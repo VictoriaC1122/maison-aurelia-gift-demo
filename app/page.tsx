@@ -94,7 +94,7 @@ export default function HomePage() {
                 controls
                 playsInline
                 poster={withBasePath(featured[0]?.images[0] ?? "/assets/categories/benyang/S__75194507_0.jpg")}
-                className="aspect-[16/10] w-full rounded-[1.4rem] object-cover"
+                className="aspect-[16/10] w-full rounded-[1.4rem] bg-black object-contain"
               >
                 <source src={withBasePath("/assets/video/hero-film.mp4")} type="video/mp4" />
               </video>
