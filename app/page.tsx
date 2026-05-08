@@ -35,8 +35,8 @@ export default function HomePage() {
         </div>
       </aside>
 
-      <section className="shell grid min-h-[calc(100vh-84px)] items-center gap-8 py-6 md:gap-10 md:py-10 lg:grid-cols-[1.05fr_0.95fr]">
-        <FadeIn className="space-y-7 md:space-y-10">
+      <section className="shell grid items-start gap-8 py-6 md:gap-10 md:py-10 lg:grid-cols-[1.05fr_0.95fr] lg:pt-8">
+        <FadeIn className="space-y-7 pt-2 md:space-y-10 lg:pt-0">
           <div className="space-y-4 md:space-y-5">
             <p className="text-xs uppercase tracking-[0.38em] text-champagne">{site.englishSlogan}</p>
             <h1 className="max-w-3xl font-display text-[2.9rem] leading-[0.94] text-ink sm:text-[3.45rem] md:text-7xl">
