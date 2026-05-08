@@ -17,13 +17,13 @@ export default function HomePage() {
           <div className="space-y-5">
             <p className="text-xs uppercase tracking-[0.38em] text-champagne">{site.englishSlogan}</p>
             <h1 className="max-w-3xl font-display text-5xl leading-[0.95] text-ink md:text-7xl">
-              精品燕窩，不做傳統電商感，
+              讓燕禮回到應有的質地，
               <br />
-              而像一個真正的 luxury gift maison。
+              在日常與贈禮之間，安靜發光。
             </h1>
             <p className="max-w-2xl text-base leading-8 text-ink/65 md:text-lg">
-              參考高轉換品牌網站的導購節奏，重新設計為奶油白、香檳金、霧面黑與留白構成的精品官網，
-              讓燕禮、企業贈禮與客製方案都能呈現更高級的品牌感。
+              以奶油白、香檳金與留白構成品牌語境，將燕窩、節慶贈禮與客製禮盒整理成更從容、
+              更細緻的收藏式體驗。
             </p>
           </div>
           <div className="flex flex-wrap gap-4">
@@ -58,14 +58,14 @@ export default function HomePage() {
       <section className="shell space-y-8 py-14">
         <SectionHeading
           eyebrow="Brand Narrative"
-          title="用品牌故事、Why Us、商品系列、FAQ 與下單流程，建立完整高端購物旅程。"
-          description="結構借鏡成熟品牌站的資訊安排，但文案、圖片、視覺與互動全部重做，保留商業效率，同時維持精品禮盒品牌的克制與優雅。"
+          title="從品牌氣質到送禮細節，都應該被妥帖呈現。"
+          description="Maison Aurelia 希望讓每一份燕禮，都像一件被細心挑選的作品，溫柔、克制，卻足夠令人記得。"
         />
         <div className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
           <div className="glass-panel p-7">
             <p className="text-sm uppercase tracking-[0.28em] text-rosegold">Brand Promise</p>
             <p className="mt-4 text-base leading-8 text-ink/65">
-              {site.chineseSlogan}。我們把產地溯源、送禮儀式感、客製提案與正式下單機制整合成一個精緻而完整的品牌體驗。
+              {site.chineseSlogan}。從產地到瓶身，從包裝到贈禮時刻，我們希望把珍貴感留在每一次被打開的瞬間。
             </p>
           </div>
           <div className="grid gap-5 md:grid-cols-3">
@@ -88,7 +88,7 @@ export default function HomePage() {
       <section className="shell space-y-8 py-14">
         <SectionHeading
           eyebrow="Best Sellers"
-          title="暢銷商品區保留導購效率，但商品卡語言改成高級禮盒展示。"
+          title="幾款值得一眼記住，也值得慢慢品味的燕禮。"
         />
         <div className="grid gap-6 lg:grid-cols-3">
           {featured.map((product, index) => (
@@ -103,8 +103,8 @@ export default function HomePage() {
         <div className="glass-panel grid gap-8 p-8 lg:grid-cols-[1fr_1.2fr] lg:p-10">
           <SectionHeading
             eyebrow="Origin Atelier"
-            title="越南燕廠，不只是相簿，而是讓精品品牌站得住的來源敘事。"
-            description="原料、採摘、處理與品管影像會在系列頁完整鋪陳，讓高端感建立在真實供應鏈之上。"
+            title="所有細膩的風味與質地，都有它被好好對待的來處。"
+            description="從產地採摘到後續整理，每一道工序都影響著最終入口的純淨與層次。"
           />
           <div className="grid gap-4 sm:grid-cols-2">
             {productContent.factoryGallery.slice(0, 4).map((image) => (

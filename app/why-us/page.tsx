@@ -3,15 +3,15 @@ import { SectionHeading } from "@/components/section-heading";
 const reasons = [
   {
     title: "Luxury Visual Language",
-    description: "以精品雜誌式字級、柔霧色系、玻璃卡片與留白比例建立高端第一印象。"
+    description: "以留白、光澤與比例感，讓視覺自然呈現出安靜而講究的質地。"
   },
   {
     title: "Source-Backed Trust",
-    description: "把越南燕廠做成完整來源敘事，而不是單純商品配圖。"
+    description: "把產地、工序與來源說清楚，讓安心感來自真實而不是想像。"
   },
   {
     title: "Commerce-Ready Flow",
-    description: "包含分類頁、商品頁、下單表單、訂單 API 與 admin 管理，不只是形象頁。"
+    description: "讓挑選、詢問與下單都保持流暢，讓品牌感與使用感並存。"
   }
 ];
 
@@ -21,7 +21,7 @@ export default function WhyUsPage() {
       <SectionHeading
         eyebrow="Why Us"
         title="品牌理念"
-        description="網站不只是漂亮，而是把高端送禮品牌該有的故事、秩序、流程與可信度一起做完整。"
+        description="真正令人留下印象的，不只是外觀，而是每一處細節都被照顧得剛剛好。"
       />
       <div className="grid gap-6 lg:grid-cols-3">
         {reasons.map((reason) => (

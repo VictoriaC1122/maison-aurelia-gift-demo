@@ -15,7 +15,7 @@ export function SiteFooter() {
           <Link href="/collections">商品系列</Link>
           <Link href="/custom">客製化方案</Link>
           <Link href="/ordering">訂購流程</Link>
-          <Link href="/admin/orders">Admin Orders</Link>
+          <Link href="/contact">聯絡我們</Link>
         </div>
         <div className="space-y-3 text-sm text-pearl/72">
           <p className="font-display text-lg text-pearl">Contact</p>

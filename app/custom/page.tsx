@@ -15,7 +15,7 @@ export default function CustomPage() {
         <div className="space-y-4">
           <h2 className="font-display text-4xl">Bespoke Gift Service</h2>
           <p className="text-base leading-8 text-ink/65">
-            我們提供從品項搭配、包裝視覺、活動檔期到配送安排的完整提案，適合企業贈禮、VIP 關係維護與高端品牌活動。
+            無論是節慶贈禮、品牌活動，或重要客戶往來，我們都能依場合與風格調整禮盒內容與呈現方式。
           </p>
         </div>
         <ul className="space-y-3 text-sm leading-8 text-ink/68">

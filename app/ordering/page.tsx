@@ -10,7 +10,7 @@ const steps = [
 export default function OrderingPage() {
   return (
     <main className="shell space-y-8 py-16">
-      <SectionHeading eyebrow="Ordering" title="訂購流程" description="參考成熟購物品牌的導購邏輯，讓詢價與正式下單都更順手。" />
+      <SectionHeading eyebrow="Ordering" title="訂購流程" description="從挑選品項到配送安排，讓每一步都清楚而從容。" />
       <div className="grid gap-5 lg:grid-cols-4">
         {steps.map((step, index) => (
           <div key={step} className="glass-panel p-6">

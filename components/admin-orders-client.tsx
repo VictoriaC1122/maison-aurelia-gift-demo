@@ -86,8 +86,8 @@ export function AdminOrdersClient({ initialOrders }: { initialOrders: OrderRecor
     <div className="space-y-6">
       <div className="flex flex-col gap-4 rounded-luxe border border-white/60 bg-white/70 p-6 shadow-glass backdrop-blur md:flex-row md:items-center md:justify-between">
         <div>
-          <p className="text-xs uppercase tracking-[0.3em] text-champagne">Order Console</p>
-          <h2 className="font-display text-3xl text-ink">/admin/orders</h2>
+          <p className="text-xs uppercase tracking-[0.3em] text-champagne">Order Ledger</p>
+          <h2 className="font-display text-3xl text-ink">訂單一覽</h2>
         </div>
         <div className="flex flex-col gap-3 md:flex-row md:items-center">
           <input
@@ -154,9 +154,7 @@ export function AdminOrdersClient({ initialOrders }: { initialOrders: OrderRecor
           </table>
         </div>
       </div>
-      <p className="text-xs leading-7 text-ink/45">
-        這是靜態展示版 admin，資料更新只會保存在目前瀏覽器，方便業主預覽流程與介面。
-      </p>
+      <p className="text-xs leading-7 text-ink/45">此頁用於整理訂單資訊與配送狀態，便於快速檢視與後續安排。</p>
     </div>
   );
 }

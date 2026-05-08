@@ -4,7 +4,7 @@ import { site } from "@/lib/content";
 export default function ShippingPage() {
   return (
     <main className="shell space-y-8 py-16">
-      <SectionHeading eyebrow="Shipping" title="配送與運費" description="正式部署到 Cloudflare Pages 時，建議改接 Supabase，讓訂單與配送狀態可長期保存。" />
+      <SectionHeading eyebrow="Shipping" title="配送與運費" description="依收件地區、訂單內容與指定時段安排配送，讓禮意穩妥送達。" />
       <div className="glass-panel grid gap-6 p-8 md:grid-cols-3">
         <div>
           <p className="text-xs uppercase tracking-[0.32em] text-champagne">Standard</p>

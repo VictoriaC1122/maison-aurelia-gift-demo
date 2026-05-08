@@ -69,7 +69,7 @@ export function OrderForm({ products, defaultProductSlug }: { products: Product[
     <div className="space-y-5">
       {successId ? (
         <div className="glass-panel p-6 text-sm leading-8 text-ink/68">
-          Demo 訂單已建立：<strong>{successId}</strong>。這筆資料會暫存在目前瀏覽器，可到 `/admin/orders` 查看展示效果。
+          已收到你的預約資訊：<strong>{successId}</strong>。我們將依你留下的內容整理後續聯繫細節。
         </div>
       ) : null}
       <form onSubmit={onSubmit} className="grid gap-5 rounded-luxe border border-white/60 bg-white/70 p-6 shadow-glass backdrop-blur md:grid-cols-2 md:p-8">
@@ -95,9 +95,9 @@ export function OrderForm({ products, defaultProductSlug }: { products: Product[
         <input className="field md:col-span-2" placeholder="希望配送日期" type="date" value={form.preferredDeliveryDate} onChange={(e) => setForm({ ...form, preferredDeliveryDate: e.target.value })} />
         <textarea className="field md:col-span-2" placeholder="備註" value={form.note} onChange={(e) => setForm({ ...form, note: e.target.value })} />
         <div className="md:col-span-2 flex items-center justify-between gap-4">
-          <p className="text-sm leading-7 text-ink/60">展示版會以瀏覽器本地資料模擬下單，不會真的送出到後端資料庫。</p>
+          <p className="text-sm leading-7 text-ink/60">若有指定送禮時程、份數或包裝需求，也歡迎一併備註。</p>
           <button className="rounded-full bg-ink px-6 py-3 text-sm text-pearl transition hover:-translate-y-0.5" disabled={submitting}>
-            {submitting ? "送出中..." : "送出 Demo 訂單"}
+            {submitting ? "送出中..." : "送出預約"}
           </button>
         </div>
       </form>
