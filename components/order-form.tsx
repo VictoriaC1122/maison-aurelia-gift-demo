@@ -68,16 +68,16 @@ export function OrderForm({ products, defaultProductSlug }: { products: Product[
   return (
     <div className="space-y-5">
       {successId ? (
-        <div className="glass-panel p-6 text-sm leading-8 text-ink/68">
+        <div className="glass-panel p-5 text-sm leading-7 text-ink/68 md:p-6 md:leading-8">
           已收到你的預約資訊：<strong>{successId}</strong>。我們將依你留下的內容整理後續聯繫細節。
         </div>
       ) : null}
       <form onSubmit={onSubmit} className="grid gap-4 rounded-luxe border border-white/60 bg-white/70 p-5 shadow-glass backdrop-blur md:grid-cols-2 md:gap-5 md:p-8">
         <input className="field" placeholder="客戶姓名" value={form.customerName} onChange={(e) => setForm({ ...form, customerName: e.target.value })} />
-        <input className="field" placeholder="電話" value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} />
-        <input className="field" placeholder="Email" type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} />
+        <input className="field" placeholder="電話" inputMode="tel" value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} />
+        <input className="field" placeholder="Email" inputMode="email" type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} />
         <input className="field" placeholder="LINE ID" value={form.lineId} onChange={(e) => setForm({ ...form, lineId: e.target.value })} />
-        <textarea className="field md:col-span-2" placeholder="收件地址" value={form.address} onChange={(e) => setForm({ ...form, address: e.target.value })} />
+        <textarea className="field min-h-[112px] resize-none md:col-span-2" placeholder="收件地址" value={form.address} onChange={(e) => setForm({ ...form, address: e.target.value })} />
         <select
           className="field"
           value={products.find((product) => product.nameZh === form.productName)?.slug ?? defaultProduct?.slug}
@@ -93,10 +93,10 @@ export function OrderForm({ products, defaultProductSlug }: { products: Product[
         <input className="field" placeholder="數量" type="number" min={1} value={form.quantity} onChange={(e) => setForm({ ...form, quantity: Number(e.target.value) })} />
         <input className="field" placeholder="規格" value={form.option} onChange={(e) => setForm({ ...form, option: e.target.value })} />
         <input className="field md:col-span-2" placeholder="希望配送日期" type="date" value={form.preferredDeliveryDate} onChange={(e) => setForm({ ...form, preferredDeliveryDate: e.target.value })} />
-        <textarea className="field md:col-span-2" placeholder="備註" value={form.note} onChange={(e) => setForm({ ...form, note: e.target.value })} />
+        <textarea className="field min-h-[120px] resize-none md:col-span-2" placeholder="備註" value={form.note} onChange={(e) => setForm({ ...form, note: e.target.value })} />
         <div className="md:col-span-2 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <p className="text-sm leading-7 text-ink/60">若有指定送禮時程、份數或包裝需求，也歡迎一併備註。</p>
-          <button className="min-h-[50px] rounded-full bg-ink px-6 py-3 text-sm text-pearl transition hover:-translate-y-0.5 active:scale-[0.99]" disabled={submitting}>
+          <p className="max-w-xl text-sm leading-7 text-ink/60">若有指定送禮時程、份數或包裝需求，也歡迎一併備註。</p>
+          <button className="min-h-[52px] w-full rounded-full bg-ink px-6 py-3 text-sm text-pearl transition hover:-translate-y-0.5 active:scale-[0.99] sm:w-auto" disabled={submitting}>
             {submitting ? "送出中..." : "送出預約"}
           </button>
         </div>
