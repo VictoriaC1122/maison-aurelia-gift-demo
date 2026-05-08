@@ -23,14 +23,14 @@ export default async function CollectionDetailPage({
   const isFactory = slug === "factory";
 
   return (
-    <main className="shell space-y-10 py-16">
+    <main className="shell space-y-10 py-10 md:py-16">
       <div className="grid gap-6 lg:grid-cols-[1.05fr_0.95fr]">
         <div className="space-y-5">
           <p className="text-xs uppercase tracking-[0.36em] text-champagne">{category.englishName}</p>
-          <h1 className="font-display text-5xl text-ink md:text-7xl">{category.name}</h1>
+          <h1 className="font-display text-[3rem] leading-[0.96] text-ink md:text-7xl">{category.name}</h1>
           <p className="max-w-2xl text-base leading-8 text-ink/65">{category.description}</p>
         </div>
-        <div className="glass-panel relative min-h-[360px] overflow-hidden">
+        <div className="glass-panel relative min-h-[260px] overflow-hidden md:min-h-[360px]">
           <AutoImageRotator
             images={[category.coverImage, ...products.flatMap((product) => product.images)]}
             alt={category.name}
@@ -56,7 +56,7 @@ export default async function CollectionDetailPage({
       ) : (
         <section className="space-y-8">
           <SectionHeading eyebrow="Products" title="商品分類頁" description="目前部分產品為範本資料，便於你之後補上正式名稱、價格、規格與特色。" />
-          <div className="grid gap-6 lg:grid-cols-2 xl:grid-cols-3">
+          <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
             {products.map((product) => (
               <ProductCard key={product.slug} product={product} />
             ))}

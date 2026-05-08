@@ -5,7 +5,7 @@ import { getCategories, getProductsByCategory } from "@/lib/content";
 
 export default function CollectionsPage() {
   return (
-    <main className="shell space-y-8 py-16">
+    <main className="shell space-y-8 py-10 md:py-16">
       <SectionHeading eyebrow="Collections" title="商品系列" description="依資料夾自動整理系列與來源內容；後續你可以直接編修 `data/products.json` 補齊名稱與售價。" />
       <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
         {getCategories().map((category) => (
@@ -18,9 +18,9 @@ export default function CollectionsPage() {
                 imageClassName="object-cover"
               />
             </div>
-            <div className="space-y-2 p-6">
+            <div className="space-y-2 p-5 md:p-6">
               <p className="text-xs uppercase tracking-[0.3em] text-champagne">{category.englishName}</p>
-              <h2 className="font-display text-3xl">{category.name}</h2>
+              <h2 className="font-display text-[2rem] md:text-3xl">{category.name}</h2>
               <p className="text-sm leading-7 text-ink/65">{category.description}</p>
             </div>
           </Link>
