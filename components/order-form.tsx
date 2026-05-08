@@ -72,7 +72,7 @@ export function OrderForm({ products, defaultProductSlug }: { products: Product[
           已收到你的預約資訊：<strong>{successId}</strong>。我們將依你留下的內容整理後續聯繫細節。
         </div>
       ) : null}
-      <form onSubmit={onSubmit} className="grid gap-5 rounded-luxe border border-white/60 bg-white/70 p-6 shadow-glass backdrop-blur md:grid-cols-2 md:p-8">
+      <form onSubmit={onSubmit} className="grid gap-4 rounded-luxe border border-white/60 bg-white/70 p-5 shadow-glass backdrop-blur md:grid-cols-2 md:gap-5 md:p-8">
         <input className="field" placeholder="客戶姓名" value={form.customerName} onChange={(e) => setForm({ ...form, customerName: e.target.value })} />
         <input className="field" placeholder="電話" value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} />
         <input className="field" placeholder="Email" type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} />
@@ -94,9 +94,9 @@ export function OrderForm({ products, defaultProductSlug }: { products: Product[
         <input className="field" placeholder="規格" value={form.option} onChange={(e) => setForm({ ...form, option: e.target.value })} />
         <input className="field md:col-span-2" placeholder="希望配送日期" type="date" value={form.preferredDeliveryDate} onChange={(e) => setForm({ ...form, preferredDeliveryDate: e.target.value })} />
         <textarea className="field md:col-span-2" placeholder="備註" value={form.note} onChange={(e) => setForm({ ...form, note: e.target.value })} />
-        <div className="md:col-span-2 flex items-center justify-between gap-4">
+        <div className="md:col-span-2 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-sm leading-7 text-ink/60">若有指定送禮時程、份數或包裝需求，也歡迎一併備註。</p>
-          <button className="rounded-full bg-ink px-6 py-3 text-sm text-pearl transition hover:-translate-y-0.5" disabled={submitting}>
+          <button className="min-h-[50px] rounded-full bg-ink px-6 py-3 text-sm text-pearl transition hover:-translate-y-0.5 active:scale-[0.99]" disabled={submitting}>
             {submitting ? "送出中..." : "送出預約"}
           </button>
         </div>
