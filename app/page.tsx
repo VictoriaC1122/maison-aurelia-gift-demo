@@ -35,8 +35,8 @@ export default function HomePage() {
         </div>
       </aside>
 
-      <section className="shell grid items-start gap-8 py-5 md:gap-10 md:py-10 lg:grid-cols-[1.05fr_0.95fr] lg:pt-6">
-        <FadeIn className="space-y-6 pt-1 md:space-y-10 lg:pt-0">
+      <section className="shell grid items-start gap-8 py-5 md:gap-10 md:py-10 lg:min-h-[calc(100vh-110px)] lg:grid-cols-[0.94fr_1.06fr] lg:gap-8 lg:pt-6">
+        <FadeIn className="space-y-6 pt-1 md:space-y-10 lg:flex lg:min-h-[calc(100vh-150px)] lg:flex-col lg:justify-center lg:pt-0">
           <div className="space-y-4 md:space-y-5">
             <p className="text-[11px] uppercase tracking-[0.28em] text-champagne md:text-xs md:tracking-[0.38em]">{site.englishSlogan}</p>
             <h1 className="max-w-3xl font-display text-[2.7rem] leading-[0.92] tracking-[-0.02em] text-ink sm:text-[3.3rem] md:text-7xl md:tracking-normal">
@@ -70,8 +70,18 @@ export default function HomePage() {
             <span className="uppercase tracking-[0.24em]">Scroll to discover</span>
           </div>
         </FadeIn>
-        <FadeIn delay={0.08} className="grid gap-4 md:gap-6">
-          <div className="glass-panel relative aspect-[1/1.16] overflow-hidden rounded-[2rem]">
+        <FadeIn delay={0.08} className="grid gap-4 md:gap-6 lg:grid-rows-[minmax(0,1fr)_minmax(148px,188px)] lg:self-center">
+          <div className="glass-panel overflow-hidden rounded-[2rem] shadow-[0_24px_55px_rgba(29,19,12,0.15)]">
+            <video
+              controls
+              playsInline
+              poster={withBasePath(featured[0]?.images[0] ?? "/assets/categories/benyang/S__75194507_0.jpg")}
+              className="aspect-[16/10] w-full object-cover"
+            >
+              <source src={withBasePath("/assets/video/hero-film.mp4")} type="video/mp4" />
+            </video>
+          </div>
+          <div className="glass-panel relative overflow-hidden rounded-[2rem]">
             <AutoImageRotator
               images={featured.flatMap((product) => product.images)}
               alt="Maison Aurelia signature selections"
@@ -80,17 +90,13 @@ export default function HomePage() {
               className="absolute inset-0"
               imageClassName="object-cover"
             />
-            <div className="absolute inset-x-5 bottom-5 z-10 rounded-[1.5rem] border border-white/40 bg-[rgba(249,244,235,0.72)] p-4 backdrop-blur-xl">
+            <div className="absolute inset-0 bg-gradient-to-t from-[rgba(33,22,15,0.22)] via-transparent to-transparent" />
+            <div className="absolute inset-x-4 bottom-4 z-10 rounded-[1.35rem] border border-white/40 bg-[rgba(249,244,235,0.74)] p-4 backdrop-blur-xl md:inset-x-5 md:bottom-5 md:rounded-[1.5rem]">
               <p className="text-[11px] uppercase tracking-[0.24em] text-champagne md:tracking-[0.3em]">Maison Moodboard</p>
               <p className="mt-2 text-[0.95rem] leading-7 text-ink/72 md:text-sm">
                 以奶白紙紋、柔金光澤與安靜留白，描繪更克制的高端燕禮語境。
               </p>
             </div>
-          </div>
-          <div className="glass-panel overflow-hidden rounded-[2rem]">
-            <video controls playsInline poster={withBasePath(featured[0]?.images[0] ?? "/assets/categories/benyang/S__75194507_0.jpg")} className="w-full object-cover">
-              <source src={withBasePath("/assets/video/hero-film.mp4")} type="video/mp4" />
-            </video>
           </div>
         </FadeIn>
       </section>
