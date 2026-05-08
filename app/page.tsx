@@ -9,11 +9,33 @@ import { withBasePath } from "@/lib/utils";
 export default function HomePage() {
   const categories = getCategories();
   const featured = getFeaturedProducts();
+  const signatureProduct = featured[0];
 
   return (
-    <main className="pb-20">
+    <main className="relative pb-20">
+      <aside className="fixed right-4 top-1/2 z-30 hidden -translate-y-1/2 xl:block">
+        <div className="glass-panel flex flex-col items-center gap-5 px-4 py-6">
+          <span className="text-[11px] uppercase tracking-[0.32em] text-champagne [writing-mode:vertical-rl]">
+            Concierge
+          </span>
+          <div className="h-16 w-px bg-champagne/30" />
+          <a
+            href={`https://line.me/R/ti/p/~${contact.line}`}
+            className="rounded-full border border-champagne/30 px-3 py-2 text-[11px] uppercase tracking-[0.24em] text-ink transition hover:bg-white/70"
+          >
+            Line
+          </a>
+          <a
+            href="/contact"
+            className="rounded-full border border-champagne/30 px-3 py-2 text-[11px] uppercase tracking-[0.24em] text-ink transition hover:bg-white/70"
+          >
+            Contact
+          </a>
+        </div>
+      </aside>
+
       <section className="shell grid min-h-[calc(100vh-84px)] items-center gap-10 py-10 lg:grid-cols-[1.05fr_0.95fr]">
-        <FadeIn className="space-y-8">
+        <FadeIn className="space-y-10">
           <div className="space-y-5">
             <p className="text-xs uppercase tracking-[0.38em] text-champagne">{site.englishSlogan}</p>
             <h1 className="max-w-3xl font-display text-5xl leading-[0.95] text-ink md:text-7xl">
@@ -42,6 +64,10 @@ export default function HomePage() {
               </div>
             ))}
           </div>
+          <div className="flex items-center gap-4 text-sm text-ink/45">
+            <span className="h-px w-16 bg-champagne/35" />
+            <span className="uppercase tracking-[0.24em]">Scroll to discover</span>
+          </div>
         </FadeIn>
         <FadeIn delay={0.08} className="grid gap-6">
           <div className="glass-panel relative aspect-[1/1.16] overflow-hidden">
@@ -61,12 +87,31 @@ export default function HomePage() {
           title="從品牌氣質到送禮細節，都應該被妥帖呈現。"
           description="Maison Aurelia 希望讓每一份燕禮，都像一件被細心挑選的作品，溫柔、克制，卻足夠令人記得。"
         />
-        <div className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
-          <div className="glass-panel p-7">
-            <p className="text-sm uppercase tracking-[0.28em] text-rosegold">Brand Promise</p>
-            <p className="mt-4 text-base leading-8 text-ink/65">
-              {site.chineseSlogan}。從產地到瓶身，從包裝到贈禮時刻，我們希望把珍貴感留在每一次被打開的瞬間。
-            </p>
+        <div className="grid gap-6 lg:grid-cols-[0.72fr_1.28fr]">
+          <div className="glass-panel grid gap-6 p-7">
+            <div className="space-y-3">
+              <p className="text-sm uppercase tracking-[0.28em] text-rosegold">Brand Promise</p>
+              <p className="text-base leading-8 text-ink/65">
+                {site.chineseSlogan}。從產地到瓶身，從包裝到贈禮時刻，我們希望把珍貴感留在每一次被打開的瞬間。
+              </p>
+            </div>
+            <div className="space-y-4">
+              {[
+                {
+                  title: "Gentle Radiance",
+                  text: "以低飽和色階與金色筆觸，保留燕禮應有的細緻與安定感。"
+                },
+                {
+                  title: "Ceremonial Gifting",
+                  text: "每一份禮盒都以打開時的光線、手感與節奏去思考它該如何被記住。"
+                }
+              ].map((item) => (
+                <div key={item.title} className="rounded-[1.4rem] border border-champagne/15 bg-white/55 p-5">
+                  <p className="font-display text-2xl text-ink">{item.title}</p>
+                  <p className="mt-2 text-sm leading-7 text-ink/58">{item.text}</p>
+                </div>
+              ))}
+            </div>
           </div>
           <div className="grid gap-5 md:grid-cols-3">
             {categories.map((category) => (
@@ -99,6 +144,47 @@ export default function HomePage() {
         </div>
       </section>
 
+      {signatureProduct ? (
+        <section className="shell py-14">
+          <div className="glass-panel grid gap-8 overflow-hidden p-8 lg:grid-cols-[0.95fr_1.05fr] lg:p-10">
+            <div className="relative min-h-[360px] overflow-hidden rounded-[2rem]">
+              <Image
+                src={withBasePath(signatureProduct.images[0])}
+                alt={signatureProduct.nameZh}
+                fill
+                className="object-cover"
+              />
+            </div>
+            <div className="flex flex-col justify-center space-y-6">
+              <div className="space-y-3">
+                <p className="text-xs uppercase tracking-[0.34em] text-champagne">Signature Selection</p>
+                <h2 className="font-display text-4xl leading-tight text-ink md:text-6xl">
+                  {signatureProduct.nameZh}
+                </h2>
+                <p className="text-base leading-8 text-ink/65">
+                  {signatureProduct.summary}
+                </p>
+              </div>
+              <div className="grid gap-4 sm:grid-cols-3">
+                {signatureProduct.features.map((feature) => (
+                  <div key={feature} className="rounded-[1.4rem] border border-champagne/15 bg-white/60 p-4 text-sm leading-7 text-ink/60">
+                    {feature}
+                  </div>
+                ))}
+              </div>
+              <div className="flex flex-wrap gap-4">
+                <Link href={`/products/${signatureProduct.slug}`} className="hero-button-dark">
+                  了解此系列
+                </Link>
+                <Link href="/custom" className="hero-button-light">
+                  洽詢客製禮盒
+                </Link>
+              </div>
+            </div>
+          </div>
+        </section>
+      ) : null}
+
       <section className="shell py-14">
         <div className="glass-panel grid gap-8 p-8 lg:grid-cols-[1fr_1.2fr] lg:p-10">
           <SectionHeading
@@ -112,6 +198,42 @@ export default function HomePage() {
                 <Image src={withBasePath(image)} alt="origin atelier" fill className="object-cover" />
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="shell py-14">
+        <div className="grid gap-6 lg:grid-cols-[1.05fr_0.95fr]">
+          <div className="glass-panel p-8 lg:p-10">
+            <SectionHeading
+              eyebrow="Private Concierge"
+              title="如果你在尋找更細緻的送禮方式，我們很樂意替你整理。"
+              description="無論是一份節慶心意、商務往來，或想為重要的人保留更安靜的祝福，都可以從這裡開始。"
+            />
+            <div className="mt-8 grid gap-4 sm:grid-cols-2">
+              <div className="rounded-[1.4rem] border border-champagne/15 bg-white/55 p-5">
+                <p className="text-xs uppercase tracking-[0.26em] text-champagne">Phone</p>
+                <p className="mt-2 text-lg text-ink">{contact.phone}</p>
+              </div>
+              <div className="rounded-[1.4rem] border border-champagne/15 bg-white/55 p-5">
+                <p className="text-xs uppercase tracking-[0.26em] text-champagne">Email</p>
+                <p className="mt-2 text-lg text-ink">{contact.email}</p>
+              </div>
+            </div>
+          </div>
+          <div className="glass-panel p-8 lg:p-10">
+            <p className="text-xs uppercase tracking-[0.3em] text-rosegold">Selected Notes</p>
+            <div className="mt-5 space-y-5">
+              {[
+                "燕禮的珍貴，不只在內容本身，也在它被遞出的那一刻是否足夠從容。",
+                "好的送禮從不喧嘩，它只是讓人一眼就知道，你真的有把這份心意放在心上。",
+                "從包裝、光澤、份量，到入口後的節奏與尾韻，細節總會替品牌說話。"
+              ].map((line) => (
+                <div key={line} className="border-b border-champagne/12 pb-5 text-sm leading-8 text-ink/60 last:border-none last:pb-0">
+                  {line}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
