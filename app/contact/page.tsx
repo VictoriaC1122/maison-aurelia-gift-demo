@@ -1,15 +1,30 @@
-import Image from "next/image";
+import { AutoImageRotator } from "@/components/auto-image-rotator";
 import { SectionHeading } from "@/components/section-heading";
-import { contact } from "@/lib/content";
-import { withBasePath } from "@/lib/utils";
+import { contact, getFeaturedProducts } from "@/lib/content";
 
 export default function ContactPage() {
+  const featured = getFeaturedProducts();
+
   return (
     <main className="shell space-y-10 py-16">
       <SectionHeading eyebrow="Contact" title="聯絡我們" description={contact.notes} />
       <div className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
         <div className="glass-panel relative min-h-[420px] overflow-hidden">
-          <Image src={withBasePath("/assets/brand/brand-card.jpg")} alt="contact card" fill className="object-cover" />
+          <AutoImageRotator
+            images={featured.flatMap((product) => product.images)}
+            alt="Maison Aurelia contact atmosphere"
+            priority
+            intervalMs={5400}
+            className="absolute inset-0"
+            imageClassName="object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-[rgba(23,18,15,0.45)] via-[rgba(23,18,15,0.12)] to-transparent" />
+          <div className="absolute bottom-6 left-6 right-6 z-10 rounded-[1.6rem] border border-white/35 bg-[rgba(248,241,232,0.74)] p-5 backdrop-blur-xl">
+            <p className="text-[11px] uppercase tracking-[0.3em] text-champagne">Private Concierge</p>
+            <p className="mt-2 text-sm leading-7 text-ink/75">
+              若需安排贈禮內容、企業禮盒或配送節奏，歡迎直接與我們聯繫。
+            </p>
+          </div>
         </div>
         <div className="glass-panel grid gap-5 p-8">
           {[

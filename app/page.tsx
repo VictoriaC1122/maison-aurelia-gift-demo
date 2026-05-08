@@ -72,10 +72,23 @@ export default function HomePage() {
         </FadeIn>
         <FadeIn delay={0.08} className="grid gap-4 md:gap-6">
           <div className="glass-panel relative aspect-[1/1.16] overflow-hidden rounded-[2rem]">
-            <Image src={withBasePath("/assets/brand/brand-card.jpg")} alt="Maison Aurelia brand card" fill className="object-cover" />
+            <AutoImageRotator
+              images={featured.flatMap((product) => product.images)}
+              alt="Maison Aurelia signature selections"
+              priority
+              intervalMs={5000}
+              className="absolute inset-0"
+              imageClassName="object-cover"
+            />
+            <div className="absolute inset-x-5 bottom-5 z-10 rounded-[1.5rem] border border-white/40 bg-[rgba(249,244,235,0.72)] p-4 backdrop-blur-xl">
+              <p className="text-[11px] uppercase tracking-[0.3em] text-champagne">Maison Moodboard</p>
+              <p className="mt-2 text-sm leading-7 text-ink/72">
+                以奶白紙紋、柔金光澤與安靜留白，描繪更克制的高端燕禮語境。
+              </p>
+            </div>
           </div>
           <div className="glass-panel overflow-hidden rounded-[2rem]">
-            <video controls playsInline poster={withBasePath("/assets/brand/brand-card.jpg")} className="w-full object-cover">
+            <video controls playsInline poster={withBasePath(featured[0]?.images[0] ?? "/assets/categories/benyang/S__75194507_0.jpg")} className="w-full object-cover">
               <source src={withBasePath("/assets/video/hero-film.mp4")} type="video/mp4" />
             </video>
           </div>
