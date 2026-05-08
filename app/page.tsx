@@ -70,17 +70,7 @@ export default function HomePage() {
             <span className="uppercase tracking-[0.24em]">Scroll to discover</span>
           </div>
         </FadeIn>
-        <FadeIn delay={0.08} className="home-hero__media grid gap-4 md:gap-6 lg:grid-rows-[minmax(0,1fr)_minmax(148px,188px)] lg:self-center">
-          <div className="home-hero__video glass-panel overflow-hidden rounded-[2rem] shadow-[0_24px_55px_rgba(29,19,12,0.15)]">
-            <video
-              controls
-              playsInline
-              poster={withBasePath(featured[0]?.images[0] ?? "/assets/categories/benyang/S__75194507_0.jpg")}
-              className="aspect-[16/10] w-full object-cover"
-            >
-              <source src={withBasePath("/assets/video/hero-film.mp4")} type="video/mp4" />
-            </video>
-          </div>
+        <FadeIn delay={0.08} className="home-hero__media grid gap-4 md:gap-6 lg:grid-rows-[minmax(0,1fr)_minmax(210px,260px)] lg:self-center">
           <div className="home-hero__mood glass-panel relative overflow-hidden rounded-[2rem]">
             <AutoImageRotator
               images={featured.flatMap((product) => product.images)}
@@ -96,6 +86,18 @@ export default function HomePage() {
               <p className="mt-2 text-[0.95rem] leading-7 text-ink/72 md:text-sm">
                 以奶白紙紋、柔金光澤與安靜留白，描繪更克制的高端燕禮語境。
               </p>
+            </div>
+          </div>
+          <div className="home-hero__video glass-panel overflow-hidden rounded-[2rem] shadow-[0_24px_55px_rgba(29,19,12,0.15)]">
+            <div className="home-hero__video-frame relative overflow-hidden rounded-[1.9rem] border border-[#120f0d]/5 bg-[#120f0d] p-2 md:p-3">
+              <video
+                controls
+                playsInline
+                poster={withBasePath(featured[0]?.images[0] ?? "/assets/categories/benyang/S__75194507_0.jpg")}
+                className="aspect-[16/10] w-full rounded-[1.4rem] object-cover"
+              >
+                <source src={withBasePath("/assets/video/hero-film.mp4")} type="video/mp4" />
+              </video>
             </div>
           </div>
         </FadeIn>

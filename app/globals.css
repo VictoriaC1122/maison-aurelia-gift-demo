@@ -236,7 +236,11 @@ body::before {
   }
 
   .home-hero__mood {
-    min-height: 150px;
+    min-height: 190px;
+  }
+
+  .home-hero__video-frame {
+    padding: 0.45rem;
   }
 
   .product-card {
