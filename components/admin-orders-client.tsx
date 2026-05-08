@@ -1,37 +1,85 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import type { OrderRecord, OrderStatus } from "@/lib/types";
 import { formatDate } from "@/lib/utils";
 
 const statuses: OrderStatus[] = ["pending", "confirmed", "shipped", "completed", "cancelled"];
+const DEMO_ORDER_KEY = "maison-aurelia-demo-orders";
 
 export function AdminOrdersClient({ initialOrders }: { initialOrders: OrderRecord[] }) {
   const [query, setQuery] = useState("");
   const [orders, setOrders] = useState(initialOrders);
 
   useEffect(() => {
-    const id = setTimeout(async () => {
-      const response = await fetch(`/api/orders${query ? `?q=${encodeURIComponent(query)}` : ""}`);
-      const payload = (await response.json()) as { orders: OrderRecord[] };
-      setOrders(payload.orders);
-    }, 180);
-    return () => clearTimeout(id);
-  }, [query]);
-
-  const countLabel = useMemo(() => `${orders.length} orders`, [orders.length]);
-
-  async function updateStatus(orderId: string, status: OrderStatus) {
-    const response = await fetch(`/api/orders/${orderId}`, {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ status })
-    });
-    const payload = (await response.json()) as { order: OrderRecord };
-    if (response.ok) {
-      setOrders((current) => current.map((item) => (item.orderId === orderId ? payload.order : item)));
+    const localOrders = JSON.parse(window.localStorage.getItem(DEMO_ORDER_KEY) ?? "[]") as OrderRecord[];
+    if (localOrders.length > 0) {
+      setOrders((current) => {
+        const merged = [...localOrders, ...current].filter(
+          (order, index, array) => array.findIndex((item) => item.orderId === order.orderId) === index
+        );
+        return merged;
+      });
     }
+  }, []);
+
+  const filteredOrders = useMemo(() => {
+    if (!query) return orders;
+    return orders.filter((order) =>
+      [order.customerName, order.phone, order.productName]
+        .join(" ")
+        .toLowerCase()
+        .includes(query.toLowerCase())
+    );
+  }, [orders, query]);
+
+  const countLabel = useMemo(() => `${filteredOrders.length} orders`, [filteredOrders.length]);
+
+  function updateStatus(orderId: string, status: OrderStatus) {
+    setOrders((current) => {
+      const next = current.map((item) => (item.orderId === orderId ? { ...item, status } : item));
+      window.localStorage.setItem(
+        DEMO_ORDER_KEY,
+        JSON.stringify(next.filter((item) => item.orderId.startsWith("DEMO-")))
+      );
+      return next;
+    });
+  }
+
+  function exportCsv() {
+    const headers = [
+      "orderId",
+      "createdAt",
+      "customerName",
+      "phone",
+      "email",
+      "lineId",
+      "address",
+      "productName",
+      "category",
+      "quantity",
+      "option",
+      "preferredDeliveryDate",
+      "note",
+      "status"
+    ];
+
+    const csv = [
+      headers.join(","),
+      ...filteredOrders.map((order) =>
+        headers
+          .map((key) => `"${String(order[key as keyof OrderRecord] ?? "").replace(/"/g, '""')}"`)
+          .join(",")
+      )
+    ].join("\n");
+
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const anchor = document.createElement("a");
+    anchor.href = url;
+    anchor.download = "maison-aurelia-demo-orders.csv";
+    anchor.click();
+    URL.revokeObjectURL(url);
   }
 
   return (
@@ -48,12 +96,13 @@ export function AdminOrdersClient({ initialOrders }: { initialOrders: OrderRecor
             value={query}
             onChange={(event) => setQuery(event.target.value)}
           />
-          <Link
-            href="/api/orders/export"
+          <button
+            type="button"
+            onClick={exportCsv}
             className="inline-flex rounded-full border border-champagne/30 px-5 py-3 text-sm text-ink transition hover:-translate-y-0.5"
           >
             匯出 CSV
-          </Link>
+          </button>
         </div>
       </div>
 
@@ -72,7 +121,7 @@ export function AdminOrdersClient({ initialOrders }: { initialOrders: OrderRecor
               </tr>
             </thead>
             <tbody>
-              {orders.map((order) => (
+              {filteredOrders.map((order) => (
                 <tr key={order.orderId} className="border-t border-mist/40">
                   <td className="px-5 py-4">{order.orderId}</td>
                   <td className="px-5 py-4">{formatDate(order.createdAt)}</td>
@@ -105,6 +154,9 @@ export function AdminOrdersClient({ initialOrders }: { initialOrders: OrderRecor
           </table>
         </div>
       </div>
+      <p className="text-xs leading-7 text-ink/45">
+        這是靜態展示版 admin，資料更新只會保存在目前瀏覽器，方便業主預覽流程與介面。
+      </p>
     </div>
   );
 }

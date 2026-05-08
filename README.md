@@ -66,6 +66,18 @@ npm run dev
 - 下單表單流程
 - `/admin/orders` 訂單後台
 
+## 公開預覽網址
+
+這個 demo repo 可部署到 GitHub Pages，網址會是：
+
+`https://victoriac1122.github.io/maison-aurelia-gift-demo/`
+
+注意：
+
+- 這是靜態展示版
+- 下單與 admin 訂單資料會以瀏覽器本地 mock mode 模擬
+- 不會真的寫入遠端資料庫
+
 ## 後續正式版可擴充
 
 若業主確認方向，之後可再把這份 demo 版升級到正式部署版，例如接 Supabase、Cloudflare Pages、正式網域與真實訂單流程。

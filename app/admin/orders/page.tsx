@@ -1,10 +1,9 @@
-export const dynamic = "force-dynamic";
-
 import { AdminOrdersClient } from "@/components/admin-orders-client";
-import { listOrders } from "@/lib/order-store";
+import ordersData from "@/data/orders.json";
+import type { OrderRecord } from "@/lib/types";
 
-export default async function AdminOrdersPage() {
-  const orders = await listOrders();
+export default function AdminOrdersPage() {
+  const orders = ordersData as OrderRecord[];
   return (
     <main className="shell py-16">
       <AdminOrdersClient initialOrders={orders} />

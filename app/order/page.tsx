@@ -1,24 +1,17 @@
+import { Suspense } from "react";
 import { SectionHeading } from "@/components/section-heading";
 import { OrderForm } from "@/components/order-form";
 import { getProducts } from "@/lib/content";
 
-export default async function OrderPage({
-  searchParams
-}: {
-  searchParams: Promise<{ product?: string; success?: string }>;
-}) {
-  const params = await searchParams;
+export default function OrderPage() {
   const products = getProducts();
 
   return (
     <main className="shell space-y-8 py-16">
-      <SectionHeading eyebrow="Order Form" title="下單表單" description="訂單欄位與後端資料結構已完成，正式上線時可切換為 Supabase storage。" />
-      {params.success ? (
-        <div className="glass-panel p-6 text-sm leading-8 text-ink/68">
-          訂單已送出，訂單編號：<strong>{params.success}</strong>
-        </div>
-      ) : null}
-      <OrderForm products={products} defaultProductSlug={params.product} />
+      <SectionHeading eyebrow="Order Form" title="下單表單" description="這個展示版會用前端 mock mode 模擬下單與訂單狀態，方便在公開網址上直接預覽。" />
+      <Suspense fallback={<div className="glass-panel p-6 text-sm text-ink/60">載入下單表單中...</div>}>
+        <OrderForm products={products} />
+      </Suspense>
     </main>
   );
 }
