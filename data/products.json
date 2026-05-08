@@ -1,0 +1,102 @@
+{
+  "categories": [
+    {
+      "slug": "benyang",
+      "name": "燕序・本養",
+      "englishName": "Essential Nourishment",
+      "description": "以柔和留白與日常奢養為主軸的入門系列。",
+      "coverImage": "/assets/categories/benyang/S__75194507_0.jpg",
+      "sourceFolder": "燕序·本養"
+    },
+    {
+      "slug": "shenyang",
+      "name": "燕序・深養",
+      "englishName": "Deep Reserve",
+      "description": "更濃縮、更具收藏感的高端旗艦系列。",
+      "coverImage": "/assets/categories/shenyang/S__75194502_0.jpg",
+      "sourceFolder": "燕序·深養"
+    },
+    {
+      "slug": "factory",
+      "name": "越南燕廠",
+      "englishName": "Origin Atelier",
+      "description": "用產地、工序與原料溯源建立品牌信任感。",
+      "coverImage": "/assets/categories/factory/S__75194516_0.jpg",
+      "sourceFolder": "越南燕廠"
+    }
+  ],
+  "products": [
+    {
+      "slug": "aurelia-essential-6",
+      "name": "Aurelia Essential Gift Box",
+      "nameZh": "燕序・本養 6 入禮盒",
+      "category": "benyang",
+      "summary": "日常奢養的入門燕禮，適合節慶送禮與個人保養。",
+      "features": [
+        "柔粉調精品盒型",
+        "適合作為品牌初次體驗",
+        "禮盒視覺完整，拍攝友善"
+      ],
+      "price": "",
+      "specification": "6 x 75ml",
+      "images": [
+        "/assets/categories/benyang/S__75194507_0.jpg",
+        "/assets/categories/benyang/S__75194508_0.jpg",
+        "/assets/categories/benyang/S__75194509_0.jpg"
+      ],
+      "placeholder": true
+    },
+    {
+      "slug": "aurelia-essential-signature",
+      "name": "Aurelia Essential Signature Box",
+      "nameZh": "燕序・本養 精選禮盒",
+      "category": "benyang",
+      "summary": "保留東方筆觸與精品留白的視覺版本，可作為標準禮贈提案。",
+      "features": [
+        "可延伸企業客製腰封",
+        "適合品牌禮與會員禮",
+        "可再補正式售價與規格"
+      ],
+      "price": "",
+      "specification": "待補",
+      "images": [
+        "/assets/categories/benyang/S__75194510_0.jpg",
+        "/assets/categories/benyang/S__75194511_0.jpg",
+        "/assets/categories/benyang/S__75194512_0.jpg"
+      ],
+      "placeholder": true
+    },
+    {
+      "slug": "aurelia-deep-reserve-6",
+      "name": "Aurelia Deep Reserve Box",
+      "nameZh": "燕序・深養 6 入禮盒",
+      "category": "shenyang",
+      "summary": "以精品禮盒收藏感呈現高端燕窩系列，適合重要客戶與節慶大禮。",
+      "features": [
+        "盒裝陳列更有儀式感",
+        "高端客戶與節慶送禮推薦",
+        "可轉為企業客製方案"
+      ],
+      "price": "",
+      "specification": "6 x 75ml",
+      "images": [
+        "/assets/categories/shenyang/S__75194502_0.jpg",
+        "/assets/categories/shenyang/S__75194503_0.jpg",
+        "/assets/categories/shenyang/S__75194504_0.jpg"
+      ],
+      "placeholder": true
+    }
+  ],
+  "factoryGallery": [
+    "/assets/categories/factory/S__75194516_0.jpg",
+    "/assets/categories/factory/S__75194517_0.jpg",
+    "/assets/categories/factory/S__75194518_0.jpg",
+    "/assets/categories/factory/S__75194519_0.jpg",
+    "/assets/categories/factory/S__75194520_0.jpg",
+    "/assets/categories/factory/S__75194523_0.jpg",
+    "/assets/categories/factory/S__75194524_0.jpg",
+    "/assets/categories/factory/S__75194525_0.jpg",
+    "/assets/categories/factory/S__75194526_0.jpg",
+    "/assets/categories/factory/S__75194527_0.jpg"
+  ]
+}

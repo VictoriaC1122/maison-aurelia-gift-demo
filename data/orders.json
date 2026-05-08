@@ -1,0 +1,18 @@
+[
+  {
+    "orderId": "MA-20260508-0001",
+    "createdAt": "2026-05-08T10:00:00.000Z",
+    "customerName": "Sample Client",
+    "phone": "0900-000-000",
+    "email": "sample@example.com",
+    "lineId": "sampleline",
+    "address": "台北市中山區精品路 1 號",
+    "productName": "Aurelia Essential Gift Box",
+    "category": "benyang",
+    "quantity": 1,
+    "option": "6 x 75ml",
+    "preferredDeliveryDate": "2026-05-20",
+    "note": "示範資料，可於 admin 測試搜尋與狀態更新。",
+    "status": "pending"
+  }
+]

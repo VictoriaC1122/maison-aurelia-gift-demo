@@ -1,0 +1,18 @@
+{
+  "brandName": "Maison Aurelia",
+  "brandNameZh": "奧蕾雅燕禮",
+  "englishSlogan": "Curated Bird's Nest Gifts with Quiet Splendor",
+  "chineseSlogan": "以燕為禮，將珍稀與風雅妥帖收藏",
+  "metaTitle": "Maison Aurelia | Luxury Bird's Nest Boutique Gift House",
+  "metaDescription": "Maison Aurelia 是一個以精品禮盒語言重新定義燕窩送禮體驗的高端品牌官網，提供系列選購、客製化方案、下單與訂單管理。",
+  "ogImage": "/assets/brand/brand-card.jpg",
+  "socialLinks": {
+    "instagram": "",
+    "line": "youwayliu"
+  },
+  "shippingPolicy": {
+    "freeShippingThreshold": 10000,
+    "standardShippingFee": 280,
+    "customNotes": "大量企業贈禮、節慶禮盒與客製方案可另外報價。"
+  }
+}

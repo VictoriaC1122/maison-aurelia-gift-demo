@@ -1,0 +1,49 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-cream bg-hero-glow font-body text-ink antialiased;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.55), rgba(255,255,255,0.55)),
+    radial-gradient(circle at 10% 20%, rgba(194,164,109,0.12), transparent 18%),
+    radial-gradient(circle at 90% 5%, rgba(191,139,122,0.10), transparent 20%);
+  z-index: -1;
+}
+
+@layer components {
+  .shell {
+    @apply mx-auto w-[min(1240px,calc(100vw-24px))] md:w-[min(1240px,calc(100vw-48px))];
+  }
+
+  .field {
+    @apply rounded-2xl border border-champagne/20 bg-pearl/80 px-4 py-3 text-sm text-ink outline-none transition placeholder:text-ink/35 focus:border-champagne/60 focus:ring-2 focus:ring-champagne/15;
+  }
+
+  .glass-panel {
+    @apply rounded-luxe border border-white/60 bg-white/70 shadow-glass backdrop-blur;
+  }
+
+  .hero-button-dark {
+    @apply inline-flex items-center rounded-full bg-ink px-6 py-3 text-sm text-pearl transition hover:-translate-y-0.5;
+  }
+
+  .hero-button-light {
+    @apply inline-flex items-center rounded-full border border-champagne/35 px-6 py-3 text-sm text-ink transition hover:-translate-y-0.5;
+  }
+}
