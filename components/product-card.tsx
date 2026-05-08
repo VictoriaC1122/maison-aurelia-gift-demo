@@ -1,17 +1,17 @@
-import Image from "next/image";
 import Link from "next/link";
+import { AutoImageRotator } from "@/components/auto-image-rotator";
 import { Product } from "@/lib/types";
-import { formatCurrency, withBasePath } from "@/lib/utils";
+import { formatCurrency } from "@/lib/utils";
 
 export function ProductCard({ product }: { product: Product }) {
   return (
     <article className="group overflow-hidden rounded-luxe border border-white/50 bg-white/70 shadow-glass backdrop-blur">
       <div className="relative aspect-[4/4.6] overflow-hidden">
-        <Image
-          src={withBasePath(product.images[0])}
+        <AutoImageRotator
+          images={product.images}
           alt={product.nameZh}
-          fill
-          className="object-cover transition duration-500 group-hover:scale-[1.03]"
+          className="absolute inset-0 transition duration-500 group-hover:scale-[1.03]"
+          imageClassName="object-cover"
         />
       </div>
       <div className="space-y-4 p-5 md:p-6">

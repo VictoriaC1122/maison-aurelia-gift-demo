@@ -1,9 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
+import { AutoImageRotator } from "@/components/auto-image-rotator";
 import { FadeIn } from "@/components/motion";
 import { ProductCard } from "@/components/product-card";
 import { SectionHeading } from "@/components/section-heading";
-import { contact, getCategories, getFeaturedProducts, productContent, site } from "@/lib/content";
+import { contact, getCategories, getFeaturedProducts, getProductsByCategory, productContent, site } from "@/lib/content";
 import { withBasePath } from "@/lib/utils";
 
 export default function HomePage() {
@@ -117,7 +118,12 @@ export default function HomePage() {
             {categories.map((category) => (
               <Link key={category.slug} href={`/collections/${category.slug}`} className="glass-panel group overflow-hidden">
                 <div className="relative aspect-[4/5]">
-                  <Image src={withBasePath(category.coverImage)} alt={category.name} fill className="object-cover transition duration-500 group-hover:scale-[1.04]" />
+                  <AutoImageRotator
+                    images={[category.coverImage, ...getProductsByCategory(category.slug).flatMap((product) => product.images)]}
+                    alt={category.name}
+                    className="absolute inset-0 transition duration-500 group-hover:scale-[1.04]"
+                    imageClassName="object-cover"
+                  />
                 </div>
                 <div className="space-y-2 p-5">
                   <p className="text-xs uppercase tracking-[0.28em] text-champagne">{category.englishName}</p>
@@ -148,11 +154,13 @@ export default function HomePage() {
         <section className="shell py-10 md:py-14">
           <div className="glass-panel grid gap-6 overflow-hidden p-5 md:gap-8 md:p-8 lg:grid-cols-[0.95fr_1.05fr] lg:p-10">
             <div className="relative min-h-[280px] overflow-hidden rounded-[2rem] md:min-h-[360px]">
-              <Image
-                src={withBasePath(signatureProduct.images[0])}
+              <AutoImageRotator
+                images={signatureProduct.images}
                 alt={signatureProduct.nameZh}
-                fill
-                className="object-cover"
+                priority
+                intervalMs={4800}
+                className="absolute inset-0"
+                imageClassName="object-cover"
               />
             </div>
               <div className="flex flex-col justify-center space-y-5 md:space-y-6">

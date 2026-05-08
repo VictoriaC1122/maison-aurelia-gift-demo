@@ -1,8 +1,9 @@
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { AutoImageRotator } from "@/components/auto-image-rotator";
 import { getProduct, getProducts } from "@/lib/content";
 import { formatCurrency, withBasePath } from "@/lib/utils";
+import Image from "next/image";
 
 export function generateStaticParams() {
   return getProducts().map((product) => ({ slug: product.slug }));
@@ -22,7 +23,7 @@ export default async function ProductDetailPage({
       <section className="grid gap-8 lg:grid-cols-[1.05fr_0.95fr]">
         <div className="grid gap-4">
         <div className="glass-panel relative aspect-[4/4.8] overflow-hidden">
-          <Image src={withBasePath(product.images[0])} alt={product.nameZh} fill className="object-cover" />
+          <AutoImageRotator images={product.images} alt={product.nameZh} priority className="absolute inset-0" imageClassName="object-cover" intervalMs={4600} />
         </div>
         <div className="grid gap-4 sm:grid-cols-3">
           {product.images.slice(1).map((image) => (

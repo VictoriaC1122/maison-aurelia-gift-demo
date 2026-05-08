@@ -1,8 +1,7 @@
 import Link from "next/link";
-import Image from "next/image";
+import { AutoImageRotator } from "@/components/auto-image-rotator";
 import { SectionHeading } from "@/components/section-heading";
-import { getCategories } from "@/lib/content";
-import { withBasePath } from "@/lib/utils";
+import { getCategories, getProductsByCategory } from "@/lib/content";
 
 export default function CollectionsPage() {
   return (
@@ -12,7 +11,12 @@ export default function CollectionsPage() {
         {getCategories().map((category) => (
           <Link key={category.slug} href={`/collections/${category.slug}`} className="glass-panel group overflow-hidden">
             <div className="relative aspect-[4/5]">
-              <Image src={withBasePath(category.coverImage)} alt={category.name} fill className="object-cover transition duration-500 group-hover:scale-[1.03]" />
+              <AutoImageRotator
+                images={[category.coverImage, ...getProductsByCategory(category.slug).flatMap((product) => product.images)]}
+                alt={category.name}
+                className="absolute inset-0 transition duration-500 group-hover:scale-[1.03]"
+                imageClassName="object-cover"
+              />
             </div>
             <div className="space-y-2 p-6">
               <p className="text-xs uppercase tracking-[0.3em] text-champagne">{category.englishName}</p>

@@ -1,9 +1,10 @@
-import Image from "next/image";
 import { notFound } from "next/navigation";
+import { AutoImageRotator } from "@/components/auto-image-rotator";
 import { ProductCard } from "@/components/product-card";
 import { SectionHeading } from "@/components/section-heading";
 import { getCategories, getCategory, getProductsByCategory, productContent } from "@/lib/content";
 import { withBasePath } from "@/lib/utils";
+import Image from "next/image";
 
 export function generateStaticParams() {
   return getCategories().map((category) => ({ slug: category.slug }));
@@ -30,7 +31,14 @@ export default async function CollectionDetailPage({
           <p className="max-w-2xl text-base leading-8 text-ink/65">{category.description}</p>
         </div>
         <div className="glass-panel relative min-h-[360px] overflow-hidden">
-          <Image src={withBasePath(category.coverImage)} alt={category.name} fill className="object-cover" />
+          <AutoImageRotator
+            images={[category.coverImage, ...products.flatMap((product) => product.images)]}
+            alt={category.name}
+            priority
+            intervalMs={4800}
+            className="absolute inset-0"
+            imageClassName="object-cover"
+          />
         </div>
       </div>
 
