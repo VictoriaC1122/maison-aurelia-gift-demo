@@ -36,7 +36,7 @@ export function SiteHeader() {
   return (
     <>
       <header className="sticky top-0 z-50 border-b border-white/40 bg-pearl/78 backdrop-blur-2xl">
-        <div className="mx-auto grid w-[min(1240px,calc(100vw-24px))] grid-cols-[1fr_auto] items-center gap-3 py-3 md:w-[min(1240px,calc(100vw-48px))] xl:grid-cols-[auto_1fr_auto] xl:gap-4 xl:py-4">
+        <div className="mobile-header-main mx-auto grid w-[min(1240px,calc(100vw-24px))] grid-cols-[1fr_auto] items-center gap-3 py-3 md:w-[min(1240px,calc(100vw-48px))] xl:grid-cols-[auto_1fr_auto] xl:gap-4 xl:py-4">
           <Link href="/" className="flex min-w-0 flex-col" onClick={closeMenu}>
             <span className="text-[10px] uppercase tracking-[0.35em] text-champagne md:text-[11px]">
               {site.brandNameZh}
@@ -53,6 +53,14 @@ export function SiteHeader() {
           </nav>
 
           <div className="flex items-center gap-2 xl:justify-self-end">
+            <div className="mobile-header-actions">
+              <a href={`https://line.me/R/ti/p/~${contact.line}`} className="mobile-header-actions__cta">
+                LINE
+              </a>
+              <Link href="/order" className="mobile-header-actions__cta mobile-header-actions__cta--primary">
+                下單
+              </Link>
+            </div>
             <Link
               href="/order"
               className="hidden rounded-full border border-champagne/40 bg-ink px-5 py-3 text-sm text-pearl shadow-glass transition hover:-translate-y-0.5 xl:inline-flex"
@@ -62,12 +70,24 @@ export function SiteHeader() {
             <button
               type="button"
               onClick={() => setIsOpen(true)}
-              className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-champagne/25 bg-white/70 text-ink shadow-glass transition active:scale-[0.98] xl:hidden"
+              className="mobile-menu-trigger inline-flex h-11 w-11 items-center justify-center rounded-full border border-champagne/25 bg-white/70 text-ink shadow-glass transition active:scale-[0.98] xl:hidden"
               aria-label="開啟選單"
               aria-expanded={isOpen}
             >
               <Menu className="h-5 w-5" />
             </button>
+          </div>
+        </div>
+
+        <div className="mobile-nav-strip">
+          <div className="mobile-nav-strip__scroller">
+            {navItems
+              .filter((item) => item.href !== "/" && item.href !== "/order")
+              .map((item) => (
+                <Link key={item.href} href={item.href} className="mobile-nav-strip__chip">
+                  {item.label}
+                </Link>
+              ))}
           </div>
         </div>
       </header>
@@ -127,18 +147,14 @@ export function SiteHeader() {
       </div>
 
       <div className="mobile-dock xl:hidden">
-        <Link href="/collections" className="mobile-dock__item">
-          <ShoppingBag className="h-4 w-4" />
-          <span>商品</span>
-        </Link>
-        <Link href="/order" className="mobile-dock__item mobile-dock__item--primary">
-          <Package2 className="h-4 w-4" />
-          <span>下單</span>
-        </Link>
         <a href={`https://line.me/R/ti/p/~${contact.line}`} className="mobile-dock__item">
           <MessageCircleMore className="h-4 w-4" />
-          <span>LINE</span>
+          <span>LINE 諮詢</span>
         </a>
+        <Link href="/order" className="mobile-dock__item mobile-dock__item--primary">
+          <Package2 className="h-4 w-4" />
+          <span>立即下單</span>
+        </Link>
       </div>
     </>
   );

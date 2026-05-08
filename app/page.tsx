@@ -35,25 +35,25 @@ export default function HomePage() {
         </div>
       </aside>
 
-      <section className="shell grid items-start gap-8 py-5 md:gap-10 md:py-10 lg:min-h-[calc(100vh-110px)] lg:grid-cols-[0.94fr_1.06fr] lg:gap-8 lg:pt-6">
-        <FadeIn className="space-y-6 pt-1 md:space-y-10 lg:flex lg:min-h-[calc(100vh-150px)] lg:flex-col lg:justify-center lg:pt-0">
+      <section className="home-hero shell grid items-start gap-8 py-5 md:gap-10 md:py-10 lg:min-h-[calc(100vh-110px)] lg:grid-cols-[0.94fr_1.06fr] lg:gap-8 lg:pt-6">
+        <FadeIn className="home-hero__copy space-y-6 pt-1 md:space-y-10 lg:flex lg:min-h-[calc(100vh-150px)] lg:flex-col lg:justify-center lg:pt-0">
           <div className="space-y-4 md:space-y-5">
             <p className="text-[11px] uppercase tracking-[0.28em] text-champagne md:text-xs md:tracking-[0.38em]">{site.englishSlogan}</p>
-            <h1 className="max-w-3xl font-display text-[2.7rem] leading-[0.92] tracking-[-0.02em] text-ink sm:text-[3.3rem] md:text-7xl md:tracking-normal">
+            <h1 className="home-hero__title max-w-3xl font-display text-[2.7rem] leading-[0.92] tracking-[-0.02em] text-ink sm:text-[3.3rem] md:text-7xl md:tracking-normal">
               讓燕禮回到應有的質地，
               <br />
               在日常與贈禮之間，安靜發光。
             </h1>
-            <p className="max-w-2xl text-[0.98rem] leading-7 text-ink/65 md:text-lg md:leading-8">
+            <p className="home-hero__body max-w-2xl text-[0.98rem] leading-7 text-ink/65 md:text-lg md:leading-8">
               以奶油白、香檳金與留白構成品牌語境，將燕窩、節慶贈禮與客製禮盒整理成更從容、
               更細緻的收藏式體驗。
             </p>
           </div>
-          <div className="grid gap-3 sm:flex sm:flex-wrap sm:gap-4">
+          <div className="home-hero__actions grid gap-3 sm:flex sm:flex-wrap sm:gap-4">
             <Link href="/collections" className="hero-button-dark min-h-[52px] justify-center px-7">探索商品系列</Link>
             <Link href="/order" className="hero-button-light min-h-[52px] justify-center px-7">立即下單</Link>
           </div>
-          <div className="grid gap-3 sm:grid-cols-3 sm:gap-4">
+          <div className="home-hero__meta grid gap-3 sm:grid-cols-3 sm:gap-4">
             {[
               { label: "精品主軸", value: "Quiet Luxury" },
               { label: "品牌顧問", value: contact.name },
@@ -70,8 +70,8 @@ export default function HomePage() {
             <span className="uppercase tracking-[0.24em]">Scroll to discover</span>
           </div>
         </FadeIn>
-        <FadeIn delay={0.08} className="grid gap-4 md:gap-6 lg:grid-rows-[minmax(0,1fr)_minmax(148px,188px)] lg:self-center">
-          <div className="glass-panel overflow-hidden rounded-[2rem] shadow-[0_24px_55px_rgba(29,19,12,0.15)]">
+        <FadeIn delay={0.08} className="home-hero__media grid gap-4 md:gap-6 lg:grid-rows-[minmax(0,1fr)_minmax(148px,188px)] lg:self-center">
+          <div className="home-hero__video glass-panel overflow-hidden rounded-[2rem] shadow-[0_24px_55px_rgba(29,19,12,0.15)]">
             <video
               controls
               playsInline
@@ -81,7 +81,7 @@ export default function HomePage() {
               <source src={withBasePath("/assets/video/hero-film.mp4")} type="video/mp4" />
             </video>
           </div>
-          <div className="glass-panel relative overflow-hidden rounded-[2rem]">
+          <div className="home-hero__mood glass-panel relative overflow-hidden rounded-[2rem]">
             <AutoImageRotator
               images={featured.flatMap((product) => product.images)}
               alt="Maison Aurelia signature selections"
@@ -219,7 +219,7 @@ export default function HomePage() {
             title="所有細膩的風味與質地，都有它被好好對待的來處。"
             description="從產地採摘到後續整理，每一道工序都影響著最終入口的純淨與層次。"
           />
-          <div className="grid gap-3 sm:grid-cols-2 md:gap-4">
+          <div className="origin-atelier-grid grid gap-3 sm:grid-cols-2 md:gap-4">
             {productContent.factoryGallery.slice(0, 4).map((image) => (
               <div key={image} className="relative aspect-[4/3] overflow-hidden rounded-3xl">
                 <Image src={withBasePath(image)} alt="origin atelier" fill className="object-cover" />

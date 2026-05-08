@@ -26,22 +26,34 @@ export default function ContactPage() {
             </p>
           </div>
         </div>
-        <div className="glass-panel grid gap-5 p-5 md:p-8">
+        <div className="contact-concierge glass-panel grid gap-5 p-5 md:p-8">
           {[
-            ["姓名", contact.name],
-            ["職稱", contact.title],
-            ["電話", contact.phone],
-            ["Email", contact.email],
-            ["LINE", contact.line],
-            ["Instagram", contact.instagram],
-            ["地址", contact.address],
-            ["營業時間", contact.businessHours]
-          ].map(([label, value]) => (
-            <div key={label} className="border-b border-mist/40 pb-4 last:border-none">
-              <p className="text-xs uppercase tracking-[0.28em] text-champagne">{label}</p>
-              <p className="mt-2 text-base text-ink/75">{value}</p>
-            </div>
-          ))}
+            ["姓名", contact.name, ""],
+            ["職稱", contact.title, ""],
+            ["電話", contact.phone, `tel:${contact.phone.replace(/\s+/g, "")}`],
+            ["Email", contact.email, `mailto:${contact.email}`],
+            ["LINE", contact.line, `https://line.me/R/ti/p/~${contact.line}`],
+            ["Instagram", contact.instagram, ""],
+            ["地址", contact.address, ""],
+            ["營業時間", contact.businessHours, ""]
+          ].map(([label, value, href]) => {
+            const content = (
+              <>
+                <p className="text-xs uppercase tracking-[0.28em] text-champagne">{label}</p>
+                <p className="mt-2 text-base text-ink/75">{value}</p>
+              </>
+            );
+
+            return href ? (
+              <a key={label} href={href} className="contact-row border-b border-mist/40 pb-4 last:border-none">
+                {content}
+              </a>
+            ) : (
+              <div key={label} className="contact-row border-b border-mist/40 pb-4 last:border-none">
+                {content}
+              </div>
+            );
+          })}
         </div>
       </div>
     </main>
