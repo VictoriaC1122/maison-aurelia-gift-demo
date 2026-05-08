@@ -72,7 +72,7 @@ export default function HomePage() {
             {categories.map((category) => (
               <Link key={category.slug} href={`/collections/${category.slug}`} className="glass-panel group overflow-hidden">
                 <div className="relative aspect-[4/5]">
-                  <Image src={category.coverImage} alt={category.name} fill className="object-cover transition duration-500 group-hover:scale-[1.04]" />
+                  <Image src={withBasePath(category.coverImage)} alt={category.name} fill className="object-cover transition duration-500 group-hover:scale-[1.04]" />
                 </div>
                 <div className="space-y-2 p-5">
                   <p className="text-xs uppercase tracking-[0.28em] text-champagne">{category.englishName}</p>
