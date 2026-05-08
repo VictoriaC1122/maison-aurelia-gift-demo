@@ -4,6 +4,7 @@ import { FadeIn } from "@/components/motion";
 import { ProductCard } from "@/components/product-card";
 import { SectionHeading } from "@/components/section-heading";
 import { contact, getCategories, getFeaturedProducts, productContent, site } from "@/lib/content";
+import { withBasePath } from "@/lib/utils";
 
 export default function HomePage() {
   const categories = getCategories();
@@ -44,11 +45,11 @@ export default function HomePage() {
         </FadeIn>
         <FadeIn delay={0.08} className="grid gap-6">
           <div className="glass-panel relative aspect-[1/1.16] overflow-hidden">
-            <Image src="/assets/brand/brand-card.jpg" alt="Maison Aurelia brand card" fill className="object-cover" />
+            <Image src={withBasePath("/assets/brand/brand-card.jpg")} alt="Maison Aurelia brand card" fill className="object-cover" />
           </div>
           <div className="glass-panel overflow-hidden">
-            <video controls playsInline poster="/assets/brand/brand-card.jpg" className="w-full object-cover">
-              <source src="/assets/video/hero-film.mp4" type="video/mp4" />
+            <video controls playsInline poster={withBasePath("/assets/brand/brand-card.jpg")} className="w-full object-cover">
+              <source src={withBasePath("/assets/video/hero-film.mp4")} type="video/mp4" />
             </video>
           </div>
         </FadeIn>
@@ -108,7 +109,7 @@ export default function HomePage() {
           <div className="grid gap-4 sm:grid-cols-2">
             {productContent.factoryGallery.slice(0, 4).map((image) => (
               <div key={image} className="relative aspect-[4/3] overflow-hidden rounded-3xl">
-                <Image src={image} alt="origin atelier" fill className="object-cover" />
+                <Image src={withBasePath(image)} alt="origin atelier" fill className="object-cover" />
               </div>
             ))}
           </div>

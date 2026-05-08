@@ -1,14 +1,14 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Product } from "@/lib/types";
-import { formatCurrency } from "@/lib/utils";
+import { formatCurrency, withBasePath } from "@/lib/utils";
 
 export function ProductCard({ product }: { product: Product }) {
   return (
     <article className="group overflow-hidden rounded-luxe border border-white/50 bg-white/70 shadow-glass backdrop-blur">
       <div className="relative aspect-[4/4.6] overflow-hidden">
         <Image
-          src={product.images[0]}
+          src={withBasePath(product.images[0])}
           alt={product.nameZh}
           fill
           className="object-cover transition duration-500 group-hover:scale-[1.03]"

@@ -4,6 +4,15 @@ export function cn(...values: Array<string | false | null | undefined>) {
   return clsx(values);
 }
 
+export function withBasePath(path: string) {
+  const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+  if (!path.startsWith("/")) {
+    return path;
+  }
+
+  return `${basePath}${path}`;
+}
+
 export function formatCurrency(value: string) {
   if (!value) {
     return "Price on request";

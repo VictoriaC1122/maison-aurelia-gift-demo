@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getProduct, getProducts } from "@/lib/content";
-import { formatCurrency } from "@/lib/utils";
+import { formatCurrency, withBasePath } from "@/lib/utils";
 
 export function generateStaticParams() {
   return getProducts().map((product) => ({ slug: product.slug }));
@@ -21,16 +21,16 @@ export default async function ProductDetailPage({
     <main className="shell space-y-10 py-16">
       <section className="grid gap-8 lg:grid-cols-[1.05fr_0.95fr]">
         <div className="grid gap-4">
-          <div className="glass-panel relative aspect-[4/4.8] overflow-hidden">
-            <Image src={product.images[0]} alt={product.nameZh} fill className="object-cover" />
-          </div>
-          <div className="grid gap-4 sm:grid-cols-3">
-            {product.images.slice(1).map((image) => (
-              <div key={image} className="glass-panel relative aspect-square overflow-hidden">
-                <Image src={image} alt={product.nameZh} fill className="object-cover" />
-              </div>
-            ))}
-          </div>
+        <div className="glass-panel relative aspect-[4/4.8] overflow-hidden">
+          <Image src={withBasePath(product.images[0])} alt={product.nameZh} fill className="object-cover" />
+        </div>
+        <div className="grid gap-4 sm:grid-cols-3">
+          {product.images.slice(1).map((image) => (
+            <div key={image} className="glass-panel relative aspect-square overflow-hidden">
+              <Image src={withBasePath(image)} alt={product.nameZh} fill className="object-cover" />
+            </div>
+          ))}
+        </div>
         </div>
         <div className="glass-panel space-y-6 p-8">
           <div className="space-y-3">

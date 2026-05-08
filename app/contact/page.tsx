@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { SectionHeading } from "@/components/section-heading";
 import { contact } from "@/lib/content";
+import { withBasePath } from "@/lib/utils";
 
 export default function ContactPage() {
   return (
@@ -8,7 +9,7 @@ export default function ContactPage() {
       <SectionHeading eyebrow="Contact" title="聯絡我們" description={contact.notes} />
       <div className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
         <div className="glass-panel relative min-h-[420px] overflow-hidden">
-          <Image src="/assets/brand/brand-card.jpg" alt="contact card" fill className="object-cover" />
+          <Image src={withBasePath("/assets/brand/brand-card.jpg")} alt="contact card" fill className="object-cover" />
         </div>
         <div className="glass-panel grid gap-5 p-8">
           {[

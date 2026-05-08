@@ -2,6 +2,7 @@ import Image from "next/image";
 import { FadeIn } from "@/components/motion";
 import { SectionHeading } from "@/components/section-heading";
 import { site } from "@/lib/content";
+import { withBasePath } from "@/lib/utils";
 
 export default function AboutPage() {
   return (
@@ -16,7 +17,7 @@ export default function AboutPage() {
           <p className="mt-6 text-sm uppercase tracking-[0.3em] text-champagne">{site.englishSlogan}</p>
         </FadeIn>
         <FadeIn delay={0.08} className="glass-panel relative min-h-[420px] overflow-hidden">
-          <Image src="/assets/brand/brand-card.jpg" alt="brand card" fill className="object-cover" />
+          <Image src={withBasePath("/assets/brand/brand-card.jpg")} alt="brand card" fill className="object-cover" />
         </FadeIn>
       </div>
     </main>

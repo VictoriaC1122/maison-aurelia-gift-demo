@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { ProductCard } from "@/components/product-card";
 import { SectionHeading } from "@/components/section-heading";
 import { getCategories, getCategory, getProductsByCategory, productContent } from "@/lib/content";
+import { withBasePath } from "@/lib/utils";
 
 export function generateStaticParams() {
   return getCategories().map((category) => ({ slug: category.slug }));
@@ -29,7 +30,7 @@ export default async function CollectionDetailPage({
           <p className="max-w-2xl text-base leading-8 text-ink/65">{category.description}</p>
         </div>
         <div className="glass-panel relative min-h-[360px] overflow-hidden">
-          <Image src={category.coverImage} alt={category.name} fill className="object-cover" />
+          <Image src={withBasePath(category.coverImage)} alt={category.name} fill className="object-cover" />
         </div>
       </div>
 
@@ -39,7 +40,7 @@ export default async function CollectionDetailPage({
           <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
             {productContent.factoryGallery.map((image) => (
               <div key={image} className="glass-panel relative aspect-[4/3] overflow-hidden">
-                <Image src={image} alt="factory image" fill className="object-cover" />
+                <Image src={withBasePath(image)} alt="factory image" fill className="object-cover" />
               </div>
             ))}
           </div>
