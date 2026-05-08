@@ -15,6 +15,8 @@ body {
   @apply bg-cream bg-hero-glow font-body text-ink antialiased;
   overflow-x: hidden;
   text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body::before {
@@ -74,6 +76,10 @@ body::before {
     padding-bottom: 5.8rem;
   }
 
+  html {
+    font-size: 15px;
+  }
+
   .shell {
     width: min(1240px, calc(100vw - 20px));
   }
@@ -85,5 +91,7 @@ body::before {
   .hero-button-dark,
   .hero-button-light {
     width: 100%;
+    font-size: 0.95rem;
+    letter-spacing: 0.01em;
   }
 }

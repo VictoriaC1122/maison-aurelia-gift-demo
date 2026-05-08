@@ -38,13 +38,13 @@ export default function HomePage() {
       <section className="shell grid items-start gap-8 py-5 md:gap-10 md:py-10 lg:grid-cols-[1.05fr_0.95fr] lg:pt-6">
         <FadeIn className="space-y-6 pt-1 md:space-y-10 lg:pt-0">
           <div className="space-y-4 md:space-y-5">
-            <p className="text-xs uppercase tracking-[0.38em] text-champagne">{site.englishSlogan}</p>
-            <h1 className="max-w-3xl font-display text-[2.9rem] leading-[0.94] text-ink sm:text-[3.45rem] md:text-7xl">
+            <p className="text-[11px] uppercase tracking-[0.28em] text-champagne md:text-xs md:tracking-[0.38em]">{site.englishSlogan}</p>
+            <h1 className="max-w-3xl font-display text-[2.7rem] leading-[0.92] tracking-[-0.02em] text-ink sm:text-[3.3rem] md:text-7xl md:tracking-normal">
               讓燕禮回到應有的質地，
               <br />
               在日常與贈禮之間，安靜發光。
             </h1>
-            <p className="max-w-2xl text-[15px] leading-7 text-ink/65 md:text-lg md:leading-8">
+            <p className="max-w-2xl text-[0.98rem] leading-7 text-ink/65 md:text-lg md:leading-8">
               以奶油白、香檳金與留白構成品牌語境，將燕窩、節慶贈禮與客製禮盒整理成更從容、
               更細緻的收藏式體驗。
             </p>
@@ -60,8 +60,8 @@ export default function HomePage() {
               { label: "LINE", value: contact.line }
             ].map((item) => (
               <div key={item.label} className="glass-panel p-4 md:p-5">
-                <p className="text-xs uppercase tracking-[0.25em] text-champagne">{item.label}</p>
-                <p className="mt-3 text-lg text-ink">{item.value}</p>
+                <p className="text-[11px] uppercase tracking-[0.22em] text-champagne md:text-xs md:tracking-[0.25em]">{item.label}</p>
+                <p className="mt-3 text-[1.08rem] leading-6 text-ink md:text-lg">{item.value}</p>
               </div>
             ))}
           </div>
@@ -81,8 +81,8 @@ export default function HomePage() {
               imageClassName="object-cover"
             />
             <div className="absolute inset-x-5 bottom-5 z-10 rounded-[1.5rem] border border-white/40 bg-[rgba(249,244,235,0.72)] p-4 backdrop-blur-xl">
-              <p className="text-[11px] uppercase tracking-[0.3em] text-champagne">Maison Moodboard</p>
-              <p className="mt-2 text-sm leading-7 text-ink/72">
+              <p className="text-[11px] uppercase tracking-[0.24em] text-champagne md:tracking-[0.3em]">Maison Moodboard</p>
+              <p className="mt-2 text-[0.95rem] leading-7 text-ink/72 md:text-sm">
                 以奶白紙紋、柔金光澤與安靜留白，描繪更克制的高端燕禮語境。
               </p>
             </div>
@@ -121,8 +121,8 @@ export default function HomePage() {
                 }
               ].map((item) => (
                 <div key={item.title} className="rounded-[1.4rem] border border-champagne/15 bg-white/55 p-4 md:p-5">
-                  <p className="font-display text-2xl text-ink">{item.title}</p>
-                  <p className="mt-2 text-sm leading-7 text-ink/58">{item.text}</p>
+                  <p className="font-display text-[1.6rem] leading-[1.08] tracking-[-0.015em] text-ink md:text-2xl md:tracking-normal">{item.title}</p>
+                  <p className="mt-2 text-[0.95rem] leading-7 text-ink/58 md:text-sm">{item.text}</p>
                 </div>
               ))}
             </div>
@@ -139,9 +139,9 @@ export default function HomePage() {
                   />
                 </div>
                 <div className="space-y-2 p-5">
-                  <p className="text-xs uppercase tracking-[0.28em] text-champagne">{category.englishName}</p>
-                  <h3 className="font-display text-3xl text-ink">{category.name}</h3>
-                  <p className="text-sm leading-7 text-ink/60">{category.description}</p>
+                  <p className="text-[11px] uppercase tracking-[0.24em] text-champagne md:text-xs md:tracking-[0.28em]">{category.englishName}</p>
+                  <h3 className="font-display text-[2rem] leading-[1.06] tracking-[-0.015em] text-ink md:text-3xl md:tracking-normal">{category.name}</h3>
+                  <p className="text-[0.95rem] leading-7 text-ink/60 md:text-sm">{category.description}</p>
                 </div>
               </Link>
             ))}
