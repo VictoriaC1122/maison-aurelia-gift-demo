@@ -5,7 +5,7 @@ import type { OrderRecord } from "@/lib/types";
 export default function AdminOrdersPage() {
   const orders = ordersData as OrderRecord[];
   return (
-    <main className="shell py-16">
+    <main className="shell py-10 md:py-16">
       <AdminOrdersClient initialOrders={orders} />
     </main>
   );

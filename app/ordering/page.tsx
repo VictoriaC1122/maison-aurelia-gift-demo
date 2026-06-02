@@ -9,13 +9,14 @@ const steps = [
 
 export default function OrderingPage() {
   return (
-    <main className="shell space-y-8 py-16">
+    <main className="shell space-y-8 py-10 md:py-16">
       <SectionHeading eyebrow="Ordering" title="訂購流程" description="從挑選品項到配送安排，讓每一步都清楚而從容。" />
-      <div className="grid gap-5 lg:grid-cols-4">
+      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
         {steps.map((step, index) => (
-          <div key={step} className="glass-panel p-6">
-            <p className="text-xs uppercase tracking-[0.32em] text-champagne">Step {index + 1}</p>
-            <p className="mt-4 text-sm leading-8 text-ink/68">{step}</p>
+          <div key={step} className="glass-panel relative overflow-hidden p-5 md:p-6">
+            <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-champagne/60 via-rosegold/30 to-transparent" />
+            <p className="text-[11px] uppercase tracking-[0.28em] text-champagne">Step {index + 1}</p>
+            <p className="mt-4 text-[0.97rem] leading-8 text-ink/68">{step}</p>
           </div>
         ))}
       </div>
