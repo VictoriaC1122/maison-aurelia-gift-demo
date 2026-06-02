@@ -108,7 +108,52 @@ export function AdminOrdersClient({ initialOrders }: { initialOrders: OrderRecor
 
       <p className="text-sm text-ink/55">{countLabel}</p>
 
-      <div className="overflow-hidden rounded-luxe border border-white/60 bg-white/75 shadow-glass">
+      <div className="grid gap-4 md:hidden">
+        {filteredOrders.map((order) => (
+          <article key={order.orderId} className="glass-panel space-y-4 p-5">
+            <div className="flex items-start justify-between gap-4">
+              <div>
+                <p className="text-[11px] uppercase tracking-[0.24em] text-champagne">{order.orderId}</p>
+                <h3 className="mt-2 font-display text-[1.55rem] leading-[1.06] text-ink">{order.productName}</h3>
+              </div>
+              <select
+                className="field min-w-[140px]"
+                value={order.status}
+                onChange={(event) => updateStatus(order.orderId, event.target.value as OrderStatus)}
+              >
+                {statuses.map((status) => (
+                  <option key={status} value={status}>
+                    {status}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="grid gap-3 text-sm text-ink/68">
+              <div className="rounded-[1.1rem] border border-champagne/12 bg-white/55 px-4 py-3">
+                <p className="text-[11px] uppercase tracking-[0.22em] text-champagne">客戶</p>
+                <p className="mt-2 text-base text-ink">{order.customerName}</p>
+                <p className="mt-1 text-sm text-ink/58">{order.phone}</p>
+              </div>
+              <div className="grid grid-cols-2 gap-3">
+                <div className="rounded-[1.1rem] border border-champagne/12 bg-white/55 px-4 py-3">
+                  <p className="text-[11px] uppercase tracking-[0.22em] text-champagne">規格</p>
+                  <p className="mt-2">{order.option}</p>
+                </div>
+                <div className="rounded-[1.1rem] border border-champagne/12 bg-white/55 px-4 py-3">
+                  <p className="text-[11px] uppercase tracking-[0.22em] text-champagne">配送日期</p>
+                  <p className="mt-2">{order.preferredDeliveryDate || "待確認"}</p>
+                </div>
+              </div>
+              <div className="rounded-[1.1rem] border border-champagne/12 bg-white/55 px-4 py-3">
+                <p className="text-[11px] uppercase tracking-[0.22em] text-champagne">建立時間</p>
+                <p className="mt-2">{formatDate(order.createdAt)}</p>
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+
+      <div className="hidden overflow-hidden rounded-luxe border border-white/60 bg-white/75 shadow-glass md:block">
         <div className="overflow-x-auto">
           <table className="min-w-full text-left text-sm">
             <thead className="bg-ink text-pearl">

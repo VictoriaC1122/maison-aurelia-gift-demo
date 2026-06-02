@@ -39,6 +39,16 @@ export default async function ProductDetailPage({
             <h1 className="font-display text-[3rem] leading-[0.96] text-ink md:text-5xl">{product.nameZh}</h1>
             <p className="text-base leading-8 text-ink/68 md:text-lg">{product.summary}</p>
           </div>
+          <div className="grid gap-3 sm:grid-cols-2">
+            <div className="rounded-[1.2rem] border border-champagne/12 bg-white/55 px-4 py-3">
+              <p className="text-[11px] uppercase tracking-[0.22em] text-champagne">系列分類</p>
+              <p className="mt-2 text-base text-ink/76">{product.category}</p>
+            </div>
+            <div className="rounded-[1.2rem] border border-champagne/12 bg-white/55 px-4 py-3">
+              <p className="text-[11px] uppercase tracking-[0.22em] text-champagne">規格資訊</p>
+              <p className="mt-2 text-base text-ink/76">{product.specification}</p>
+            </div>
+          </div>
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <span className="inline-flex w-fit rounded-full border border-champagne/30 px-4 py-2 text-sm text-ink/70">{product.specification}</span>
             <strong className="font-display text-2xl">{formatCurrency(product.price)}</strong>

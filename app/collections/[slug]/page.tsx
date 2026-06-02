@@ -29,6 +29,11 @@ export default async function CollectionDetailPage({
           <p className="text-xs uppercase tracking-[0.36em] text-champagne">{category.englishName}</p>
           <h1 className="font-display text-[3rem] leading-[0.96] text-ink md:text-7xl">{category.name}</h1>
           <p className="max-w-2xl text-base leading-8 text-ink/65">{category.description}</p>
+          {!isFactory ? (
+            <div className="inline-flex rounded-full border border-champagne/15 bg-white/62 px-4 py-2 text-[11px] uppercase tracking-[0.24em] text-champagne">
+              {products.length} 款系列商品
+            </div>
+          ) : null}
         </div>
         <div className="glass-panel relative min-h-[260px] overflow-hidden md:min-h-[360px]">
           <AutoImageRotator
