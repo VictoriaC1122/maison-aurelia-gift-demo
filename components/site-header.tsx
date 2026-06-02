@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Menu, MessageCircleMore, Package2, ShoppingBag, X } from "lucide-react";
 import { contact, site } from "@/lib/content";
 import { cn } from "@/lib/utils";
@@ -21,6 +22,7 @@ const navItems = [
 
 export function SiteHeader() {
   const [isOpen, setIsOpen] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     document.body.style.overflow = isOpen ? "hidden" : "";
@@ -46,7 +48,14 @@ export function SiteHeader() {
 
           <nav className="hidden gap-5 overflow-x-auto whitespace-nowrap pb-1 text-sm text-ink/70 xl:flex xl:items-center xl:justify-center xl:overflow-visible">
             {navItems.map((item) => (
-              <Link key={item.href} href={item.href} className="transition hover:text-ink">
+              <Link
+                key={item.href}
+                href={item.href}
+                className={cn(
+                  "rounded-full px-3 py-2 transition hover:text-ink",
+                  pathname === item.href ? "bg-white/75 text-ink shadow-[0_10px_25px_rgba(32,24,18,0.06)]" : ""
+                )}
+              >
                 {item.label}
               </Link>
             ))}
@@ -84,7 +93,11 @@ export function SiteHeader() {
             {navItems
               .filter((item) => item.href !== "/" && item.href !== "/order")
               .map((item) => (
-                <Link key={item.href} href={item.href} className="mobile-nav-strip__chip">
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={cn("mobile-nav-strip__chip", pathname === item.href ? "mobile-nav-strip__chip--active" : "")}
+                >
                   {item.label}
                 </Link>
               ))}

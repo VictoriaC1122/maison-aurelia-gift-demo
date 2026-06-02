@@ -40,6 +40,20 @@ body::before {
     @apply min-h-[52px] rounded-2xl border border-champagne/20 bg-pearl/80 px-4 py-3 text-sm text-ink outline-none transition placeholder:text-ink/35 focus:border-champagne/60 focus:ring-2 focus:ring-champagne/15;
   }
 
+  .field-group {
+    @apply space-y-2;
+  }
+
+  .field-label {
+    @apply flex items-center gap-2 text-[13px] font-medium tracking-[0.04em] text-ink;
+    opacity: 0.72;
+  }
+
+  .field-hint {
+    @apply text-[11px] font-normal tracking-[0.08em] text-ink;
+    opacity: 0.42;
+  }
+
   .glass-panel {
     @apply rounded-luxe border border-white/60 bg-white/70 shadow-glass backdrop-blur;
   }
@@ -77,6 +91,14 @@ body::before {
 }
 
 @media (min-width: 769px) {
+  .shell {
+    width: min(1240px, calc(100vw - 56px));
+  }
+
+  .glass-panel {
+    box-shadow: 0 24px 54px rgba(38, 28, 20, 0.07);
+  }
+
   .home-hero {
     gap: 2.8rem;
     padding-top: 1rem;
@@ -110,6 +132,16 @@ body::before {
   .home-hero__video video {
     aspect-ratio: 16 / 9;
     object-fit: contain;
+  }
+
+  .product-card {
+    transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
+  }
+
+  .product-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 30px 64px rgba(38, 28, 20, 0.12);
+    border-color: rgba(194, 164, 109, 0.24);
   }
 }
 
@@ -278,6 +310,19 @@ body::before {
 
   .home-hero__video-frame {
     padding: 0.45rem;
+  }
+
+  .field-group {
+    gap: 0.45rem;
+  }
+
+  .field-label {
+    font-size: 0.79rem;
+    letter-spacing: 0.05em;
+  }
+
+  .field-hint {
+    font-size: 0.68rem;
   }
 
   .product-card {
