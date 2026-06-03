@@ -20,8 +20,8 @@ export default async function ProductDetailPage({
 
   return (
     <main className="shell space-y-8 py-10 md:space-y-10 md:py-16">
-      <section className="grid gap-8 lg:grid-cols-[1.05fr_0.95fr]">
-        <div className="grid gap-4">
+      <section className="grid gap-8 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)]">
+        <div className="min-w-0 grid gap-4">
           <div className="glass-panel relative aspect-[4/4.8] overflow-hidden">
             <AutoImageRotator images={product.images} alt={product.nameZh} priority className="absolute inset-0" imageClassName="object-cover" intervalMs={4600} />
           </div>
@@ -33,10 +33,10 @@ export default async function ProductDetailPage({
             ))}
           </div>
         </div>
-        <div className="glass-panel space-y-5 p-5 md:space-y-6 md:p-8">
+        <div className="glass-panel min-w-0 space-y-5 p-5 md:space-y-6 md:p-8">
           <div className="space-y-3">
             <p className="text-xs uppercase tracking-[0.34em] text-rosegold">{product.name}</p>
-            <h1 className="font-display text-[3rem] leading-[0.96] text-ink md:text-5xl">{product.nameZh}</h1>
+            <h1 className="font-display text-[3rem] leading-[0.96] text-ink md:text-[3.6rem] lg:text-[4.2rem]">{product.nameZh}</h1>
             <p className="text-base leading-8 text-ink/68 md:text-lg">{product.summary}</p>
           </div>
           <div className="grid gap-3 sm:grid-cols-2">

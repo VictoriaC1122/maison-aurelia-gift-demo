@@ -5,7 +5,7 @@ import { formatCurrency } from "@/lib/utils";
 
 export function ProductCard({ product }: { product: Product }) {
   return (
-    <article className="product-card group flex h-full flex-col overflow-hidden rounded-luxe border border-white/50 bg-white/70 shadow-glass backdrop-blur">
+    <article className="product-card group flex h-full min-w-0 flex-col overflow-hidden rounded-luxe border border-white/50 bg-white/70 shadow-glass backdrop-blur">
       <div className="product-card__media relative aspect-[4/4.6] overflow-hidden">
         <AutoImageRotator
           images={product.images}
@@ -14,7 +14,7 @@ export function ProductCard({ product }: { product: Product }) {
           imageClassName="object-cover"
         />
       </div>
-      <div className="product-card__body flex flex-1 flex-col gap-4 p-5 md:p-6">
+      <div className="product-card__body flex min-w-0 flex-1 flex-col gap-4 p-5 md:p-6">
         <div className="space-y-2">
           <p className="text-[11px] uppercase tracking-[0.28em] text-rosegold md:text-xs md:tracking-[0.32em]">{product.name}</p>
           <h3 className="product-card__title min-h-[3.8rem] font-display text-[1.68rem] leading-[1.08] tracking-[-0.015em] text-ink md:min-h-[4.8rem] md:text-3xl md:tracking-normal">

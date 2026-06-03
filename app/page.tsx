@@ -35,11 +35,11 @@ export default function HomePage() {
         </div>
       </aside>
 
-      <section className="home-hero shell grid items-start gap-8 py-5 md:gap-10 md:py-10 lg:min-h-[calc(100vh-110px)] lg:grid-cols-[0.94fr_1.06fr] lg:gap-8 lg:pt-6">
-        <FadeIn className="home-hero__copy space-y-6 pt-1 md:space-y-10 lg:flex lg:min-h-[calc(100vh-150px)] lg:flex-col lg:justify-center lg:pt-0">
+      <section className="home-hero shell grid items-start gap-8 py-5 md:gap-10 md:py-10 lg:min-h-[calc(100vh-110px)] lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)] lg:gap-10 lg:pt-6 xl:gap-12">
+        <FadeIn className="home-hero__copy min-w-0 space-y-6 pt-1 md:space-y-10 lg:flex lg:min-h-[calc(100vh-150px)] lg:flex-col lg:justify-center lg:pt-0">
           <div className="space-y-4 md:space-y-5">
             <p className="text-[11px] uppercase tracking-[0.28em] text-champagne md:text-xs md:tracking-[0.38em]">{site.englishSlogan}</p>
-            <h1 className="home-hero__title max-w-3xl font-display text-[2.7rem] leading-[0.92] tracking-[-0.02em] text-ink sm:text-[3.3rem] md:text-7xl md:tracking-normal">
+            <h1 className="home-hero__title max-w-3xl font-display text-[2.7rem] leading-[0.92] tracking-[-0.02em] text-ink sm:text-[3.3rem] md:text-[4.35rem] lg:text-[5.15rem] xl:text-[5.7rem] md:tracking-normal">
               讓燕禮回到應有的質地，
               <br />
               在日常與贈禮之間，安靜發光。
@@ -70,7 +70,7 @@ export default function HomePage() {
             <span className="uppercase tracking-[0.24em]">Scroll to discover</span>
           </div>
         </FadeIn>
-        <FadeIn delay={0.08} className="home-hero__media grid gap-4 md:gap-6 lg:grid-rows-[minmax(0,1fr)_minmax(210px,260px)] lg:self-center">
+        <FadeIn delay={0.08} className="home-hero__media min-w-0 grid gap-4 md:gap-6 lg:grid-rows-[minmax(0,1fr)_minmax(210px,260px)] lg:self-center">
           <div className="home-hero__mood glass-panel relative overflow-hidden rounded-[2rem]">
             <AutoImageRotator
               images={featured.flatMap((product) => product.images)}
@@ -173,45 +173,45 @@ export default function HomePage() {
 
       {signatureProduct ? (
         <section className="shell py-10 md:py-14">
-          <div className="glass-panel grid gap-6 overflow-hidden p-5 md:gap-8 md:p-8 lg:grid-cols-[0.95fr_1.05fr] lg:p-10">
-            <div className="relative min-h-[280px] overflow-hidden rounded-[2rem] md:min-h-[360px]">
-              <AutoImageRotator
-                images={signatureProduct.images}
+        <div className="glass-panel grid gap-6 overflow-hidden p-5 md:gap-8 md:p-8 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:p-10">
+          <div className="relative min-h-[280px] overflow-hidden rounded-[2rem] md:min-h-[360px]">
+            <AutoImageRotator
+              images={signatureProduct.images}
                 alt={signatureProduct.nameZh}
                 priority
                 intervalMs={4800}
-                className="absolute inset-0"
-                imageClassName="object-cover"
-              />
+              className="absolute inset-0"
+              imageClassName="object-cover"
+            />
+          </div>
+          <div className="flex min-w-0 flex-col justify-center space-y-5 md:space-y-6">
+            <div className="space-y-3">
+              <p className="text-xs uppercase tracking-[0.34em] text-champagne">Signature Selection</p>
+              <h2 className="font-display text-[2.3rem] leading-tight text-ink md:text-[3rem] lg:text-[4rem] xl:text-[4.6rem]">
+                {signatureProduct.nameZh}
+              </h2>
             </div>
-              <div className="flex flex-col justify-center space-y-5 md:space-y-6">
-                <div className="space-y-3">
-                  <p className="text-xs uppercase tracking-[0.34em] text-champagne">Signature Selection</p>
-                <h2 className="font-display text-[2.3rem] leading-tight text-ink md:text-6xl">
-                  {signatureProduct.nameZh}
-                </h2>
-                <p className="text-base leading-8 text-ink/65">
-                  {signatureProduct.summary}
-                </p>
-              </div>
-              <div className="grid gap-3 sm:grid-cols-3 md:gap-4">
-                {signatureProduct.features.map((feature) => (
-                  <div key={feature} className="rounded-[1.4rem] border border-champagne/15 bg-white/60 p-4 text-sm leading-7 text-ink/60">
-                    {feature}
-                  </div>
-                ))}
-              </div>
-              <div className="grid gap-3 sm:flex sm:flex-wrap sm:gap-4">
-                <Link href={`/products/${signatureProduct.slug}`} className="hero-button-dark min-h-[52px] justify-center">
-                  了解此系列
-                </Link>
-                <Link href="/custom" className="hero-button-light min-h-[52px] justify-center">
-                  洽詢客製禮盒
-                </Link>
-              </div>
+            <p className="text-base leading-8 text-ink/65">
+              {signatureProduct.summary}
+            </p>
+            <div className="grid gap-3 sm:grid-cols-3 md:gap-4">
+              {signatureProduct.features.map((feature) => (
+                <div key={feature} className="rounded-[1.4rem] border border-champagne/15 bg-white/60 p-4 text-sm leading-7 text-ink/60">
+                  {feature}
+                </div>
+              ))}
+            </div>
+            <div className="grid gap-3 sm:flex sm:flex-wrap sm:gap-4">
+              <Link href={`/products/${signatureProduct.slug}`} className="hero-button-dark min-h-[52px] justify-center">
+                了解此系列
+              </Link>
+              <Link href="/custom" className="hero-button-light min-h-[52px] justify-center">
+                洽詢客製禮盒
+              </Link>
             </div>
           </div>
-        </section>
+        </div>
+      </section>
       ) : null}
 
       <section className="shell py-10 md:py-14">

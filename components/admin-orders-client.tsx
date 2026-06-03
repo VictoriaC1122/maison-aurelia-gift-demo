@@ -84,14 +84,14 @@ export function AdminOrdersClient({ initialOrders }: { initialOrders: OrderRecor
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-col gap-4 rounded-luxe border border-white/60 bg-white/70 p-6 shadow-glass backdrop-blur md:flex-row md:items-center md:justify-between">
+      <div className="flex flex-col gap-4 rounded-luxe border border-white/60 bg-white/70 p-6 shadow-glass backdrop-blur lg:flex-row lg:items-center lg:justify-between">
         <div>
           <p className="text-xs uppercase tracking-[0.3em] text-champagne">Order Ledger</p>
           <h2 className="font-display text-3xl text-ink">訂單一覽</h2>
         </div>
         <div className="flex flex-col gap-3 md:flex-row md:items-center">
           <input
-            className="field min-w-[280px]"
+            className="field w-full md:min-w-0 md:flex-1 lg:w-[320px] lg:flex-none"
             placeholder="搜尋姓名、電話、商品"
             value={query}
             onChange={(event) => setQuery(event.target.value)}
@@ -99,7 +99,7 @@ export function AdminOrdersClient({ initialOrders }: { initialOrders: OrderRecor
           <button
             type="button"
             onClick={exportCsv}
-            className="inline-flex rounded-full border border-champagne/30 px-5 py-3 text-sm text-ink transition hover:-translate-y-0.5"
+            className="inline-flex min-h-[48px] items-center justify-center rounded-full border border-champagne/30 px-5 py-3 text-sm text-ink transition hover:-translate-y-0.5"
           >
             匯出 CSV
           </button>

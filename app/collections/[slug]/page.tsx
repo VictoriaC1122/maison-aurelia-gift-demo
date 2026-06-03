@@ -24,10 +24,10 @@ export default async function CollectionDetailPage({
 
   return (
     <main className="shell space-y-10 py-10 md:py-16">
-      <div className="grid gap-6 lg:grid-cols-[1.05fr_0.95fr]">
-        <div className="space-y-5">
+      <div className="grid gap-6 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:items-end">
+        <div className="min-w-0 space-y-5">
           <p className="text-xs uppercase tracking-[0.36em] text-champagne">{category.englishName}</p>
-          <h1 className="font-display text-[3rem] leading-[0.96] text-ink md:text-7xl">{category.name}</h1>
+          <h1 className="font-display text-[3rem] leading-[0.96] text-ink md:text-[4.2rem] lg:text-[5rem] xl:text-[5.8rem]">{category.name}</h1>
           <p className="max-w-2xl text-base leading-8 text-ink/65">{category.description}</p>
           {!isFactory ? (
             <div className="inline-flex rounded-full border border-champagne/15 bg-white/62 px-4 py-2 text-[11px] uppercase tracking-[0.24em] text-champagne">
