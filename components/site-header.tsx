@@ -21,11 +21,12 @@ const navItems = [
 
 export function SiteHeader() {
   const pathname = usePathname();
+  const isActiveLink = (href: string) => (href === "/" ? pathname === href : pathname === href || pathname.startsWith(`${href}/`));
 
   return (
     <>
       <header className="sticky top-0 z-50 border-b border-white/40 bg-pearl/78 backdrop-blur-2xl">
-        <div className="mobile-header-main mx-auto grid w-[min(1240px,calc(100vw-24px))] grid-cols-[1fr_auto] items-center gap-3 py-3 md:w-[min(1240px,calc(100vw-48px))] lg:grid-cols-[auto_1fr_auto] lg:gap-5 lg:py-4">
+        <div className="mobile-header-main mx-auto grid w-[min(1240px,calc(100vw-24px))] grid-cols-[1fr_auto] items-center gap-3 py-3 md:w-[min(1240px,calc(100vw-48px))] xl:grid-cols-[auto_1fr_auto] xl:gap-5 xl:py-4">
           <Link href="/" className="flex min-w-0 flex-col">
             <span className="text-[10px] uppercase tracking-[0.35em] text-champagne md:text-[11px]">
               {site.brandNameZh}
@@ -33,14 +34,15 @@ export function SiteHeader() {
             <span className="truncate font-display text-lg text-ink md:text-2xl">{site.brandName}</span>
           </Link>
 
-          <nav className="hidden min-w-0 gap-3 overflow-x-auto whitespace-nowrap pb-1 text-sm text-ink/70 lg:flex lg:items-center lg:justify-center lg:overflow-visible xl:gap-5">
+          <nav aria-label="主要導覽" className="hidden min-w-0 gap-3 overflow-x-auto whitespace-nowrap pb-1 text-sm text-ink/70 xl:flex xl:items-center xl:justify-center xl:overflow-visible xl:gap-5">
             {navItems.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
+                aria-current={isActiveLink(item.href) ? "page" : undefined}
                 className={cn(
                   "rounded-full px-3 py-2 transition hover:text-ink xl:px-3.5",
-                  pathname === item.href ? "bg-white/75 text-ink shadow-[0_10px_25px_rgba(32,24,18,0.06)]" : ""
+                  isActiveLink(item.href) ? "bg-white/75 text-ink shadow-[0_10px_25px_rgba(32,24,18,0.06)]" : ""
                 )}
               >
                 {item.label}
@@ -49,7 +51,7 @@ export function SiteHeader() {
           </nav>
 
           <div className="flex items-center gap-2 lg:justify-self-end">
-            <div className="mobile-header-actions lg:hidden">
+            <div className="mobile-header-actions xl:hidden">
               <a href={`https://line.me/R/ti/p/~${contact.line}`} className="mobile-header-actions__cta">
                 LINE
               </a>
@@ -59,14 +61,14 @@ export function SiteHeader() {
             </div>
             <Link
               href="/order"
-              className="hidden rounded-full border border-champagne/40 bg-ink px-5 py-3 text-sm text-pearl shadow-glass transition hover:-translate-y-0.5 lg:inline-flex"
+              className="hidden rounded-full border border-champagne/40 bg-ink px-5 py-3 text-sm text-pearl shadow-glass transition hover:-translate-y-0.5 xl:inline-flex"
             >
               開始下單
             </Link>
           </div>
         </div>
 
-        <div className="mobile-nav-strip lg:hidden">
+        <div className="mobile-nav-strip xl:hidden">
           <div className="mobile-nav-strip__scroller">
             {navItems
               .filter((item) => item.href !== "/" && item.href !== "/order")
@@ -74,7 +76,8 @@ export function SiteHeader() {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={cn("mobile-nav-strip__chip", pathname === item.href ? "mobile-nav-strip__chip--active" : "")}
+                  aria-current={isActiveLink(item.href) ? "page" : undefined}
+                  className={cn("mobile-nav-strip__chip", isActiveLink(item.href) ? "mobile-nav-strip__chip--active" : "")}
                 >
                   {item.label}
                 </Link>

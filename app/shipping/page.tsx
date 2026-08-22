@@ -1,10 +1,17 @@
 import { SectionHeading } from "@/components/section-heading";
 import { site } from "@/lib/content";
+import { buildMetadata } from "@/lib/seo";
+
+export const metadata = buildMetadata({
+  title: "配送與運費",
+  description: "查看 Maison Aurelia 的宅配運費、免運門檻與企業多點配送安排。",
+  path: "/shipping"
+});
 
 export default function ShippingPage() {
   return (
-    <main className="shell space-y-8 py-10 md:py-16">
-      <SectionHeading eyebrow="Shipping" title="配送與運費" description="依收件地區、訂單內容與指定時段安排配送，讓禮意穩妥送達。" />
+    <main id="main-content" className="shell space-y-8 py-10 md:py-16">
+      <SectionHeading as="h1" eyebrow="Shipping" title="配送與運費" description="依收件地區、訂單內容與指定時段安排配送，讓禮意穩妥送達。" />
       <div className="glass-panel grid gap-4 p-5 md:grid-cols-3 md:gap-6 md:p-8">
         <div className="rounded-[1.35rem] border border-champagne/12 bg-white/58 p-4 md:p-5">
           <p className="text-[11px] uppercase tracking-[0.28em] text-champagne">Standard</p>

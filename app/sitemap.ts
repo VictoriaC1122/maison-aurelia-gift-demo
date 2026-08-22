@@ -1,10 +1,10 @@
 import type { MetadataRoute } from "next";
 import { getCategories, getProducts } from "@/lib/content";
+import { absoluteSiteUrl } from "@/lib/seo";
 
 export const dynamic = "force-static";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const base = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
   const staticRoutes = [
     "",
     "/about",
@@ -15,18 +15,17 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/shipping",
     "/faq",
     "/contact",
-    "/order",
-    "/admin/orders"
+    "/order"
   ];
 
   return [
-    ...staticRoutes.map((route) => ({ url: `${base}${route}`, lastModified: new Date() })),
+    ...staticRoutes.map((route) => ({ url: absoluteSiteUrl(route || "/"), lastModified: new Date() })),
     ...getCategories().map((category) => ({
-      url: `${base}/collections/${category.slug}`,
+      url: absoluteSiteUrl(`/collections/${category.slug}`),
       lastModified: new Date()
     })),
     ...getProducts().map((product) => ({
-      url: `${base}/products/${product.slug}`,
+      url: absoluteSiteUrl(`/products/${product.slug}`),
       lastModified: new Date()
     }))
   ];

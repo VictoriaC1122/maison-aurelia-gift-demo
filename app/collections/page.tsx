@@ -2,11 +2,18 @@ import Link from "next/link";
 import { AutoImageRotator } from "@/components/auto-image-rotator";
 import { SectionHeading } from "@/components/section-heading";
 import { getCategories, getProductsByCategory } from "@/lib/content";
+import { buildMetadata } from "@/lib/seo";
+
+export const metadata = buildMetadata({
+  title: "商品系列",
+  description: "依系列快速瀏覽 Maison Aurelia 的本養、深養與產地故事內容。",
+  path: "/collections"
+});
 
 export default function CollectionsPage() {
   return (
-    <main className="shell space-y-8 py-10 md:py-16">
-      <SectionHeading eyebrow="Collections" title="商品系列" description="依資料夾自動整理系列與來源內容；後續你可以直接編修 `data/products.json` 補齊名稱與售價。" />
+    <main id="main-content" className="shell space-y-8 py-10 md:py-16">
+      <SectionHeading as="h1" eyebrow="Collections" title="商品系列" description="依資料夾自動整理系列與來源內容；後續你可以直接編修 `data/products.json` 補齊名稱與售價。" />
       <div className="grid gap-4 md:grid-cols-3">
         {[
           { label: "系列", value: String(getCategories().length) },
@@ -28,6 +35,7 @@ export default function CollectionsPage() {
                 alt={category.name}
                 className="absolute inset-0 transition duration-500 group-hover:scale-[1.03]"
                 imageClassName="object-cover"
+                sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 380px"
               />
             </div>
             <div className="space-y-2 p-5 md:p-6">

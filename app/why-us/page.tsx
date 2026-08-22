@@ -1,4 +1,5 @@
 import { SectionHeading } from "@/components/section-heading";
+import { buildMetadata } from "@/lib/seo";
 
 const reasons = [
   {
@@ -15,10 +16,17 @@ const reasons = [
   }
 ];
 
+export const metadata = buildMetadata({
+  title: "品牌理念",
+  description: "了解 Maison Aurelia 如何用來源透明、送禮節奏與精品視覺語言建立品牌信任。",
+  path: "/why-us"
+});
+
 export default function WhyUsPage() {
   return (
-    <main className="shell space-y-8 py-10 md:py-16">
+    <main id="main-content" className="shell space-y-8 py-10 md:py-16">
       <SectionHeading
+        as="h1"
         eyebrow="Why Us"
         title="品牌理念"
         description="真正令人留下印象的，不只是外觀，而是每一處細節都被照顧得剛剛好。"

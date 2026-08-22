@@ -2,13 +2,20 @@ import { Suspense } from "react";
 import { SectionHeading } from "@/components/section-heading";
 import { OrderForm } from "@/components/order-form";
 import { getProducts } from "@/lib/content";
+import { buildMetadata } from "@/lib/seo";
+
+export const metadata = buildMetadata({
+  title: "下單表單",
+  description: "填寫收件與商品資訊，提交 Maison Aurelia 的燕禮詢價與下單需求。",
+  path: "/order"
+});
 
 export default function OrderPage() {
   const products = getProducts();
 
   return (
-    <main className="shell space-y-8 py-10 md:py-16">
-      <SectionHeading eyebrow="Order Form" title="下單表單" description="留下收件與品項資訊後，我們會再與你確認細節與配送安排。" />
+    <main id="main-content" className="shell space-y-8 py-10 md:py-16">
+      <SectionHeading as="h1" eyebrow="Order Form" title="下單表單" description="留下收件與品項資訊後，我們會再與你確認細節與配送安排。" />
       <div className="grid gap-4 md:grid-cols-3">
         {[
           { label: "步驟一", text: "確認系列與規格" },

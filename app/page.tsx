@@ -4,17 +4,39 @@ import { AutoImageRotator } from "@/components/auto-image-rotator";
 import { FadeIn } from "@/components/motion";
 import { ProductCard } from "@/components/product-card";
 import { SectionHeading } from "@/components/section-heading";
+import { StructuredData } from "@/components/structured-data";
 import { contact, getCategories, getFeaturedProducts, getProductsByCategory, productContent, site } from "@/lib/content";
+import { absoluteSiteUrl, buildMetadata } from "@/lib/seo";
 import { withBasePath } from "@/lib/utils";
+
+export const metadata = buildMetadata({
+  title: site.metaTitle,
+  description: site.metaDescription,
+  path: "/"
+});
 
 export default function HomePage() {
   const categories = getCategories();
   const featured = getFeaturedProducts();
   const signatureProduct = featured[0];
+  const homeSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    name: site.metaTitle,
+    description: site.metaDescription,
+    url: absoluteSiteUrl("/"),
+    primaryImageOfPage: absoluteSiteUrl(site.ogImage),
+    mainEntity: featured.map((product) => ({
+      "@type": "Product",
+      name: product.nameZh,
+      url: absoluteSiteUrl(`/products/${product.slug}`)
+    }))
+  };
 
   return (
-    <main className="relative pb-8 md:pb-20">
-      <aside className="fixed right-4 top-1/2 z-30 hidden -translate-y-1/2 xl:block">
+    <main id="main-content" className="relative pb-8 md:pb-20">
+      <StructuredData data={homeSchema} />
+      <aside className="fixed right-4 top-1/2 z-30 hidden -translate-y-1/2 2xl:block">
         <div className="glass-panel flex flex-col items-center gap-5 px-4 py-6">
           <span className="text-[11px] uppercase tracking-[0.32em] text-champagne [writing-mode:vertical-rl]">
             Concierge
@@ -35,11 +57,11 @@ export default function HomePage() {
         </div>
       </aside>
 
-      <section className="home-hero shell grid items-start gap-8 py-5 md:gap-10 md:py-10 lg:min-h-[calc(100vh-110px)] lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)] lg:gap-10 lg:pt-6 xl:gap-12">
-        <FadeIn className="home-hero__copy min-w-0 space-y-6 pt-1 md:space-y-10 lg:flex lg:min-h-[calc(100vh-150px)] lg:flex-col lg:justify-center lg:pt-0">
+      <section className="home-hero shell grid items-start gap-8 py-5 md:gap-10 md:py-10 lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)] lg:gap-10 lg:pt-6 xl:gap-12">
+        <FadeIn className="home-hero__copy min-w-0 space-y-6 pt-1 md:space-y-8 lg:flex lg:flex-col lg:justify-center lg:pt-0">
           <div className="space-y-4 md:space-y-5">
             <p className="text-[11px] uppercase tracking-[0.28em] text-champagne md:text-xs md:tracking-[0.38em]">{site.englishSlogan}</p>
-            <h1 className="home-hero__title max-w-3xl font-display text-[2.7rem] leading-[0.92] tracking-[-0.02em] text-ink sm:text-[3.3rem] md:text-[4.35rem] lg:text-[5.15rem] xl:text-[5.7rem] md:tracking-normal">
+            <h1 className="home-hero__title max-w-[11.2ch] font-display text-[2.7rem] leading-[0.92] tracking-[-0.02em] text-ink sm:text-[3.2rem] md:text-[3.55rem] lg:text-[4.15rem] xl:text-[4.85rem] 2xl:text-[5.15rem] md:tracking-normal">
               讓燕禮回到應有的質地，
               <br />
               在日常與贈禮之間，安靜發光。
@@ -59,7 +81,7 @@ export default function HomePage() {
               { label: "品牌顧問", value: contact.name },
               { label: "LINE", value: contact.line }
             ].map((item) => (
-              <div key={item.label} className="glass-panel p-4 md:p-5">
+              <div key={item.label} className="home-hero__meta-card glass-panel p-4 md:p-5">
                 <p className="text-[11px] uppercase tracking-[0.22em] text-champagne md:text-xs md:tracking-[0.25em]">{item.label}</p>
                 <p className="mt-3 text-[1.08rem] leading-6 text-ink md:text-lg">{item.value}</p>
               </div>
@@ -70,35 +92,35 @@ export default function HomePage() {
             <span className="uppercase tracking-[0.24em]">Scroll to discover</span>
           </div>
         </FadeIn>
-        <FadeIn delay={0.08} className="home-hero__media min-w-0 grid gap-4 md:gap-6 lg:grid-rows-[minmax(0,1fr)_minmax(210px,260px)] lg:self-center">
-          <div className="home-hero__mood glass-panel relative overflow-hidden rounded-[2rem]">
-            <AutoImageRotator
-              images={featured.flatMap((product) => product.images)}
-              alt="Maison Aurelia signature selections"
-              priority
-              intervalMs={5000}
-              className="absolute inset-0"
-              imageClassName="object-cover"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-[rgba(33,22,15,0.22)] via-transparent to-transparent" />
-            <div className="absolute inset-x-4 bottom-4 z-10 rounded-[1.35rem] border border-white/40 bg-[rgba(249,244,235,0.74)] p-4 backdrop-blur-xl md:inset-x-5 md:bottom-5 md:rounded-[1.5rem]">
-              <p className="text-[11px] uppercase tracking-[0.24em] text-champagne md:tracking-[0.3em]">Maison Moodboard</p>
-              <p className="mt-2 text-[0.95rem] leading-7 text-ink/72 md:text-sm">
-                以奶白紙紋、柔金光澤與安靜留白，描繪更克制的高端燕禮語境。
-              </p>
-            </div>
+        <FadeIn delay={0.08} className="home-hero__mood glass-panel relative min-w-0 overflow-hidden rounded-[2rem]">
+          <AutoImageRotator
+            images={featured.flatMap((product) => product.images)}
+            alt="Maison Aurelia signature selections"
+            priority
+            intervalMs={5000}
+            className="absolute inset-0"
+            imageClassName="object-cover"
+            sizes="(max-width: 768px) 100vw, (max-width: 1279px) 46vw, 560px"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-[rgba(33,22,15,0.22)] via-transparent to-transparent" />
+          <div className="absolute inset-x-4 bottom-4 z-10 rounded-[1.35rem] border border-white/40 bg-[rgba(249,244,235,0.74)] p-4 backdrop-blur-xl md:inset-x-5 md:bottom-5 md:rounded-[1.5rem]">
+            <p className="text-[11px] uppercase tracking-[0.24em] text-champagne md:tracking-[0.3em]">Maison Moodboard</p>
+            <p className="mt-2 text-[0.95rem] leading-7 text-ink/72 md:text-sm">
+              以奶白紙紋、柔金光澤與安靜留白，描繪更克制的高端燕禮語境。
+            </p>
           </div>
-          <div className="home-hero__video glass-panel overflow-hidden rounded-[2rem] shadow-[0_24px_55px_rgba(29,19,12,0.15)]">
-            <div className="home-hero__video-frame relative overflow-hidden rounded-[1.9rem] border border-[#120f0d]/5 bg-[#120f0d] p-2 md:p-3">
-              <video
-                controls
-                playsInline
-                poster={withBasePath(featured[0]?.images[0] ?? "/assets/categories/benyang/S__75194507_0.jpg")}
-                className="aspect-[16/10] w-full rounded-[1.4rem] bg-black object-contain"
-              >
-                <source src={withBasePath("/assets/video/hero-film.mp4")} type="video/mp4" />
-              </video>
-            </div>
+        </FadeIn>
+        <FadeIn delay={0.14} className="home-hero__video glass-panel min-w-0 overflow-hidden rounded-[2rem] shadow-[0_24px_55px_rgba(29,19,12,0.15)]">
+          <div className="home-hero__video-frame relative overflow-hidden rounded-[1.9rem] border border-[#120f0d]/5 bg-[#120f0d] p-2 md:p-3">
+            <video
+              controls
+              playsInline
+              poster={withBasePath(featured[0]?.images[0] ?? "/assets/categories/benyang/S__75194507_0.jpg")}
+              className="aspect-[16/10] w-full rounded-[1.4rem] bg-black object-contain"
+              aria-label="Maison Aurelia 品牌影片"
+            >
+              <source src={withBasePath("/assets/video/hero-film.mp4")} type="video/mp4" />
+            </video>
           </div>
         </FadeIn>
       </section>
@@ -144,6 +166,7 @@ export default function HomePage() {
                     alt={category.name}
                     className="absolute inset-0 transition duration-500 group-hover:scale-[1.04]"
                     imageClassName="object-cover"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1280px) 33vw, 360px"
                   />
                 </div>
                 <div className="space-y-2 p-5">
@@ -180,9 +203,10 @@ export default function HomePage() {
                 alt={signatureProduct.nameZh}
                 priority
                 intervalMs={4800}
-              className="absolute inset-0"
-              imageClassName="object-cover"
-            />
+                className="absolute inset-0"
+                imageClassName="object-cover"
+                sizes="(max-width: 1024px) 100vw, 520px"
+              />
           </div>
           <div className="flex min-w-0 flex-col justify-center space-y-5 md:space-y-6">
             <div className="space-y-3">
@@ -224,7 +248,7 @@ export default function HomePage() {
           <div className="origin-atelier-grid grid gap-3 sm:grid-cols-2 md:gap-4">
             {productContent.factoryGallery.slice(0, 4).map((image) => (
               <div key={image} className="relative aspect-[4/3] overflow-hidden rounded-3xl">
-                <Image src={withBasePath(image)} alt="origin atelier" fill className="object-cover" />
+                <Image src={withBasePath(image)} alt="origin atelier" fill sizes="(max-width: 768px) 50vw, 320px" className="object-cover" />
               </div>
             ))}
           </div>

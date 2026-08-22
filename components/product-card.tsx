@@ -12,6 +12,7 @@ export function ProductCard({ product }: { product: Product }) {
           alt={product.nameZh}
           className="absolute inset-0 transition duration-500 group-hover:scale-[1.03]"
           imageClassName="object-cover"
+          sizes="(max-width: 768px) 100vw, (max-width: 1280px) 33vw, 360px"
         />
       </div>
       <div className="product-card__body flex min-w-0 flex-1 flex-col gap-4 p-5 md:p-6">

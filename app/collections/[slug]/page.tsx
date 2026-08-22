@@ -1,13 +1,39 @@
 import { notFound } from "next/navigation";
+import type { Metadata } from "next";
 import { AutoImageRotator } from "@/components/auto-image-rotator";
 import { ProductCard } from "@/components/product-card";
 import { SectionHeading } from "@/components/section-heading";
 import { getCategories, getCategory, getProductsByCategory, productContent } from "@/lib/content";
+import { buildMetadata } from "@/lib/seo";
 import { withBasePath } from "@/lib/utils";
 import Image from "next/image";
 
 export function generateStaticParams() {
   return getCategories().map((category) => ({ slug: category.slug }));
+}
+
+export async function generateMetadata({
+  params
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const category = getCategory(slug);
+
+  if (!category) {
+    return buildMetadata({
+      title: "商品系列",
+      description: "瀏覽 Maison Aurelia 的系列內容。",
+      path: "/collections"
+    });
+  }
+
+  return buildMetadata({
+    title: category.name,
+    description: category.description,
+    path: `/collections/${slug}`,
+    image: category.coverImage
+  });
 }
 
 export default async function CollectionDetailPage({
@@ -23,7 +49,7 @@ export default async function CollectionDetailPage({
   const isFactory = slug === "factory";
 
   return (
-    <main className="shell space-y-10 py-10 md:py-16">
+    <main id="main-content" className="shell space-y-10 py-10 md:py-16">
       <div className="grid gap-6 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:items-end">
         <div className="min-w-0 space-y-5">
           <p className="text-xs uppercase tracking-[0.36em] text-champagne">{category.englishName}</p>
@@ -43,6 +69,7 @@ export default async function CollectionDetailPage({
             intervalMs={4800}
             className="absolute inset-0"
             imageClassName="object-cover"
+            sizes="(max-width: 1024px) 100vw, 520px"
           />
         </div>
       </div>
@@ -53,7 +80,7 @@ export default async function CollectionDetailPage({
           <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
             {productContent.factoryGallery.map((image) => (
               <div key={image} className="glass-panel relative aspect-[4/3] overflow-hidden">
-                <Image src={withBasePath(image)} alt="factory image" fill className="object-cover" />
+                <Image src={withBasePath(image)} alt="factory image" fill sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 360px" className="object-cover" />
               </div>
             ))}
           </div>

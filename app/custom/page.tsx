@@ -1,4 +1,5 @@
 import { SectionHeading } from "@/components/section-heading";
+import { buildMetadata } from "@/lib/seo";
 
 const items = [
   "企業贈禮與品牌聯名禮盒",
@@ -7,10 +8,16 @@ const items = [
   "大宗配送、指定時段與多點寄送"
 ];
 
+export const metadata = buildMetadata({
+  title: "客製化方案",
+  description: "為企業贈禮、節慶活動與會員經營安排更合適的 Maison Aurelia 客製燕禮方案。",
+  path: "/custom"
+});
+
 export default function CustomPage() {
   return (
-    <main className="shell space-y-8 py-10 md:py-16">
-      <SectionHeading eyebrow="Custom Program" title="客製化方案" description="讓高端禮盒可以更貼近企業品牌活動與會員經營需求。" />
+    <main id="main-content" className="shell space-y-8 py-10 md:py-16">
+      <SectionHeading as="h1" eyebrow="Custom Program" title="客製化方案" description="讓高端禮盒可以更貼近企業品牌活動與會員經營需求。" />
       <div className="glass-panel grid gap-6 p-5 md:p-8 lg:grid-cols-2">
         <div className="space-y-4">
           <div className="inline-flex rounded-full border border-champagne/15 bg-white/65 px-4 py-2 text-[11px] uppercase tracking-[0.24em] text-champagne">

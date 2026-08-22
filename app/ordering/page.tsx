@@ -1,4 +1,5 @@
 import { SectionHeading } from "@/components/section-heading";
+import { buildMetadata } from "@/lib/seo";
 
 const steps = [
   "選擇商品系列或客製方案",
@@ -7,10 +8,16 @@ const steps = [
   "建立正式訂單並進入後續出貨流程"
 ];
 
+export const metadata = buildMetadata({
+  title: "訂購流程",
+  description: "從挑選系列、確認規格到配送安排，一次掌握 Maison Aurelia 的完整訂購流程。",
+  path: "/ordering"
+});
+
 export default function OrderingPage() {
   return (
-    <main className="shell space-y-8 py-10 md:py-16">
-      <SectionHeading eyebrow="Ordering" title="訂購流程" description="從挑選品項到配送安排，讓每一步都清楚而從容。" />
+    <main id="main-content" className="shell space-y-8 py-10 md:py-16">
+      <SectionHeading as="h1" eyebrow="Ordering" title="訂購流程" description="從挑選品項到配送安排，讓每一步都清楚而從容。" />
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
         {steps.map((step, index) => (
           <div key={step} className="glass-panel relative overflow-hidden p-5 md:p-6">

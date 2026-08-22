@@ -87,10 +87,14 @@ export function AdminOrdersClient({ initialOrders }: { initialOrders: OrderRecor
       <div className="flex flex-col gap-4 rounded-luxe border border-white/60 bg-white/70 p-6 shadow-glass backdrop-blur lg:flex-row lg:items-center lg:justify-between">
         <div>
           <p className="text-xs uppercase tracking-[0.3em] text-champagne">Order Ledger</p>
-          <h2 className="font-display text-3xl text-ink">訂單一覽</h2>
+          <h1 className="font-display text-3xl text-ink">訂單一覽</h1>
         </div>
         <div className="flex flex-col gap-3 md:flex-row md:items-center">
+          <label htmlFor="order-search" className="sr-only">
+            搜尋姓名、電話或商品
+          </label>
           <input
+            id="order-search"
             className="field w-full md:min-w-0 md:flex-1 lg:w-[320px] lg:flex-none"
             placeholder="搜尋姓名、電話、商品"
             value={query}

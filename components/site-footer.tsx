@@ -12,17 +12,17 @@ export function SiteFooter() {
         </div>
         <div className="footer-group grid gap-3 text-sm text-pearl/72">
           <p className="font-display text-lg text-pearl">Explore</p>
-          <Link href="/collections">商品系列</Link>
-          <Link href="/custom">客製化方案</Link>
-          <Link href="/ordering">訂購流程</Link>
-          <Link href="/contact">聯絡我們</Link>
+          <Link href="/collections" className="transition hover:text-pearl">商品系列</Link>
+          <Link href="/custom" className="transition hover:text-pearl">客製化方案</Link>
+          <Link href="/ordering" className="transition hover:text-pearl">訂購流程</Link>
+          <Link href="/contact" className="transition hover:text-pearl">聯絡我們</Link>
         </div>
         <div className="footer-group grid gap-3 text-sm text-pearl/72">
           <p className="font-display text-lg text-pearl">Contact</p>
           <p>{contact.name}</p>
-          <p>{contact.phone}</p>
-          <p>{contact.email}</p>
-          <p>LINE: {contact.line}</p>
+          <a href={`tel:${contact.phone.replace(/\s+/g, "")}`} className="transition hover:text-pearl">{contact.phone}</a>
+          <a href={`mailto:${contact.email}`} className="transition hover:text-pearl">{contact.email}</a>
+          <a href={`https://line.me/R/ti/p/~${contact.line}`} className="transition hover:text-pearl">LINE: {contact.line}</a>
         </div>
       </div>
     </footer>

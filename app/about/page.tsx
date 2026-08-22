@@ -1,16 +1,21 @@
-import Image from "next/image";
 import { AutoImageRotator } from "@/components/auto-image-rotator";
 import { FadeIn } from "@/components/motion";
 import { SectionHeading } from "@/components/section-heading";
 import { getFeaturedProducts, site } from "@/lib/content";
-import { withBasePath } from "@/lib/utils";
+import { buildMetadata } from "@/lib/seo";
+
+export const metadata = buildMetadata({
+  title: "品牌介紹",
+  description: "認識 Maison Aurelia 如何將燕窩送禮轉譯成更克制、精緻且具有品牌質地的精品禮盒體驗。",
+  path: "/about"
+});
 
 export default function AboutPage() {
   const featured = getFeaturedProducts();
 
   return (
-    <main className="shell space-y-10 py-10 md:py-16">
-      <SectionHeading eyebrow="About Maison" title="品牌介紹" description="Maison Aurelia 將燕窩從傳統補品語境重新轉譯為精品禮盒與高端品牌體驗。" />
+    <main id="main-content" className="shell space-y-10 py-10 md:py-16">
+      <SectionHeading as="h1" eyebrow="About Maison" title="品牌介紹" description="Maison Aurelia 將燕窩從傳統補品語境重新轉譯為精品禮盒與高端品牌體驗。" />
       <div className="grid gap-6 lg:grid-cols-[1.05fr_0.95fr]">
         <FadeIn className="glass-panel p-5 md:p-8">
           <p className="text-base leading-8 text-ink/70 md:text-lg md:leading-9">
@@ -27,6 +32,7 @@ export default function AboutPage() {
             intervalMs={5200}
             className="absolute inset-0"
             imageClassName="object-cover"
+            sizes="(max-width: 1024px) 100vw, 520px"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-[rgba(27,20,15,0.3)] via-transparent to-transparent" />
           <div className="absolute bottom-4 left-4 right-4 z-10 rounded-[1.45rem] border border-white/35 bg-[rgba(255,250,245,0.7)] p-4 backdrop-blur-xl md:bottom-6 md:left-6 md:right-6 md:rounded-[1.6rem] md:p-5">
