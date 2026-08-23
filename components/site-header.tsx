@@ -68,7 +68,7 @@ export function SiteHeader() {
           </div>
         </div>
 
-        <div className="mobile-nav-strip xl:hidden">
+        <div className={cn("mobile-nav-strip xl:hidden", pathname === "/" ? "mobile-nav-strip--home" : "")}>
           <div className="mobile-nav-strip__scroller">
             {navItems
               .filter((item) => item.href !== "/" && item.href !== "/order")

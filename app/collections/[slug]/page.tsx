@@ -53,7 +53,7 @@ export default async function CollectionDetailPage({
       <div className="grid gap-6 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:items-end">
         <div className="min-w-0 space-y-5">
           <p className="text-xs uppercase tracking-[0.36em] text-champagne">{category.englishName}</p>
-          <h1 className="font-display text-[3rem] leading-[0.96] text-ink md:text-[4.2rem] lg:text-[5rem] xl:text-[5.8rem]">{category.name}</h1>
+          <h1 className="collection-hero__title font-display text-[2.7rem] leading-[1.02] text-ink md:text-[3.8rem] lg:text-[4.6rem] xl:text-[5.1rem]">{category.name}</h1>
           <p className="max-w-2xl text-base leading-8 text-ink/65">{category.description}</p>
           {!isFactory ? (
             <div className="inline-flex rounded-full border border-champagne/15 bg-white/62 px-4 py-2 text-[11px] uppercase tracking-[0.24em] text-champagne">
@@ -87,7 +87,7 @@ export default async function CollectionDetailPage({
         </section>
       ) : (
         <section className="space-y-8">
-          <SectionHeading eyebrow="Products" title="商品分類頁" description="目前部分產品為範本資料，便於你之後補上正式名稱、價格、規格與特色。" />
+          <SectionHeading eyebrow="Products" title="本系列選品" description="規格、份數與禮盒搭配可由顧問協助確認，適合日常保養、節慶與企業贈禮。" />
           <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
             {products.map((product) => (
               <ProductCard key={product.slug} product={product} />

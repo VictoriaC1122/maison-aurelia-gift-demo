@@ -48,23 +48,21 @@ export default function HomePage() {
           >
             Line
           </a>
-          <a
+          <Link
             href="/contact"
             className="rounded-full border border-champagne/30 px-3 py-2 text-[11px] uppercase tracking-[0.24em] text-ink transition hover:bg-white/70"
           >
             Contact
-          </a>
+          </Link>
         </div>
       </aside>
 
-      <section className="home-hero shell grid items-start gap-8 py-5 md:gap-10 md:py-10 lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)] lg:gap-10 lg:pt-6 xl:gap-12">
-        <FadeIn className="home-hero__copy min-w-0 space-y-6 pt-1 md:space-y-8 lg:flex lg:flex-col lg:justify-center lg:pt-0">
+      <section className="home-hero shell grid items-center gap-8 py-5 md:gap-10 md:py-10 lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)] lg:gap-10 lg:pt-6 xl:gap-12">
+        <FadeIn className="home-hero__copy min-w-0 space-y-5 pt-1 md:space-y-7 lg:flex lg:flex-col lg:justify-center lg:pt-0">
           <div className="space-y-4 md:space-y-5">
             <p className="text-[11px] uppercase tracking-[0.28em] text-champagne md:text-xs md:tracking-[0.38em]">{site.englishSlogan}</p>
-            <h1 className="home-hero__title max-w-[11.2ch] font-display text-[2.7rem] leading-[0.92] tracking-[-0.02em] text-ink sm:text-[3.2rem] md:text-[3.55rem] lg:text-[4.15rem] xl:text-[4.85rem] 2xl:text-[5.15rem] md:tracking-normal">
-              讓燕禮回到應有的質地，
-              <br />
-              在日常與贈禮之間，安靜發光。
+            <h1 className="home-hero__title font-display text-[2.65rem] leading-[1.04] tracking-[-0.025em] text-ink sm:text-[3rem] md:text-[3.45rem] lg:text-[3.65rem] xl:text-[4.1rem] 2xl:text-[4.35rem]">
+              讓燕禮回到應有的質地，在日常與贈禮之間，安靜發光。
             </h1>
             <p className="home-hero__body max-w-2xl text-[0.98rem] leading-7 text-ink/65 md:text-lg md:leading-8">
               以奶油白、香檳金與留白構成品牌語境，將燕窩、節慶贈禮與客製禮盒整理成更從容、
@@ -73,7 +71,7 @@ export default function HomePage() {
           </div>
           <div className="home-hero__actions grid gap-3 sm:flex sm:flex-wrap sm:gap-4">
             <Link href="/collections" className="hero-button-dark min-h-[52px] justify-center px-7">探索商品系列</Link>
-            <Link href="/order" className="hero-button-light min-h-[52px] justify-center px-7">立即下單</Link>
+            <Link href="/order" className="home-hero__order-cta hero-button-light min-h-[52px] justify-center px-7">立即下單</Link>
           </div>
           <div className="home-hero__meta grid gap-3 sm:grid-cols-3 sm:gap-4">
             {[
@@ -110,13 +108,26 @@ export default function HomePage() {
             </p>
           </div>
         </FadeIn>
-        <FadeIn delay={0.14} className="home-hero__video glass-panel min-w-0 overflow-hidden rounded-[2rem] shadow-[0_24px_55px_rgba(29,19,12,0.15)]">
-          <div className="home-hero__video-frame relative overflow-hidden rounded-[1.9rem] border border-[#120f0d]/5 bg-[#120f0d] p-2 md:p-3">
+      </section>
+
+      <section className="home-film shell py-4 md:py-8">
+        <FadeIn delay={0.12} className="home-film__panel glass-panel grid min-w-0 gap-5 overflow-hidden p-4 md:gap-8 md:p-7 lg:grid-cols-[minmax(240px,0.64fr)_minmax(0,1.36fr)] lg:items-center lg:p-9">
+          <div className="home-film__copy min-w-0 space-y-4 px-1 py-2 md:px-2 lg:py-4">
+            <p className="text-[11px] uppercase tracking-[0.32em] text-champagne md:text-xs md:tracking-[0.38em]">Selected Film</p>
+            <h2 className="font-display text-[2rem] leading-[1.08] tracking-[-0.02em] text-ink md:text-[2.6rem] lg:text-[3rem]">
+              從燕盞到禮盒，近看選品的質地與細節。
+            </h2>
+            <p className="max-w-md text-[0.96rem] leading-7 text-ink/64 md:text-base md:leading-8">
+              點開短片，認識燕窩選品、包裝與禮盒呈現。
+            </p>
+          </div>
+          <div className="home-film__video min-w-0 overflow-hidden rounded-[1.6rem] bg-[#120f0d] p-2 shadow-[0_22px_48px_rgba(29,19,12,0.15)] md:rounded-[1.9rem] md:p-3">
             <video
               controls
               playsInline
+              preload="metadata"
               poster={withBasePath(featured[0]?.images[0] ?? "/assets/categories/benyang/S__75194507_0.jpg")}
-              className="aspect-[16/10] w-full rounded-[1.4rem] bg-black object-contain"
+              className="aspect-video w-full rounded-[1.2rem] bg-black object-contain md:rounded-[1.4rem]"
               aria-label="Maison Aurelia 品牌影片"
             >
               <source src={withBasePath("/assets/video/hero-film.mp4")} type="video/mp4" />
@@ -185,7 +196,7 @@ export default function HomePage() {
           eyebrow="Best Sellers"
           title="幾款值得一眼記住，也值得慢慢品味的燕禮。"
         />
-        <div className="grid gap-6 lg:grid-cols-3">
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {featured.map((product, index) => (
             <FadeIn key={product.slug} delay={index * 0.08}>
               <ProductCard product={product} />
@@ -211,7 +222,7 @@ export default function HomePage() {
           <div className="flex min-w-0 flex-col justify-center space-y-5 md:space-y-6">
             <div className="space-y-3">
               <p className="text-xs uppercase tracking-[0.34em] text-champagne">Signature Selection</p>
-              <h2 className="font-display text-[2.3rem] leading-tight text-ink md:text-[3rem] lg:text-[4rem] xl:text-[4.6rem]">
+              <h2 className="text-balance font-display text-[2.3rem] leading-tight text-ink md:text-[3rem] lg:text-[3.6rem] xl:text-[4rem]">
                 {signatureProduct.nameZh}
               </h2>
             </div>

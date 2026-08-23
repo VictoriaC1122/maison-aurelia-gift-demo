@@ -6,6 +6,15 @@ import { useSearchParams } from "next/navigation";
 import type { Product } from "@/lib/types";
 
 const DEMO_ORDER_KEY = "maison-aurelia-demo-orders";
+const CATEGORY_LABELS: Record<string, string> = {
+  benyang: "燕序・本養",
+  shenyang: "燕序・深養",
+  factory: "越南燕廠"
+};
+
+function displaySpecification(value: string) {
+  return value === "待補" ? "顧問確認" : value;
+}
 
 function buildDemoOrderId() {
   const stamp = new Date().toISOString().slice(0, 10).replace(/-/g, "");
@@ -75,7 +84,7 @@ export function OrderForm({ products, defaultProductSlug }: { products: Product[
     productName: defaultProduct?.nameZh ?? "",
     category: defaultProduct?.category ?? "",
     quantity: 1,
-    option: defaultProduct?.specification ?? "",
+    option: displaySpecification(defaultProduct?.specification ?? ""),
     preferredDeliveryDate: "",
     note: ""
   });
@@ -134,7 +143,7 @@ export function OrderForm({ products, defaultProductSlug }: { products: Product[
       ...current,
       productName: product.nameZh,
       category: product.category,
-      option: product.specification
+      option: displaySpecification(product.specification)
     }));
     setErrors((current) => ({
       ...current,
@@ -215,7 +224,7 @@ export function OrderForm({ products, defaultProductSlug }: { products: Product[
         </div>
         <div className="field-group">
           {fieldLabel("商品分類", "category")}
-          <input id="category" className="field" placeholder="系統將自動帶入" aria-label="商品分類" aria-invalid={Boolean(errors.category)} aria-describedby={errors.category ? "category-error" : undefined} readOnly value={form.category} onChange={(e) => updateField("category", e.target.value)} />
+          <input id="category" className="field" placeholder="系統將自動帶入" aria-label="商品分類" aria-invalid={Boolean(errors.category)} aria-describedby={errors.category ? "category-error" : undefined} readOnly value={CATEGORY_LABELS[form.category] ?? form.category} />
           {errors.category ? <p id="category-error" className="text-sm text-rosegold">{errors.category}</p> : null}
         </div>
         <div className="field-group">

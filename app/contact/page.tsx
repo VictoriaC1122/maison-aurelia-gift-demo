@@ -11,6 +11,16 @@ export const metadata = buildMetadata({
 
 export default function ContactPage() {
   const featured = getFeaturedProducts();
+  const contactItems = [
+    ["姓名", contact.name || "", ""],
+    ["職稱", contact.title || "", ""],
+    ["電話", contact.phone || "", contact.phone ? `tel:${contact.phone.replace(/\s+/g, "")}` : ""],
+    ["Email", contact.email || "", contact.email ? `mailto:${contact.email}` : ""],
+    ["LINE", contact.line || "", contact.line ? `https://line.me/R/ti/p/~${contact.line}` : ""],
+    ["Instagram", contact.instagram || "", ""],
+    ["地址", contact.address || "", ""],
+    ["營業時間", contact.businessHours || "", ""]
+  ].filter(([, value]) => value && !value.startsWith("待補"));
 
   return (
     <main id="main-content" className="shell space-y-10 py-10 md:py-16">
@@ -35,16 +45,7 @@ export default function ContactPage() {
           </div>
         </div>
         <div className="contact-concierge glass-panel grid gap-5 p-5 md:p-8">
-          {[
-            ["姓名", contact.name || "待補", ""],
-            ["職稱", contact.title || "待補", ""],
-            ["電話", contact.phone || "待補", contact.phone ? `tel:${contact.phone.replace(/\s+/g, "")}` : ""],
-            ["Email", contact.email || "待補", contact.email ? `mailto:${contact.email}` : ""],
-            ["LINE", contact.line || "待補", contact.line ? `https://line.me/R/ti/p/~${contact.line}` : ""],
-            ["Instagram", contact.instagram || "待補", ""],
-            ["地址", contact.address || "待補", ""],
-            ["營業時間", contact.businessHours || "待補", ""]
-          ].map(([label, value, href]) => {
+          {contactItems.map(([label, value, href]) => {
             const content = (
               <>
                 <p className="text-xs uppercase tracking-[0.28em] text-champagne">{label}</p>

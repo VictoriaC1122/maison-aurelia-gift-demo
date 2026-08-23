@@ -121,7 +121,7 @@ export function AdminOrdersClient({ initialOrders }: { initialOrders: OrderRecor
                 <h3 className="mt-2 font-display text-[1.55rem] leading-[1.06] text-ink">{order.productName}</h3>
               </div>
               <select
-                className="field min-w-[140px]"
+                className="field w-auto min-w-[140px] max-w-[150px] shrink-0"
                 value={order.status}
                 onChange={(event) => updateStatus(order.orderId, event.target.value as OrderStatus)}
               >

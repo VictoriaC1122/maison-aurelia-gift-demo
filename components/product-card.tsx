@@ -4,9 +4,11 @@ import { Product } from "@/lib/types";
 import { formatCurrency } from "@/lib/utils";
 
 export function ProductCard({ product }: { product: Product }) {
+  const specification = product.specification === "待補" ? "顧問確認" : product.specification;
+
   return (
     <article className="product-card group flex h-full min-w-0 flex-col overflow-hidden rounded-luxe border border-white/50 bg-white/70 shadow-glass backdrop-blur">
-      <div className="product-card__media relative aspect-[4/4.6] overflow-hidden">
+      <div className="product-card__media relative aspect-[4/3] overflow-hidden">
         <AutoImageRotator
           images={product.images}
           alt={product.nameZh}
@@ -24,11 +26,11 @@ export function ProductCard({ product }: { product: Product }) {
           <p className="product-card__summary min-h-[5rem] text-[0.96rem] leading-7 text-ink/65 md:min-h-[5.5rem] md:text-sm">{product.summary}</p>
         </div>
         <div className="mt-auto flex flex-col gap-4">
-          <div className="product-card__pricing flex flex-col gap-3 text-sm sm:flex-row sm:items-center sm:justify-between">
-          <span className="product-card__spec inline-flex w-fit rounded-full border border-champagne/25 px-4 py-2 text-[0.96rem] text-ink/70 md:text-sm">
-            {product.specification}
-          </span>
-          <strong className="product-card__price font-display text-[1.72rem] leading-none text-ink md:text-xl">{formatCurrency(product.price)}</strong>
+          <div className="product-card__pricing flex items-center justify-between gap-3 text-sm">
+            <span className="product-card__spec inline-flex w-fit rounded-full border border-champagne/25 px-4 py-2 text-[0.96rem] text-ink/70 md:text-sm">
+              {specification}
+            </span>
+            <strong className="product-card__price font-display text-[1.72rem] leading-none text-ink md:text-xl">{formatCurrency(product.price)}</strong>
           </div>
           <div className="product-card__actions grid gap-3 sm:grid-cols-2">
             <Link
