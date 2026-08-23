@@ -85,7 +85,7 @@ export function AutoImageRotator({
           />
         </div>
       ) : (
-        <AnimatePresence mode="wait">
+        <AnimatePresence mode="wait" initial={false}>
           <motion.div
             key={uniqueImages[index]}
             className="absolute inset-0"
