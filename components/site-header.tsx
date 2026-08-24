@@ -7,21 +7,20 @@ import { contact, site } from "@/lib/content";
 import { cn } from "@/lib/utils";
 
 const navItems = [
-  { href: "/", label: "首頁" },
-  { href: "/about", label: "品牌介紹" },
-  { href: "/why-us", label: "Why Us" },
   { href: "/collections", label: "商品系列" },
-  { href: "/custom", label: "客製化方案" },
-  { href: "/ordering", label: "訂購流程" },
-  { href: "/shipping", label: "配送與運費" },
-  { href: "/faq", label: "FAQ" },
-  { href: "/contact", label: "聯絡我們" },
-  { href: "/order", label: "立即下單" }
+  { href: "/custom", label: "客製禮贈" },
+  { href: "/about", label: "品牌故事" },
+  { href: "/ordering", label: "訂購說明" },
+  { href: "/faq", label: "常見問題" },
+  { href: "/contact", label: "聯絡我們" }
 ];
 
 export function SiteHeader() {
   const pathname = usePathname();
   const isActiveLink = (href: string) => (href === "/" ? pathname === href : pathname === href || pathname.startsWith(`${href}/`));
+  const productSlug = pathname.match(/^\/products\/([^/]+)$/)?.[1];
+  const orderHref = productSlug ? `/order?product=${productSlug}` : "/order";
+  const isOrderPage = pathname === "/order";
 
   return (
     <>
@@ -55,46 +54,46 @@ export function SiteHeader() {
               <a href={`https://line.me/R/ti/p/~${contact.line}`} className="mobile-header-actions__cta">
                 LINE
               </a>
-              <Link href="/order" className="mobile-header-actions__cta mobile-header-actions__cta--primary">
-                下單
+              <Link href={orderHref} className="mobile-header-actions__cta mobile-header-actions__cta--primary">
+                {productSlug ? "選購" : "下單"}
               </Link>
             </div>
             <Link
-              href="/order"
+              href={orderHref}
               className="hidden rounded-full border border-champagne/40 bg-ink px-5 py-3 text-sm text-pearl shadow-glass transition hover:-translate-y-0.5 xl:inline-flex"
             >
-              開始下單
+              {productSlug ? "選擇此商品" : "開始下單"}
             </Link>
           </div>
         </div>
 
         <div className={cn("mobile-nav-strip xl:hidden", pathname === "/" ? "mobile-nav-strip--home" : "")}>
           <div className="mobile-nav-strip__scroller">
-            {navItems
-              .filter((item) => item.href !== "/" && item.href !== "/order")
-              .map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  aria-current={isActiveLink(item.href) ? "page" : undefined}
-                  className={cn("mobile-nav-strip__chip", isActiveLink(item.href) ? "mobile-nav-strip__chip--active" : "")}
-                >
-                  {item.label}
-                </Link>
-              ))}
+            {navItems.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                aria-current={isActiveLink(item.href) ? "page" : undefined}
+                className={cn("mobile-nav-strip__chip", isActiveLink(item.href) ? "mobile-nav-strip__chip--active" : "")}
+              >
+                {item.label}
+              </Link>
+            ))}
           </div>
         </div>
       </header>
-      <div className="mobile-dock md:hidden">
-        <a href={`https://line.me/R/ti/p/~${contact.line}`} className="mobile-dock__item">
-          <MessageCircleMore className="h-4 w-4" />
-          <span>LINE 諮詢</span>
-        </a>
-        <Link href="/order" className="mobile-dock__item mobile-dock__item--primary">
-          <Package2 className="h-4 w-4" />
-          <span>立即下單</span>
-        </Link>
-      </div>
+      {!isOrderPage ? (
+        <div className="mobile-dock md:hidden">
+          <a href={`https://line.me/R/ti/p/~${contact.line}`} className="mobile-dock__item">
+            <MessageCircleMore className="h-4 w-4" />
+            <span>LINE 諮詢</span>
+          </a>
+          <Link href={orderHref} className="mobile-dock__item mobile-dock__item--primary">
+            <Package2 className="h-4 w-4" />
+            <span>{productSlug ? "選擇此商品" : "立即下單"}</span>
+          </Link>
+        </div>
+      ) : null}
     </>
   );
 }

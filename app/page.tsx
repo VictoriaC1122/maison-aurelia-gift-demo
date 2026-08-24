@@ -110,6 +110,29 @@ export default function HomePage() {
         </FadeIn>
       </section>
 
+      <section className="home-shop shell space-y-8 py-10 md:py-14">
+        <div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
+          <SectionHeading
+            eyebrow="Best Sellers"
+            title="先從最受歡迎的燕禮開始選。"
+            description="依日常保養、節慶送禮與重要贈禮挑選；規格與份數可在送出需求後由顧問協助確認。"
+          />
+          <Link
+            href="/collections"
+            className="inline-flex min-h-[48px] shrink-0 items-center justify-center rounded-full border border-champagne/30 bg-white/55 px-6 text-sm text-ink transition hover:bg-white/80 active:scale-[0.99]"
+          >
+            查看全部系列
+          </Link>
+        </div>
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {featured.map((product, index) => (
+            <FadeIn key={product.slug} delay={index * 0.08}>
+              <ProductCard product={product} />
+            </FadeIn>
+          ))}
+        </div>
+      </section>
+
       <section className="home-film shell py-4 md:py-8">
         <FadeIn delay={0.12} className="home-film__panel glass-panel grid min-w-0 gap-5 overflow-hidden p-4 md:gap-8 md:p-7 lg:grid-cols-[minmax(240px,0.64fr)_minmax(0,1.36fr)] lg:items-center lg:p-9">
           <div className="home-film__copy min-w-0 space-y-4 px-1 py-2 md:px-2 lg:py-4">
@@ -188,20 +211,6 @@ export default function HomePage() {
               </Link>
             ))}
           </div>
-        </div>
-      </section>
-
-      <section className="shell space-y-8 py-10 md:py-14">
-        <SectionHeading
-          eyebrow="Best Sellers"
-          title="幾款值得一眼記住，也值得慢慢品味的燕禮。"
-        />
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {featured.map((product, index) => (
-            <FadeIn key={product.slug} delay={index * 0.08}>
-              <ProductCard product={product} />
-            </FadeIn>
-          ))}
         </div>
       </section>
 

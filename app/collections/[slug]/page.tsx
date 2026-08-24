@@ -1,5 +1,7 @@
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
+import { ChevronRight } from "lucide-react";
 import { AutoImageRotator } from "@/components/auto-image-rotator";
 import { ProductCard } from "@/components/product-card";
 import { SectionHeading } from "@/components/section-heading";
@@ -50,6 +52,13 @@ export default async function CollectionDetailPage({
 
   return (
     <main id="main-content" className="shell space-y-10 py-10 md:py-16">
+      <nav aria-label="麵包屑" className="flex min-w-0 items-center gap-2 overflow-hidden text-sm text-ink/48">
+        <Link href="/" className="shrink-0 transition hover:text-ink">首頁</Link>
+        <ChevronRight aria-hidden="true" className="h-3.5 w-3.5 shrink-0 text-champagne" />
+        <Link href="/collections" className="shrink-0 transition hover:text-ink">商品系列</Link>
+        <ChevronRight aria-hidden="true" className="h-3.5 w-3.5 shrink-0 text-champagne" />
+        <span aria-current="page" className="truncate text-ink/72">{category.name}</span>
+      </nav>
       <div className="grid gap-6 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:items-end">
         <div className="min-w-0 space-y-5">
           <p className="text-xs uppercase tracking-[0.36em] text-champagne">{category.englishName}</p>
@@ -73,6 +82,24 @@ export default async function CollectionDetailPage({
           />
         </div>
       </div>
+
+      <nav aria-label="切換商品系列" className="glass-panel flex gap-2 overflow-x-auto p-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        {getCategories().map((item) => {
+          const isCurrent = item.slug === category.slug;
+          return (
+            <Link
+              key={item.slug}
+              href={`/collections/${item.slug}`}
+              aria-current={isCurrent ? "page" : undefined}
+              className={`inline-flex min-h-[44px] shrink-0 items-center justify-center rounded-full px-5 text-sm transition ${
+                isCurrent ? "bg-ink text-pearl" : "bg-white/55 text-ink/68 hover:bg-white/85 hover:text-ink"
+              }`}
+            >
+              {item.name}
+            </Link>
+          );
+        })}
+      </nav>
 
       {isFactory ? (
         <section className="space-y-8">
