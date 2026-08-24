@@ -35,6 +35,8 @@ strong {
 
 .font-display {
   font-kerning: normal;
+  font-weight: 500;
+  letter-spacing: 0.01em;
   font-variant-numeric: lining-nums proportional-nums;
 }
 
@@ -185,7 +187,26 @@ summary {
 .product-detail-title,
 .collection-hero__title,
 .home-film__copy h2 {
+  line-break: strict;
   text-wrap: balance;
+}
+
+.home-hero__title {
+  line-height: 1.15;
+}
+
+.section-heading__title {
+  line-height: 1.2;
+}
+
+.product-detail-title,
+.collection-hero__title {
+  line-height: 1.16;
+}
+
+.home-film__copy h2,
+.product-card__title {
+  line-height: 1.22;
 }
 
 .home-hero__body,
@@ -346,7 +367,7 @@ summary {
   .home-hero__title {
     max-width: 100%;
     font-size: clamp(3rem, 5.2vw, 3.75rem);
-    line-height: 1.04;
+    line-height: 1.15;
   }
 
   .home-hero__body {
@@ -447,8 +468,8 @@ summary {
     width: 100%;
     max-width: none;
     font-size: clamp(36px, 9vw, 42px);
-    line-height: 1.12;
-    letter-spacing: -0.012em;
+    line-height: 1.16;
+    letter-spacing: 0.01em;
   }
 
   .home-hero__body {
@@ -524,7 +545,7 @@ summary {
   .product-card__title {
     min-height: auto;
     font-size: 1.42rem;
-    line-height: 1.14;
+    line-height: 1.22;
   }
 
   .product-card__summary {

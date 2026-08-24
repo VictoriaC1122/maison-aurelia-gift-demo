@@ -23,6 +23,7 @@ const config: Config = {
         display: [
           "Georgia",
           "'Times New Roman'",
+          "var(--font-noto-serif-tc)",
           "'Noto Serif TC'",
           "'Songti TC'",
           "STSong",
@@ -32,6 +33,7 @@ const config: Config = {
         body: [
           "Georgia",
           "'Times New Roman'",
+          "var(--font-noto-serif-tc)",
           "'Noto Serif TC'",
           "'Songti TC'",
           "STSong",
