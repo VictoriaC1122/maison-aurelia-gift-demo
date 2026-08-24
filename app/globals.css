@@ -19,9 +19,23 @@ html {
 body {
   @apply bg-cream bg-hero-glow font-body text-ink antialiased;
   overflow-x: hidden;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.7;
+  font-kerning: normal;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+b,
+strong {
+  font-weight: 600;
+}
+
+.font-display {
+  font-kerning: normal;
+  font-variant-numeric: lining-nums proportional-nums;
 }
 
 body::before {
@@ -426,14 +440,14 @@ summary {
     width: 100%;
     max-width: none;
     font-size: clamp(36px, 9vw, 42px);
-    line-height: 1.08;
-    letter-spacing: -0.02em;
+    line-height: 1.12;
+    letter-spacing: -0.012em;
   }
 
   .home-hero__body {
     max-width: 100%;
-    font-size: 0.97rem;
-    line-height: 1.74;
+    font-size: 1rem;
+    line-height: 1.8;
   }
 
   .home-hero__actions {
@@ -508,8 +522,8 @@ summary {
 
   .product-card__summary {
     min-height: auto;
-    font-size: 0.96rem;
-    line-height: 1.72;
+    font-size: 1rem;
+    line-height: 1.8;
   }
 
   .product-card__pricing {

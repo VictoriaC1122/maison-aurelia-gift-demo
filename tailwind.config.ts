@@ -20,8 +20,24 @@ const config: Config = {
         luxe: "1.75rem"
       },
       fontFamily: {
-        display: ["'Bodoni 72'", "Didot", "Baskerville", "serif"],
-        body: ["'Iowan Old Style'", "'Noto Serif TC'", "Baskerville", "serif"]
+        display: [
+          "Georgia",
+          "'Times New Roman'",
+          "'Noto Serif TC'",
+          "'Songti TC'",
+          "STSong",
+          "PMingLiU",
+          "serif"
+        ],
+        body: [
+          "Georgia",
+          "'Times New Roman'",
+          "'Noto Serif TC'",
+          "'Songti TC'",
+          "STSong",
+          "PMingLiU",
+          "serif"
+        ]
       },
       backgroundImage: {
         "hero-glow":
