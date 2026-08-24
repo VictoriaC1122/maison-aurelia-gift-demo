@@ -17,10 +17,18 @@ const navItems = [
 
 export function SiteHeader() {
   const pathname = usePathname();
-  const isActiveLink = (href: string) => (href === "/" ? pathname === href : pathname === href || pathname.startsWith(`${href}/`));
-  const productSlug = pathname.match(/^\/products\/([^/]+)$/)?.[1];
+  const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+  const normalizedPathname = basePath && pathname.startsWith(basePath)
+    ? pathname.slice(basePath.length) || "/"
+    : pathname;
+  const isActiveLink = (href: string) => {
+    if (href === "/") return normalizedPathname === href;
+    if (href === "/collections" && normalizedPathname.startsWith("/products/")) return true;
+    return normalizedPathname === href || normalizedPathname.startsWith(`${href}/`);
+  };
+  const productSlug = normalizedPathname.match(/^\/products\/([^/]+)\/?$/)?.[1];
   const orderHref = productSlug ? `/order?product=${productSlug}` : "/order";
-  const isOrderPage = pathname === "/order";
+  const isOrderPage = /^\/order\/?$/.test(normalizedPathname);
 
   return (
     <>
@@ -67,7 +75,7 @@ export function SiteHeader() {
           </div>
         </div>
 
-        <div className={cn("mobile-nav-strip xl:hidden", pathname === "/" ? "mobile-nav-strip--home" : "")}>
+        <div className={cn("mobile-nav-strip xl:hidden", normalizedPathname === "/" ? "mobile-nav-strip--home" : "")}>
           <div className="mobile-nav-strip__scroller">
             {navItems.map((item) => (
               <Link
