@@ -15,7 +15,7 @@ export function withBasePath(path: string) {
 
 export function formatCurrency(value: string) {
   if (!value) {
-    return "Price on request";
+    return "專人報價";
   }
 
   const numeric = Number(value);
