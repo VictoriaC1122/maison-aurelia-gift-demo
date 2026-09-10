@@ -25,6 +25,7 @@ export function AutoImageRotator({
   const uniqueImages = useMemo(() => Array.from(new Set(images.filter(Boolean))), [images]);
   const [index, setIndex] = useState(0);
   const [isVisible, setIsVisible] = useState(priority);
+  const [isPaused, setIsPaused] = useState(false);
   const reduceMotion = useReducedMotion();
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -54,14 +55,14 @@ export function AutoImageRotator({
   }, [priority]);
 
   useEffect(() => {
-    if (reduceMotion || !isVisible || uniqueImages.length < 2) return;
+    if (reduceMotion || !isVisible || isPaused || uniqueImages.length < 2) return;
 
     const timer = window.setInterval(() => {
       setIndex((current) => (current + 1) % uniqueImages.length);
     }, intervalMs);
 
     return () => window.clearInterval(timer);
-  }, [intervalMs, isVisible, reduceMotion, uniqueImages.length]);
+  }, [intervalMs, isPaused, isVisible, reduceMotion, uniqueImages.length]);
 
   useEffect(() => {
     setIndex(0);
@@ -72,7 +73,12 @@ export function AutoImageRotator({
   }
 
   return (
-    <div ref={containerRef} className={className}>
+    <div
+      ref={containerRef}
+      className={className}
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
+    >
       {reduceMotion || uniqueImages.length < 2 ? (
         <div className="absolute inset-0">
           <Image

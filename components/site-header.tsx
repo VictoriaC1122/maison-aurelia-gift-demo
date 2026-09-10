@@ -11,7 +11,6 @@ const navItems = [
   { href: "/custom", label: "客製禮贈" },
   { href: "/about", label: "品牌故事" },
   { href: "/ordering", label: "訂購說明" },
-  { href: "/faq", label: "常見問題" },
   { href: "/contact", label: "聯絡我們" }
 ];
 
@@ -29,6 +28,9 @@ export function SiteHeader() {
   const productSlug = normalizedPathname.match(/^\/products\/([^/]+)\/?$/)?.[1];
   const orderHref = productSlug ? `/order?product=${productSlug}` : "/order";
   const isOrderPage = /^\/order\/?$/.test(normalizedPathname);
+  const isProductPage = Boolean(productSlug);
+  const mobilePrimaryHref = normalizedPathname === "/" ? "/collections" : orderHref;
+  const mobilePrimaryLabel = productSlug ? "選購" : normalizedPathname === "/" ? "選禮" : "下單";
 
   return (
     <>
@@ -62,8 +64,8 @@ export function SiteHeader() {
               <a href={`https://line.me/R/ti/p/~${contact.line}`} className="mobile-header-actions__cta">
                 LINE
               </a>
-              <Link href={orderHref} className="mobile-header-actions__cta mobile-header-actions__cta--primary">
-                {productSlug ? "選購" : "下單"}
+              <Link href={mobilePrimaryHref} className="mobile-header-actions__cta mobile-header-actions__cta--primary">
+                {mobilePrimaryLabel}
               </Link>
             </div>
             <Link
@@ -90,15 +92,15 @@ export function SiteHeader() {
           </div>
         </div>
       </header>
-      {!isOrderPage ? (
+      {!isOrderPage && !isProductPage ? (
         <div className="mobile-dock md:hidden">
           <a href={`https://line.me/R/ti/p/~${contact.line}`} className="mobile-dock__item">
             <MessageCircleMore className="h-4 w-4" />
             <span>LINE 諮詢</span>
           </a>
-          <Link href={orderHref} className="mobile-dock__item mobile-dock__item--primary">
+          <Link href={mobilePrimaryHref} className="mobile-dock__item mobile-dock__item--primary">
             <Package2 className="h-4 w-4" />
-            <span>{productSlug ? "選擇此商品" : "立即下單"}</span>
+            <span>{normalizedPathname === "/" ? "挑選燕禮" : "立即下單"}</span>
           </Link>
         </div>
       ) : null}
