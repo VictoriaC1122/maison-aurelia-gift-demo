@@ -35,19 +35,13 @@ NEXT_PUBLIC_WEB3FORMS_KEY=xxxx-xxxx
 
 這三個值本來就是公開金鑰，可以放進 Git。推上 GitHub 後會自動重新部署。
 
-## 4. 網址 yue-jin-yan.com
+## 4. 網址 yue-jin-yan.com（已完成）
 
-1. 購買網址（Cloudflare、Namecheap、GoDaddy 等）。
-2. GitHub repo → **Settings → Pages → Custom domain** 填 `yue-jin-yan.com` → Save。
-3. 在買網址的地方設定 DNS：
-   - A 記錄 `@` → `185.199.108.153`、`185.199.109.153`、`185.199.110.153`、`185.199.111.153`
-   - CNAME `www` → `victoriac1122.github.io`
-4. 把 `.github/workflows/deploy-pages.yml` 改成：
-   ```yaml
-   NEXT_PUBLIC_SITE_URL: "https://yue-jin-yan.com"
-   NEXT_PUBLIC_BASE_PATH: ""
-   ```
-5. DNS 生效後（最多 24 小時），在 Pages 設定勾選 **Enforce HTTPS**。
+- 網域在 Namecheap（帳號：yuejinyan.official@gmail.com），已開自動續約。
+- DNS：A 記錄 `@` → 185.199.108.153 / 109 / 110 / 111；CNAME `www` → `victoriac1122.github.io`；
+  TXT `_github-pages-challenge-victoriac1122` 為 GitHub 網域驗證用，請勿刪除。
+- GitHub 帳號設定已驗證此網域；repo 的 Pages → Custom domain 設為 `yue-jin-yan.com`。
+- `.github/workflows/deploy-pages.yml` 已改為 `NEXT_PUBLIC_SITE_URL=https://yue-jin-yan.com`、`NEXT_PUBLIC_BASE_PATH=""`。
 
 ## 5. 後台
 
