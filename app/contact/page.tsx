@@ -5,7 +5,7 @@ import { buildMetadata } from "@/lib/seo";
 
 export const metadata = buildMetadata({
   title: "聯絡我們",
-  description: "與 Maison Aurelia 顧問聯繫，安排燕禮選品、企業贈禮、配送時程與客製化方案。",
+  description: "與越金燕顧問聯繫，安排燕禮選品、企業贈禮、配送時程與客製化方案。",
   path: "/contact"
 });
 
@@ -29,7 +29,7 @@ export default function ContactPage() {
         <div className="glass-panel relative min-h-[300px] overflow-hidden md:min-h-[420px]">
           <AutoImageRotator
             images={featured.flatMap((product) => product.images)}
-            alt="Maison Aurelia contact atmosphere"
+            alt="越金燕燕序系列禮盒"
             priority
             intervalMs={5400}
             className="absolute inset-0"

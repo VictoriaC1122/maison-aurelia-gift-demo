@@ -1,13 +1,14 @@
-# Maison Aurelia Demo
+# 越金燕 YUA JIN YAN Demo
 
 高端精品燕窩購物品牌官網的業主展示版，採用 Next.js + TypeScript + Tailwind CSS + Framer Motion 建置，包含品牌前台、下單 API、mock 訂單儲存與 `/admin/orders` 簡易後台。
 
 ## 品牌定位
 
-- 英文品牌名：`Maison Aurelia`
-- 中文品牌名：`奧蕾雅燕禮`
-- 英文 slogan：`Curated Bird's Nest Gifts with Quiet Splendor`
-- 中文 slogan：`以燕為禮，將珍稀與風雅妥帖收藏`
+- 中文品牌名：`越金燕`
+- 英文品牌名：`YUA JIN YAN`
+- 系列名：`燕序`（本養 / 深養）
+- 中文 slogan：`頂級燕窩・專研之選`
+- 英文 slogan：`Premium Bird's Nest, Expertly Selected`
 
 ## 技術棧
 
@@ -82,9 +83,6 @@ npm run dev
 
 若業主確認方向，之後可再把這份 demo 版升級到正式部署版，例如接 Supabase、Cloudflare Pages、正式網域與真實訂單流程。
 
-## 目前待補資料
+## 正式上線設定
 
-- `data/products.json` 中的正式商品價格
-- `data/products.json` 中的最終商品名稱 / 規格 / 特色
-- `data/contact.json` 中的 Instagram、地址、營業時間
-- 若要正式上線，再補資料庫與部署平台設定
+後台、訂單通知、網址與待補資料，請看 [SETUP.md](SETUP.md)。

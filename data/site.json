@@ -1,14 +1,21 @@
 {
-  "brandName": "Maison Aurelia",
-  "brandNameZh": "奧蕾雅燕禮",
-  "englishSlogan": "Curated Bird's Nest Gifts with Quiet Splendor",
-  "chineseSlogan": "以燕為禮，將珍稀與風雅妥帖收藏",
-  "metaTitle": "Maison Aurelia | Luxury Bird's Nest Boutique Gift House",
-  "metaDescription": "Maison Aurelia 是一個以精品禮盒語言重新定義燕窩送禮體驗的高端品牌官網，提供系列選購、客製化方案、下單與訂單管理。",
+  "brandName": "YUA JIN YAN",
+  "brandNameZh": "越金燕",
+  "englishSlogan": "Premium Bird's Nest, Expertly Selected",
+  "chineseSlogan": "頂級燕窩・專研之選",
+  "metaTitle": "越金燕 YUA JIN YAN｜頂級燕窩・專研之選",
+  "metaDescription": "越金燕 YUA JIN YAN 專研頂級燕窩，提供「燕序」本養、深養系列燕窩禮盒，以及企業客製禮贈與專人顧問服務。",
   "ogImage": "/assets/categories/benyang/S__75194507_0.jpg",
   "socialLinks": {
     "instagram": "",
     "line": "youwayliu"
+  },
+  "company": {
+    "legalName": "",
+    "taxId": "",
+    "foodBusinessRegistrationNo": "",
+    "productLiabilityInsurance": "",
+    "address": ""
   },
   "shippingPolicy": {
     "freeShippingThreshold": 10000,

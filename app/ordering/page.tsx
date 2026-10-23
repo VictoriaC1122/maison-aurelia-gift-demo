@@ -10,7 +10,7 @@ const steps = [
 
 export const metadata = buildMetadata({
   title: "訂購流程",
-  description: "從挑選系列、確認規格到配送安排，一次掌握 Maison Aurelia 的完整訂購流程。",
+  description: "從挑選系列、確認規格到配送安排，一次掌握越金燕的完整訂購流程。",
   path: "/ordering"
 });
 

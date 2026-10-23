@@ -15,7 +15,9 @@ function resolveTitle(title?: string) {
     return site.metaTitle;
   }
 
-  return title.includes(site.brandName) ? title : `${title} | ${site.brandName}`;
+  return title.includes(site.brandNameZh) || title.includes(site.brandName)
+    ? title
+    : `${title}｜${site.brandNameZh}`;
 }
 
 export function buildMetadata({
@@ -47,13 +49,13 @@ export function buildMetadata({
       title: resolvedTitle,
       description: resolvedDescription,
       url: canonical,
-      siteName: site.brandName,
+      siteName: site.brandNameZh,
       locale: "zh_TW",
       type: "website",
       images: [
         {
           url: ogImage,
-          alt: site.brandName
+          alt: site.brandNameZh
         }
       ]
     },
@@ -77,8 +79,8 @@ export function buildSiteSchemas() {
     {
       "@context": "https://schema.org",
       "@type": "Organization",
-      name: site.brandName,
-      alternateName: site.brandNameZh,
+      name: site.brandNameZh,
+      alternateName: site.brandName,
       url: absoluteSiteUrl("/"),
       slogan: site.chineseSlogan,
       logo: absoluteSiteUrl(site.ogImage),

@@ -7,7 +7,7 @@ import { buildMetadata } from "@/lib/seo";
 
 export const metadata = buildMetadata({
   title: "下單表單",
-  description: "填寫收件與商品資訊，提交 Maison Aurelia 的燕禮詢價與下單需求。",
+  description: "填寫收件與商品資訊，提交越金燕的燕禮詢價與下單需求。",
   path: "/order"
 });
 

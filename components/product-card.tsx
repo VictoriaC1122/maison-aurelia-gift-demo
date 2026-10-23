@@ -55,7 +55,7 @@ export function ProductCard({ product }: { product: Product }) {
             </span>
             <span className="text-right">
               <span className="block text-[10px] uppercase tracking-[0.18em] text-ink/38">{product.price ? "售價" : "報價方式"}</span>
-              <strong className="product-card__price mt-1 block font-display text-[1.35rem] font-medium leading-none text-ink md:text-xl">{formatCurrency(product.price)}</strong>
+              <strong className="product-card__price mt-1 block font-display text-[1.35rem] font-medium leading-none text-ink md:text-xl">{formatCurrency(product.price, product.priceFrom)}</strong>
             </span>
           </div>
           <div className="product-card__actions grid gap-3 sm:grid-cols-2">

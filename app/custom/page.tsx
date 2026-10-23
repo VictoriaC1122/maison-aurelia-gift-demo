@@ -10,7 +10,7 @@ const items = [
 
 export const metadata = buildMetadata({
   title: "客製化方案",
-  description: "為企業贈禮、節慶活動與會員經營安排更合適的 Maison Aurelia 客製燕禮方案。",
+  description: "為企業贈禮、節慶活動與會員經營安排更合適的越金燕客製燕禮方案。",
   path: "/custom"
 });
 

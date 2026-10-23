@@ -18,6 +18,7 @@ import {
   contact,
   faqs,
   getCategory,
+  getFactoryCaption,
   getFeaturedProducts,
   getProductsByCategory,
   productContent,
@@ -156,7 +157,7 @@ export default function HomePage() {
         <FadeIn delay={0.08} className="home-hero__mood relative min-w-0 overflow-hidden rounded-[1.8rem] border border-white/55 bg-white/55 shadow-[0_24px_58px_rgba(37,26,19,0.12)]">
           <AutoImageRotator
             images={signatureProduct?.images ?? featured.flatMap((product) => product.images)}
-            alt={signatureProduct?.nameZh ?? "Maison Aurelia 燕禮精選"}
+            alt={signatureProduct?.nameZh ?? "越金燕 燕序精選"}
             priority
             intervalMs={5600}
             className="absolute inset-0"
@@ -294,7 +295,7 @@ export default function HomePage() {
                 >
                   <Image
                     src={withBasePath(image)}
-                    alt={`燕窩產地與工序影像 ${index + 1}`}
+                    alt={getFactoryCaption(image, index)}
                     fill
                     sizes={index === 0 ? "(max-width: 1024px) 100vw, 620px" : "(max-width: 1024px) 50vw, 300px"}
                     className="object-cover"
@@ -328,9 +329,9 @@ export default function HomePage() {
               controls
               playsInline
               preload="metadata"
-              poster={withBasePath(signatureProduct?.images[0] ?? "/assets/categories/benyang/S__75194507_0.jpg")}
+              poster={withBasePath(signatureProduct?.images[0] ?? "/assets/categories/benyang/S__75194507_0.webp")}
               className="aspect-video w-full rounded-[1.05rem] bg-black object-contain md:rounded-[1.3rem]"
-              aria-label="Maison Aurelia 品牌影片"
+              aria-label="越金燕品牌影片"
             >
               <source src={withBasePath("/assets/video/hero-film.mp4")} type="video/mp4" />
             </video>

@@ -35,6 +35,9 @@ jobs:
         run: npm run build
         env:
           GITHUB_PAGES: "true"
+          # 綁定自訂網域 yue-jin-yan.com 後，改成：
+          #   NEXT_PUBLIC_SITE_URL: "https://yue-jin-yan.com"
+          #   NEXT_PUBLIC_BASE_PATH: ""
           NEXT_PUBLIC_SITE_URL: "https://victoriac1122.github.io/maison-aurelia-gift-demo"
           NEXT_PUBLIC_BASE_PATH: "/maison-aurelia-gift-demo"
 

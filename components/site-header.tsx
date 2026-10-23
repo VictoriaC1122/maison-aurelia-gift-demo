@@ -29,6 +29,7 @@ export function SiteHeader() {
   const orderHref = productSlug ? `/order?product=${productSlug}` : "/order";
   const isOrderPage = /^\/order\/?$/.test(normalizedPathname);
   const isProductPage = Boolean(productSlug);
+  const isAdminPage = normalizedPathname.startsWith("/admin");
   const mobilePrimaryHref = normalizedPathname === "/" ? "/collections" : orderHref;
   const mobilePrimaryLabel = productSlug ? "選購" : normalizedPathname === "/" ? "選禮" : "下單";
 
@@ -38,9 +39,9 @@ export function SiteHeader() {
         <div className="mobile-header-main mx-auto grid w-[min(1240px,calc(100vw-24px))] grid-cols-[1fr_auto] items-center gap-3 py-3 md:w-[min(1240px,calc(100vw-48px))] xl:grid-cols-[auto_1fr_auto] xl:gap-5 xl:py-4">
           <Link href="/" className="flex min-w-0 flex-col">
             <span className="text-[10px] uppercase tracking-[0.35em] text-champagne md:text-[11px]">
-              {site.brandNameZh}
+              {site.brandName}
             </span>
-            <span className="truncate font-display text-lg text-ink md:text-2xl">{site.brandName}</span>
+            <span className="truncate font-display text-lg text-ink md:text-2xl">{site.brandNameZh}</span>
           </Link>
 
           <nav aria-label="主要導覽" className="hidden min-w-0 gap-3 overflow-x-auto whitespace-nowrap pb-1 text-sm text-ink/70 xl:flex xl:items-center xl:justify-center xl:overflow-visible xl:gap-5">
@@ -92,7 +93,7 @@ export function SiteHeader() {
           </div>
         </div>
       </header>
-      {!isOrderPage && !isProductPage ? (
+      {!isOrderPage && !isProductPage && !isAdminPage ? (
         <div className="mobile-dock md:hidden">
           <a href={`https://line.me/R/ti/p/~${contact.line}`} className="mobile-dock__item">
             <MessageCircleMore className="h-4 w-4" />

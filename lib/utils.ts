@@ -13,7 +13,7 @@ export function withBasePath(path: string) {
   return `${basePath}${path}`;
 }
 
-export function formatCurrency(value: string) {
+export function formatCurrency(value: string, from = false) {
   if (!value) {
     return "專人報價";
   }
@@ -23,11 +23,13 @@ export function formatCurrency(value: string) {
     return value;
   }
 
-  return new Intl.NumberFormat("zh-TW", {
+  const formatted = new Intl.NumberFormat("zh-TW", {
     style: "currency",
     currency: "TWD",
     maximumFractionDigits: 0
   }).format(numeric);
+
+  return from ? `${formatted} 起` : formatted;
 }
 
 export function formatDate(value: string) {

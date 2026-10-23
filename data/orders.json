@@ -1,13 +1,13 @@
 [
   {
-    "orderId": "MA-20260508-0001",
+    "orderId": "YJY-20260508-0001",
     "createdAt": "2026-05-08T10:00:00.000Z",
     "customerName": "Sample Client",
     "phone": "0900-000-000",
     "email": "sample@example.com",
     "lineId": "sampleline",
     "address": "台北市中山區精品路 1 號",
-    "productName": "Aurelia Essential Gift Box",
+    "productName": "燕序・本養 6 入禮盒",
     "category": "benyang",
     "quantity": 1,
     "option": "6 x 75ml",

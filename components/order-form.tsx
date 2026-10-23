@@ -15,10 +15,10 @@ import {
   ShieldCheck
 } from "lucide-react";
 import { contact } from "@/lib/content";
+import { isSupabaseConfigured, notifyNewOrder, submitOrder } from "@/lib/orders-client";
 import type { Product } from "@/lib/types";
 import { cn, formatCurrency, withBasePath } from "@/lib/utils";
 
-const DEMO_ORDER_KEY = "maison-aurelia-demo-orders";
 const CATEGORY_LABELS: Record<string, string> = {
   benyang: "燕序・本養",
   shenyang: "燕序・深養",
@@ -35,12 +35,6 @@ type CheckoutStep = (typeof CHECKOUT_STEPS)[number]["step"];
 
 function displaySpecification(value: string) {
   return value === "待補" ? "顧問確認" : value;
-}
-
-function buildDemoOrderId() {
-  const stamp = new Date().toISOString().slice(0, 10).replace(/-/g, "");
-  const serial = String(Date.now()).slice(-4);
-  return `DEMO-${stamp}-${serial}`;
 }
 
 type OrderFormState = {
@@ -124,6 +118,9 @@ export function OrderForm({ products, defaultProductSlug }: { products: Product[
   const [submitting, setSubmitting] = useState(false);
   const [successId, setSuccessId] = useState("");
   const [submitError, setSubmitError] = useState("");
+  const [consent, setConsent] = useState(false);
+  const [consentError, setConsentError] = useState("");
+  const [honeypot, setHoneypot] = useState("");
   const selectedProduct = products.find((product) => product.nameZh === form.productName) ?? defaultProduct;
   const minDeliveryDate = new Date().toISOString().split("T")[0];
 
@@ -190,22 +187,39 @@ export function OrderForm({ products, defaultProductSlug }: { products: Product[
       return;
     }
 
+    if (!consent) {
+      setConsentError("請先勾選同意隱私權政策與退換貨說明。");
+      setSubmitError("請先勾選同意隱私權政策與退換貨說明。");
+      focusField("consent" as keyof OrderFormState);
+      return;
+    }
+
+    // 機器人防護：隱藏欄位被填寫時不送出
+    if (honeypot) {
+      setSuccessId("YJY-RECEIVED");
+      return;
+    }
+
     setSubmitting(true);
     setSubmitError("");
 
     try {
-      const nextOrder = {
-        orderId: buildDemoOrderId(),
-        createdAt: new Date().toISOString(),
-        status: "pending",
-        ...form
+      const payload = {
+        ...form,
+        customerName: form.customerName.trim(),
+        phone: form.phone.trim(),
+        email: form.email.trim(),
+        lineId: form.lineId.trim(),
+        address: form.address.trim(),
+        note: form.note.trim()
       };
-      const currentOrders = JSON.parse(window.localStorage.getItem(DEMO_ORDER_KEY) ?? "[]") as Array<Record<string, unknown>>;
-      currentOrders.unshift(nextOrder);
-      window.localStorage.setItem(DEMO_ORDER_KEY, JSON.stringify(currentOrders));
-      setSuccessId(nextOrder.orderId);
+      const { orderId, live } = await submitOrder(payload);
+      if (live) {
+        await notifyNewOrder(orderId, payload);
+      }
+      setSuccessId(orderId);
     } catch {
-      setSubmitError("目前無法儲存你的表單資訊，請稍後再試一次。");
+      setSubmitError(`目前無法送出訂單，請稍後再試一次，或直接透過 LINE（${contact.line}）聯繫我們。`);
     } finally {
       setSubmitting(false);
     }
@@ -259,6 +273,11 @@ export function OrderForm({ products, defaultProductSlug }: { products: Product[
           <p className="mt-3 text-base leading-8 text-ink/62">
             訂單編號 <strong className="text-ink">{successId}</strong>。顧問將依你留下的品項與聯絡資料確認規格、交期與配送安排。
           </p>
+          {!isSupabaseConfigured ? (
+            <p className="mt-3 rounded-[1rem] border border-rosegold/20 bg-rosegold/10 px-4 py-3 text-sm leading-6 text-ink/70">
+              目前為展示模式，這筆資料只存在你的瀏覽器，並未送到店家。
+            </p>
+          ) : null}
         </div>
         <div className="mt-8 grid gap-3 sm:grid-cols-3">
           {[
@@ -329,6 +348,15 @@ export function OrderForm({ products, defaultProductSlug }: { products: Product[
         </nav>
 
         <form noValidate onSubmit={onSubmit} aria-busy={submitting} className="min-w-0">
+          {!isSupabaseConfigured ? (
+            <div className="mb-4 rounded-[1.15rem] border border-rosegold/20 bg-rosegold/10 px-4 py-3 text-sm leading-6 text-ink/72">
+              展示模式：訂單後台尚未連接，送出的資料只會存在這台裝置。正式訂購請先透過 LINE（{contact.line}）聯繫顧問。
+            </div>
+          ) : null}
+          <div aria-hidden="true" className="absolute -left-[9999px] h-px w-px overflow-hidden">
+            <label htmlFor="company-website">請勿填寫此欄位</label>
+            <input id="company-website" tabIndex={-1} autoComplete="off" value={honeypot} onChange={(event) => setHoneypot(event.target.value)} />
+          </div>
           {submitError ? (
             <div role="alert" className="mb-4 rounded-[1.15rem] border border-rosegold/18 bg-rosegold/10 px-4 py-3 text-sm text-ink/76">
               {submitError}
@@ -498,6 +526,31 @@ export function OrderForm({ products, defaultProductSlug }: { products: Product[
                 {fieldLabel("補充需求", "note", "選填")}
                 <textarea id="note" className="field min-h-[124px] resize-none" placeholder="例如：希望加購提袋、企業腰封、分批配送" aria-label="備註" value={form.note} onChange={(event) => updateField("note", event.target.value)} />
               </div>
+              <div className="mt-5 space-y-2">
+                <label htmlFor="consent" className="flex cursor-pointer items-start gap-3 rounded-[1.1rem] border border-champagne/14 bg-white/52 p-4 text-sm leading-7 text-ink/70">
+                  <input
+                    id="consent"
+                    type="checkbox"
+                    className="mt-1.5 h-4 w-4 shrink-0 accent-[#15120F]"
+                    checked={consent}
+                    aria-invalid={Boolean(consentError)}
+                    aria-describedby={consentError ? "consent-error" : undefined}
+                    onChange={(event) => {
+                      setConsent(event.target.checked);
+                      setConsentError("");
+                      setSubmitError("");
+                    }}
+                  />
+                  <span>
+                    我已閱讀並同意
+                    <Link href="/privacy" target="_blank" className="mx-1 underline decoration-champagne/50 underline-offset-4">隱私權政策</Link>
+                    與
+                    <Link href="/returns" target="_blank" className="ml-1 underline decoration-champagne/50 underline-offset-4">退換貨說明</Link>
+                    ，並同意店家以上述資料聯繫我確認訂單。
+                  </span>
+                </label>
+                {consentError ? <p id="consent-error" className="text-sm text-rosegold">{consentError}</p> : null}
+              </div>
               <div className="mt-5 flex items-start gap-3 rounded-[1.1rem] border border-champagne/14 bg-white/52 p-4 text-sm leading-7 text-ink/58">
                 <ShieldCheck aria-hidden="true" className="mt-1 h-5 w-5 shrink-0 text-champagne" />
                 <p id="order-submit-note">送出後不會立即付款；顧問會先確認規格、正式報價與配送日期。</p>
@@ -543,7 +596,7 @@ export function OrderForm({ products, defaultProductSlug }: { products: Product[
               </dl>
               <div className="flex items-end justify-between gap-4 border-y border-champagne/12 py-4">
                 <span className="text-xs uppercase tracking-[0.18em] text-ink/42">{selectedProduct.price ? "商品售價" : "報價方式"}</span>
-                <strong className="font-display text-xl text-ink">{formatCurrency(selectedProduct.price)}</strong>
+                <strong className="font-display text-xl text-ink">{formatCurrency(selectedProduct.price, selectedProduct.priceFrom)}</strong>
               </div>
               <Link href={`/products/${selectedProduct.slug}`} className="inline-flex min-h-[44px] w-full items-center justify-center rounded-full border border-champagne/25 text-sm text-ink transition hover:bg-white/75">
                 返回商品詳情

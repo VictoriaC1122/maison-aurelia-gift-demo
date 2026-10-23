@@ -5,7 +5,14 @@ import { ChevronRight } from "lucide-react";
 import { AutoImageRotator } from "@/components/auto-image-rotator";
 import { ProductCard } from "@/components/product-card";
 import { SectionHeading } from "@/components/section-heading";
-import { getCategories, getCategory, getProductsByCategory, productContent } from "@/lib/content";
+import { getCategories, getCategory, getFactoryCaption, getProductsByCategory, productContent } from "@/lib/content";
+
+const FACTORY_STEPS = [
+  { title: "燕屋築巢", text: "金絲燕在越南燕屋的木樑上，以唾液一層層築成燕窩。燕屋保持安靜、昏暗，讓燕子安心棲息。" },
+  { title: "人工採收", text: "燕窩由採收人員在燕屋內，以刮刀從木樑上逐一手工取下。" },
+  { title: "清潔整理", text: "採下的原燕盞經過清潔、挑毛與整形，成為一盞盞完整的燕盞與燕條。" },
+  { title: "製成燕序", text: "整理好的燕窩再製作成「燕序」本養、深養系列，裝入禮盒送到你手上。" }
+];
 import { buildMetadata } from "@/lib/seo";
 import { withBasePath } from "@/lib/utils";
 import Image from "next/image";
@@ -25,7 +32,7 @@ export async function generateMetadata({
   if (!category) {
     return buildMetadata({
       title: "商品系列",
-      description: "瀏覽 Maison Aurelia 的系列內容。",
+      description: "瀏覽越金燕的系列內容。",
       path: "/collections"
     });
   }
@@ -103,12 +110,28 @@ export default async function CollectionDetailPage({
 
       {isFactory ? (
         <section className="space-y-8">
-          <SectionHeading eyebrow="Origin Gallery" title="越南燕廠故事與溯源影像" />
+          <SectionHeading
+            eyebrow="From Swiftlet House to Gift Box"
+            title="從燕屋到燕盞"
+            description="越金燕的燕窩來自越南燕屋。以下是燕屋、採收與整理過程的實拍照片，讓你在挑選前看見每一盞燕窩的來處。"
+          />
+          <ol className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+            {FACTORY_STEPS.map((step, index) => (
+              <li key={step.title} className="glass-panel p-5 md:p-6">
+                <p className="text-[11px] uppercase tracking-[0.28em] text-champagne">Step {index + 1}</p>
+                <h3 className="mt-3 font-display text-2xl text-ink">{step.title}</h3>
+                <p className="mt-3 text-[0.97rem] leading-8 text-ink/66">{step.text}</p>
+              </li>
+            ))}
+          </ol>
           <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-            {productContent.factoryGallery.map((image) => (
-              <div key={image} className="glass-panel relative aspect-[4/3] overflow-hidden">
-                <Image src={withBasePath(image)} alt="factory image" fill sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 360px" className="object-cover" />
-              </div>
+            {productContent.factoryGallery.map((image, index) => (
+              <figure key={image} className="glass-panel overflow-hidden">
+                <div className="relative aspect-[4/3]">
+                  <Image src={withBasePath(image)} alt={getFactoryCaption(image, index)} fill sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 360px" className="object-cover" />
+                </div>
+                <figcaption className="px-5 py-4 text-sm text-ink/66">{getFactoryCaption(image, index)}</figcaption>
+              </figure>
             ))}
           </div>
         </section>

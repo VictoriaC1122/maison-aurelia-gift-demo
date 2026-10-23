@@ -29,6 +29,10 @@ export function getFeaturedProducts() {
   return productContent.products.slice(0, 3);
 }
 
+export function getFactoryCaption(image: string, index = 0) {
+  return productContent.factoryCaptions?.[image] ?? `越南燕廠實景 ${index + 1}`;
+}
+
 export function getProductsByCategory(category: string) {
   return productContent.products.filter((product) => product.category === category);
 }

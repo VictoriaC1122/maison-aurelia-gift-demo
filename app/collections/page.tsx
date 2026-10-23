@@ -6,7 +6,7 @@ import { buildMetadata } from "@/lib/seo";
 
 export const metadata = buildMetadata({
   title: "商品系列",
-  description: "依系列快速瀏覽 Maison Aurelia 的本養、深養與產地故事內容。",
+  description: "依系列快速瀏覽越金燕的本養、深養與產地故事內容。",
   path: "/collections"
 });
 

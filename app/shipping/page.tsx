@@ -4,7 +4,7 @@ import { buildMetadata } from "@/lib/seo";
 
 export const metadata = buildMetadata({
   title: "配送與運費",
-  description: "查看 Maison Aurelia 的宅配運費、免運門檻與企業多點配送安排。",
+  description: "查看越金燕的宅配運費、免運門檻與企業多點配送安排。",
   path: "/shipping"
 });
 

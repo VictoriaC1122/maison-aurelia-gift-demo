@@ -4,7 +4,7 @@ import { buildMetadata } from "@/lib/seo";
 
 export const metadata = buildMetadata({
   title: "常見問題",
-  description: "快速查閱 Maison Aurelia 的交期、客製、配送與訂購常見問題。",
+  description: "快速查閱越金燕的交期、客製、配送與訂購常見問題。",
   path: "/faq"
 });
 

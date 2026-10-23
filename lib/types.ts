@@ -14,6 +14,20 @@ export type Category = {
   sourceFolder: string;
 };
 
+export type ProductDetails = {
+  netContent?: string;
+  nestContent?: string;
+  ingredients?: string;
+  sweetness?: string;
+  howToEnjoy?: string;
+  storage?: string;
+  shelfLife?: string;
+  origin?: string;
+  manufacturer?: string;
+  allergens?: string;
+  nutrition?: string;
+};
+
 export type Product = {
   slug: string;
   name: string;
@@ -22,15 +36,18 @@ export type Product = {
   summary: string;
   features: string[];
   price: string;
+  priceFrom?: boolean;
   specification: string;
   images: string[];
   placeholder: boolean;
+  details?: ProductDetails;
 };
 
 export type ProductsData = {
   categories: Category[];
   products: Product[];
   factoryGallery: string[];
+  factoryCaptions?: Record<string, string>;
 };
 
 export type ContactData = {
@@ -57,6 +74,13 @@ export type SiteData = {
     instagram: string;
     line: string;
   };
+  company: {
+    legalName: string;
+    taxId: string;
+    foodBusinessRegistrationNo: string;
+    productLiabilityInsurance: string;
+    address: string;
+  };
   shippingPolicy: {
     freeShippingThreshold: number;
     standardShippingFee: number;
@@ -79,6 +103,7 @@ export type OrderRecord = {
   preferredDeliveryDate: string;
   note: string;
   status: OrderStatus;
+  adminNote?: string;
 };
 
 export type OrderInput = Omit<OrderRecord, "orderId" | "createdAt" | "status"> & {

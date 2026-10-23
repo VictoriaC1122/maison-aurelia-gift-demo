@@ -6,7 +6,22 @@ import { ProductGallery } from "@/components/product-gallery";
 import { StructuredData } from "@/components/structured-data";
 import { contact, getCategory, getProduct, getProducts } from "@/lib/content";
 import { buildMetadata, buildProductSchema } from "@/lib/seo";
+import type { ProductDetails } from "@/lib/types";
 import { formatCurrency } from "@/lib/utils";
+
+const DETAIL_LABELS: Array<[keyof ProductDetails, string]> = [
+  ["netContent", "容量／入數"],
+  ["nestContent", "每瓶燕窩含量"],
+  ["ingredients", "成分"],
+  ["sweetness", "甜度"],
+  ["howToEnjoy", "食用方式"],
+  ["storage", "保存方式"],
+  ["shelfLife", "保存期限"],
+  ["origin", "原產地"],
+  ["manufacturer", "製造廠商"],
+  ["allergens", "過敏原資訊"],
+  ["nutrition", "營養標示"]
+];
 
 export function generateStaticParams() {
   return getProducts().map((product) => ({ slug: product.slug }));
@@ -23,7 +38,7 @@ export async function generateMetadata({
   if (!product) {
     return buildMetadata({
       title: "商品詳情",
-      description: "查看 Maison Aurelia 的商品內容。",
+      description: "查看越金燕的商品內容。",
       path: "/collections"
     });
   }
@@ -46,6 +61,9 @@ export default async function ProductDetailPage({
   if (!product) notFound();
   const category = getCategory(product.category);
   const specification = product.specification === "待補" ? "顧問確認" : product.specification;
+  const details = DETAIL_LABELS.map(([key, label]) => [label, product.details?.[key]?.trim() ?? ""] as const).filter(
+    ([, value]) => value
+  );
 
   return (
     <>
@@ -85,7 +103,7 @@ export default async function ProductDetailPage({
           <div className="flex flex-col gap-2 border-y border-champagne/15 py-5 sm:flex-row sm:items-end sm:justify-between">
             <div>
               <p className="text-[11px] uppercase tracking-[0.24em] text-champagne">{product.price ? "商品售價" : "報價方式"}</p>
-              <strong className="mt-2 block font-display text-2xl">{formatCurrency(product.price)}</strong>
+              <strong className="mt-2 block font-display text-2xl">{formatCurrency(product.price, product.priceFrom)}</strong>
             </div>
             <p className="max-w-[16rem] text-sm leading-6 text-ink/52 sm:text-right">選入訂購單後，再確認數量、規格與希望日期。</p>
           </div>
@@ -99,6 +117,19 @@ export default async function ProductDetailPage({
               </li>
             ))}
           </ul>
+          {details.length > 0 ? (
+            <section aria-labelledby="product-details-title" className="rounded-[1.2rem] border border-champagne/14 bg-white/50 p-4 md:p-5">
+              <h2 id="product-details-title" className="text-[11px] uppercase tracking-[0.24em] text-champagne">商品資訊</h2>
+              <dl className="mt-3 divide-y divide-champagne/12 text-sm">
+                {details.map(([label, value]) => (
+                  <div key={label} className="grid grid-cols-[6.5rem_minmax(0,1fr)] gap-3 py-2.5">
+                    <dt className="text-ink/48">{label}</dt>
+                    <dd className="whitespace-pre-line break-words text-ink/76">{value}</dd>
+                  </div>
+                ))}
+              </dl>
+            </section>
+          ) : null}
           <div className="grid gap-3 sm:grid-cols-3">
             <Link href="/ordering" className="rounded-[1.1rem] border border-champagne/14 bg-cream/42 p-4 transition hover:bg-white/75">
               <PackageCheck aria-hidden="true" className="h-5 w-5 text-champagne" />
@@ -132,7 +163,7 @@ export default async function ProductDetailPage({
       <div className="product-mobile-dock md:hidden">
         <div className="min-w-0">
           <span className="block truncate text-[10px] uppercase tracking-[0.14em] text-ink/42">{specification}</span>
-          <strong className="mt-1 block truncate font-display text-base font-medium leading-none text-ink">{formatCurrency(product.price)}</strong>
+          <strong className="mt-1 block truncate font-display text-base font-medium leading-none text-ink">{formatCurrency(product.price, product.priceFrom)}</strong>
         </div>
         <Link href={`/order?product=${product.slug}`} className="inline-flex min-h-[50px] shrink-0 items-center justify-center rounded-full bg-ink px-6 text-sm text-pearl active:scale-[0.98]">
           選入訂購單

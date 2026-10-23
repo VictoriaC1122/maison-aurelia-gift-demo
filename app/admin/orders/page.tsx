@@ -5,7 +5,7 @@ import { buildMetadata } from "@/lib/seo";
 
 export const metadata = buildMetadata({
   title: "訂單管理",
-  description: "檢視 Maison Aurelia 展示站的訂單列表、搜尋結果與狀態管理。",
+  description: "檢視越金燕展示站的訂單列表、搜尋結果與狀態管理。",
   path: "/admin/orders",
   noIndex: true
 });
