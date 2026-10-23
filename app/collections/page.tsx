@@ -14,18 +14,6 @@ export default function CollectionsPage() {
   return (
     <main id="main-content" className="shell space-y-8 py-10 md:py-16">
       <SectionHeading as="h1" eyebrow="Collections" title="商品系列" description="依送禮情境與風味深度，瀏覽本養、深養與產地系列。" />
-      <div className="grid gap-4 md:grid-cols-3">
-        {[
-          { label: "系列", value: String(getCategories().length) },
-          { label: "顧問服務", value: "Private Concierge" },
-          { label: "配送方式", value: "預約安排" }
-        ].map((item) => (
-          <div key={item.label} className="glass-panel p-5">
-            <p className="text-[11px] uppercase tracking-[0.24em] text-champagne">{item.label}</p>
-            <p className="mt-2 text-[1.08rem] leading-7 text-ink/74">{item.value}</p>
-          </div>
-        ))}
-      </div>
       <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
         {getCategories().map((category) => (
           <Link key={category.slug} href={`/collections/${category.slug}`} className="collection-card glass-panel group overflow-hidden">

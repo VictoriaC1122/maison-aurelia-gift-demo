@@ -20,6 +20,24 @@
   "shippingPolicy": {
     "freeShippingThreshold": 10000,
     "standardShippingFee": 280,
+    "cvsShippingFee": null,
     "customNotes": "大量企業贈禮、節慶禮盒與客製方案可另外報價。"
+  },
+  "delivery": {
+    "home": true,
+    "cvs_711": true,
+    "cvs_family": true
+  },
+  "payment": {
+    "bank_transfer": true,
+    "cod": true,
+    "bankAccount": {
+      "bankName": "",
+      "bankCode": "",
+      "branch": "",
+      "accountNumber": "",
+      "accountName": ""
+    },
+    "transferDeadlineDays": 3
   }
 }

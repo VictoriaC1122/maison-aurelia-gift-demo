@@ -7,16 +7,44 @@ import {
   DEMO_ORDER_KEY,
   ORDER_STATUSES,
   ORDER_STATUS_LABELS,
+  PAYMENT_STATUSES,
+  PAYMENT_STATUS_LABELS,
   checkIsAdmin,
   fetchOrders,
   isSupabaseConfigured,
-  updateOrder
+  updateOrder,
+  type OrderPatch
 } from "@/lib/orders-client";
+import { deliveryLabel, paymentLabel } from "@/lib/commerce";
+import { formatTWD } from "@/lib/pricing";
 import { getSupabase } from "@/lib/supabase";
-import type { OrderRecord, OrderStatus } from "@/lib/types";
+import type { OrderRecord, OrderStatus, PaymentStatus } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
 type AuthState = "checking" | "signed-out" | "not-admin" | "ready";
+
+type Draft = {
+  adminNote: string;
+  quotedTotal: string;
+  paymentStatus: PaymentStatus;
+  trackingNumber: string;
+};
+
+function draftFrom(order: OrderRecord): Draft {
+  return {
+    adminNote: order.adminNote ?? "",
+    quotedTotal: order.quotedTotal === null || order.quotedTotal === undefined ? "" : String(order.quotedTotal),
+    paymentStatus: order.paymentStatus ?? "unpaid",
+    trackingNumber: order.trackingNumber ?? ""
+  };
+}
+
+const PAYMENT_STYLES: Record<PaymentStatus, string> = {
+  unpaid: "text-ink/55",
+  reported: "text-[#a2533f]",
+  paid: "text-[#3f6a45]",
+  refunded: "text-ink/45"
+};
 
 const STATUS_STYLES: Record<OrderStatus, string> = {
   pending: "bg-rosegold/14 text-[#8a5544]",
@@ -57,8 +85,9 @@ export function AdminOrdersClient({ initialOrders }: { initialOrders: OrderRecor
   const [query, setQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState<OrderStatus | "all">("all");
   const [expanded, setExpanded] = useState<string | null>(null);
-  const [noteDrafts, setNoteDrafts] = useState<Record<string, string>>({});
-  const [savingNote, setSavingNote] = useState<string | null>(null);
+  const [drafts, setDrafts] = useState<Record<string, Draft>>({});
+  const [saving, setSaving] = useState<string | null>(null);
+  const [savedId, setSavedId] = useState<string | null>(null);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [signingIn, setSigningIn] = useState(false);
@@ -141,16 +170,37 @@ export function AdminOrdersClient({ initialOrders }: { initialOrders: OrderRecor
     }
   }
 
-  async function saveNote(orderId: string) {
-    const adminNote = noteDrafts[orderId] ?? "";
-    setSavingNote(orderId);
+  async function saveDetails(orderId: string) {
+    const draft = drafts[orderId];
+    if (!draft) return;
+    const amount = draft.quotedTotal.trim() === "" ? null : Math.round(Number(draft.quotedTotal.replace(/[^\d.]/g, "")));
+    if (amount !== null && !Number.isFinite(amount)) {
+      setError("應付金額請輸入數字。");
+      return;
+    }
+    const patch: OrderPatch = {
+      adminNote: draft.adminNote,
+      quotedTotal: amount,
+      paymentStatus: draft.paymentStatus,
+      trackingNumber: draft.trackingNumber.trim()
+    };
+    setSaving(orderId);
+    setError("");
     try {
-      if (isSupabaseConfigured) await updateOrder(orderId, { adminNote });
-      setOrders((current) => current.map((order) => (order.orderId === orderId ? { ...order, adminNote } : order)));
+      if (isSupabaseConfigured) await updateOrder(orderId, patch);
+      setOrders((current) =>
+        current.map((order) =>
+          order.orderId === orderId
+            ? { ...order, adminNote: patch.adminNote, quotedTotal: amount, paymentStatus: patch.paymentStatus, trackingNumber: patch.trackingNumber }
+            : order
+        )
+      );
+      setSavedId(orderId);
+      window.setTimeout(() => setSavedId((current) => (current === orderId ? null : current)), 2000);
     } catch {
-      setError("備註儲存失敗，請再試一次。");
+      setError("儲存失敗，請再試一次。");
     } finally {
-      setSavingNote(null);
+      setSaving(null);
     }
   }
 
@@ -183,8 +233,13 @@ export function AdminOrdersClient({ initialOrders }: { initialOrders: OrderRecor
       ["lineId", "LINE"],
       ["address", "地址"],
       ["productName", "商品"],
-      ["option", "規格"],
       ["quantity", "數量"],
+      ["deliveryMethod", "配送方式"],
+      ["paymentMethod", "付款方式"],
+      ["paymentStatus", "付款狀態"],
+      ["paymentLast5", "匯款後五碼"],
+      ["quotedTotal", "應付金額"],
+      ["trackingNumber", "物流單號"],
       ["preferredDeliveryDate", "希望配送日期"],
       ["note", "客人備註"],
       ["adminNote", "內部備註"]
@@ -193,6 +248,9 @@ export function AdminOrdersClient({ initialOrders }: { initialOrders: OrderRecor
       let value = String(order[key] ?? "");
       if (key === "createdAt" && value) value = formatDateTime(value);
       if (key === "status") value = ORDER_STATUS_LABELS[order.status] ?? value;
+      if (key === "deliveryMethod") value = deliveryLabel(order.deliveryMethod);
+      if (key === "paymentMethod") value = paymentLabel(order.paymentMethod);
+      if (key === "paymentStatus") value = PAYMENT_STATUS_LABELS[order.paymentStatus ?? "unpaid"];
       return `"${value.replace(/"/g, '""')}"`;
     };
     const csv = [
@@ -321,7 +379,10 @@ export function AdminOrdersClient({ initialOrders }: { initialOrders: OrderRecor
                   </div>
                   <div className="min-w-0">
                     <p className="truncate text-sm text-ink">{order.productName}</p>
-                    <p className="text-xs text-ink/50">{order.option}・x {order.quantity}</p>
+                    <p className="text-xs text-ink/50">
+                      共 {order.quantity} 件・{deliveryLabel(order.deliveryMethod)}・
+                      <span className={PAYMENT_STYLES[order.paymentStatus ?? "unpaid"]}>{PAYMENT_STATUS_LABELS[order.paymentStatus ?? "unpaid"]}</span>
+                    </p>
                   </div>
                   <div className="flex items-center gap-2">
                     <label htmlFor={`status-${order.orderId}`} className="sr-only">訂單狀態</label>
@@ -341,7 +402,7 @@ export function AdminOrdersClient({ initialOrders }: { initialOrders: OrderRecor
                       aria-label={isOpen ? "收合詳情" : "查看詳情"}
                       onClick={() => {
                         setExpanded(isOpen ? null : order.orderId);
-                        setNoteDrafts((current) => ({ ...current, [order.orderId]: current[order.orderId] ?? order.adminNote ?? "" }));
+                        setDrafts((current) => ({ ...current, [order.orderId]: current[order.orderId] ?? draftFrom(order) }));
                       }}
                       className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-champagne/25 text-ink/60 transition hover:bg-white"
                     >
@@ -350,31 +411,88 @@ export function AdminOrdersClient({ initialOrders }: { initialOrders: OrderRecor
                   </div>
                 </div>
                 {isOpen ? (
-                  <div className="grid gap-5 border-t border-champagne/14 bg-cream/30 p-4 text-sm md:grid-cols-2 md:p-5">
-                    <dl className="space-y-3">
-                      <div><dt className="text-xs text-ink/45">Email</dt><dd className="mt-1 break-all"><a href={`mailto:${order.email}`} className="underline-offset-4 hover:underline">{order.email}</a></dd></div>
-                      <div><dt className="text-xs text-ink/45">LINE</dt><dd className="mt-1">{order.lineId || "未填"}</dd></div>
-                      <div><dt className="text-xs text-ink/45">收件地址</dt><dd className="mt-1 break-words">{order.address}</dd></div>
-                      <div><dt className="text-xs text-ink/45">希望配送日期</dt><dd className="mt-1">{order.preferredDeliveryDate || "未指定"}</dd></div>
-                      <div><dt className="text-xs text-ink/45">客人備註</dt><dd className="mt-1 whitespace-pre-wrap break-words">{order.note || "無"}</dd></div>
-                    </dl>
-                    <div className="field-group">
-                      <label htmlFor={`note-${order.orderId}`} className="field-label">內部備註（客人看不到）</label>
-                      <textarea
-                        id={`note-${order.orderId}`}
-                        className="field min-h-[140px] resize-y"
-                        placeholder="例如：已報價 NT$...、已匯款、宅配單號..."
-                        value={noteDrafts[order.orderId] ?? ""}
-                        onChange={(event) => setNoteDrafts((current) => ({ ...current, [order.orderId]: event.target.value }))}
-                      />
-                      <button
-                        type="button"
-                        disabled={savingNote === order.orderId}
-                        onClick={() => void saveNote(order.orderId)}
-                        className="mt-2 inline-flex min-h-[44px] items-center justify-center rounded-full bg-ink px-5 text-sm text-pearl disabled:opacity-50"
-                      >
-                        {savingNote === order.orderId ? "儲存中..." : "儲存備註"}
-                      </button>
+                  <div className="grid gap-6 border-t border-champagne/14 bg-cream/30 p-4 text-sm md:grid-cols-2 md:p-5">
+                    <div className="space-y-4">
+                      {order.items && order.items.length > 0 ? (
+                        <div>
+                          <p className="text-xs text-ink/45">商品明細</p>
+                          <ul className="mt-1 divide-y divide-champagne/12 rounded-xl border border-champagne/14 bg-white/60 px-3">
+                            {order.items.map((item) => (
+                              <li key={`${item.slug}-${item.name}`} className="flex justify-between gap-3 py-2">
+                                <span>{item.name}<span className="ml-1 text-xs text-ink/45">{item.spec}</span></span>
+                                <span>x {item.quantity}{item.unitPrice ? `・${formatTWD(item.unitPrice * item.quantity)}` : ""}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      ) : null}
+                      <dl className="grid gap-3 sm:grid-cols-2">
+                        <div><dt className="text-xs text-ink/45">Email</dt><dd className="mt-1 break-all"><a href={`mailto:${order.email}`} className="underline-offset-4 hover:underline">{order.email}</a></dd></div>
+                        <div><dt className="text-xs text-ink/45">LINE</dt><dd className="mt-1">{order.lineId || "未填"}</dd></div>
+                        <div><dt className="text-xs text-ink/45">配送方式</dt><dd className="mt-1">{deliveryLabel(order.deliveryMethod)}</dd></div>
+                        <div><dt className="text-xs text-ink/45">付款方式</dt><dd className="mt-1">{paymentLabel(order.paymentMethod)}{order.paymentLast5 ? `（後五碼 ${order.paymentLast5}）` : ""}</dd></div>
+                        <div className="sm:col-span-2"><dt className="text-xs text-ink/45">收件地址／門市</dt><dd className="mt-1 break-words">{order.address}</dd></div>
+                        <div><dt className="text-xs text-ink/45">希望到貨日</dt><dd className="mt-1">{order.preferredDeliveryDate || "未指定"}</dd></div>
+                        <div className="sm:col-span-2"><dt className="text-xs text-ink/45">客人備註</dt><dd className="mt-1 whitespace-pre-wrap break-words">{order.note || "無"}</dd></div>
+                      </dl>
+                    </div>
+                    <div className="space-y-3">
+                      <p className="text-xs text-ink/45">訂單處理（應付金額、付款狀態與物流單號會顯示在客人的訂單查詢頁）</p>
+                      <div className="grid gap-3 sm:grid-cols-2">
+                        <div className="field-group">
+                          <label htmlFor={`total-${order.orderId}`} className="field-label">應付金額（含運）</label>
+                          <input
+                            id={`total-${order.orderId}`}
+                            className="field"
+                            inputMode="numeric"
+                            placeholder="例如 6880"
+                            value={drafts[order.orderId]?.quotedTotal ?? ""}
+                            onChange={(event) => setDrafts((current) => ({ ...current, [order.orderId]: { ...(current[order.orderId] ?? draftFrom(order)), quotedTotal: event.target.value } }))}
+                          />
+                        </div>
+                        <div className="field-group">
+                          <label htmlFor={`pay-${order.orderId}`} className="field-label">付款狀態</label>
+                          <select
+                            id={`pay-${order.orderId}`}
+                            className="field"
+                            value={drafts[order.orderId]?.paymentStatus ?? "unpaid"}
+                            onChange={(event) => setDrafts((current) => ({ ...current, [order.orderId]: { ...(current[order.orderId] ?? draftFrom(order)), paymentStatus: event.target.value as PaymentStatus } }))}
+                          >
+                            {PAYMENT_STATUSES.map((status) => <option key={status} value={status}>{PAYMENT_STATUS_LABELS[status]}</option>)}
+                          </select>
+                        </div>
+                        <div className="field-group sm:col-span-2">
+                          <label htmlFor={`track-${order.orderId}`} className="field-label">物流單號</label>
+                          <input
+                            id={`track-${order.orderId}`}
+                            className="field"
+                            placeholder="出貨後填寫"
+                            value={drafts[order.orderId]?.trackingNumber ?? ""}
+                            onChange={(event) => setDrafts((current) => ({ ...current, [order.orderId]: { ...(current[order.orderId] ?? draftFrom(order)), trackingNumber: event.target.value } }))}
+                          />
+                        </div>
+                      </div>
+                      <div className="field-group">
+                        <label htmlFor={`note-${order.orderId}`} className="field-label">內部備註（客人看不到）</label>
+                        <textarea
+                          id={`note-${order.orderId}`}
+                          className="field min-h-[110px] resize-y"
+                          placeholder="例如：已電話確認、要附提袋…"
+                          value={drafts[order.orderId]?.adminNote ?? ""}
+                          onChange={(event) => setDrafts((current) => ({ ...current, [order.orderId]: { ...(current[order.orderId] ?? draftFrom(order)), adminNote: event.target.value } }))}
+                        />
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <button
+                          type="button"
+                          disabled={saving === order.orderId}
+                          onClick={() => void saveDetails(order.orderId)}
+                          className="inline-flex min-h-[44px] items-center justify-center rounded-full bg-ink px-6 text-sm text-pearl disabled:opacity-50"
+                        >
+                          {saving === order.orderId ? "儲存中..." : "儲存"}
+                        </button>
+                        {savedId === order.orderId ? <span className="text-sm text-[#3f6a45]">已儲存</span> : null}
+                      </div>
                     </div>
                   </div>
                 ) : null}

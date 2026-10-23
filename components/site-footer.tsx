@@ -16,16 +16,23 @@ export function SiteFooter() {
           <p className="text-xs uppercase tracking-[0.35em] text-champagne">{site.brandName}</p>
           <h2 className="font-display text-[2rem] leading-[1.02] md:text-3xl">{site.brandNameZh}</h2>
           <p className="max-w-md text-sm leading-7 text-pearl/72">{site.chineseSlogan}</p>
+          <ul className="flex flex-wrap gap-2 pt-2 text-[11px] text-pearl/70">
+            {["宅配到府", "7-11 取貨", "全家取貨", "銀行轉帳", "貨到付款"].map((label) => (
+              <li key={label} className="rounded-full border border-pearl/15 px-3 py-1">{label}</li>
+            ))}
+          </ul>
         </div>
         <div className="footer-group grid gap-3 text-sm text-pearl/72">
-          <p className="font-display text-lg text-pearl">Explore</p>
+          <p className="font-display text-lg text-pearl">選購</p>
+          <Link href="/products" className="footer-link transition hover:text-pearl">全部商品</Link>
+          <Link href="/collections/factory" className="footer-link transition hover:text-pearl">產地故事</Link>
+          <Link href="/custom" className="footer-link transition hover:text-pearl">企業禮贈</Link>
           <Link href="/about" className="footer-link transition hover:text-pearl">品牌故事</Link>
-          <Link href="/collections" className="footer-link transition hover:text-pearl">商品系列</Link>
-          <Link href="/custom" className="footer-link transition hover:text-pearl">客製化方案</Link>
         </div>
         <div className="footer-group grid gap-3 text-sm text-pearl/72">
-          <p className="font-display text-lg text-pearl">Service</p>
-          <Link href="/ordering" className="footer-link transition hover:text-pearl">訂購流程</Link>
+          <p className="font-display text-lg text-pearl">顧客服務</p>
+          <Link href="/track" className="footer-link transition hover:text-pearl">訂單查詢</Link>
+          <Link href="/ordering" className="footer-link transition hover:text-pearl">購物說明</Link>
           <Link href="/shipping" className="footer-link transition hover:text-pearl">配送與運費</Link>
           <Link href="/faq" className="footer-link transition hover:text-pearl">常見問題</Link>
           <Link href="/returns" className="footer-link transition hover:text-pearl">退換貨說明</Link>
@@ -33,7 +40,7 @@ export function SiteFooter() {
           <Link href="/contact" className="footer-link transition hover:text-pearl">聯絡我們</Link>
         </div>
         <div className="footer-group grid gap-3 text-sm text-pearl/72">
-          <p className="font-display text-lg text-pearl">Contact</p>
+          <p className="font-display text-lg text-pearl">聯絡資訊</p>
           <p>{contact.name}</p>
           <a href={`tel:${contact.phone.replace(/\s+/g, "")}`} className="footer-link transition hover:text-pearl">{contact.phone}</a>
           <a href={`mailto:${contact.email}`} className="footer-link break-all transition hover:text-pearl">{contact.email}</a>

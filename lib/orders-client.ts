@@ -1,28 +1,36 @@
+import { deliveryLabel, paymentLabel } from "@/lib/commerce";
 import { getSupabase, isSupabaseConfigured } from "@/lib/supabase";
-import type { OrderRecord, OrderStatus } from "@/lib/types";
+import type {
+  DeliveryMethod,
+  OrderItem,
+  OrderRecord,
+  OrderStatus,
+  PaymentMethod,
+  PaymentStatus
+} from "@/lib/types";
+
+export { ORDER_STATUSES, ORDER_STATUS_LABELS, PAYMENT_STATUSES, PAYMENT_STATUS_LABELS } from "@/lib/commerce";
 
 export const DEMO_ORDER_KEY = "yuajinyan-demo-orders";
 
-export const ORDER_STATUS_LABELS: Record<OrderStatus, string> = {
-  pending: "待確認",
-  confirmed: "已確認",
-  shipped: "已出貨",
-  completed: "已完成",
-  cancelled: "已取消"
+export type DeliveryDetails = {
+  zip?: string;
+  city?: string;
+  district?: string;
+  detail?: string;
+  storeId?: string;
+  storeName?: string;
 };
 
-export const ORDER_STATUSES = Object.keys(ORDER_STATUS_LABELS) as OrderStatus[];
-
-export type OrderPayload = {
+export type CheckoutPayload = {
   customerName: string;
   phone: string;
   email: string;
   lineId: string;
-  address: string;
-  productName: string;
-  category: string;
-  quantity: number;
-  option: string;
+  items: OrderItem[];
+  deliveryMethod: DeliveryMethod;
+  delivery: DeliveryDetails;
+  paymentMethod: PaymentMethod;
   preferredDeliveryDate: string;
   note: string;
 };
@@ -43,6 +51,29 @@ type OrderRow = {
   note: string | null;
   status: OrderStatus;
   admin_note: string | null;
+  items: OrderItem[] | null;
+  delivery_method: DeliveryMethod | null;
+  payment_method: PaymentMethod | null;
+  payment_status: PaymentStatus | null;
+  payment_last5: string | null;
+  quoted_total: number | null;
+  tracking_number: string | null;
+};
+
+export type TrackedOrder = {
+  orderId: string;
+  createdAt: string;
+  status: OrderStatus;
+  productName: string;
+  quantity: number;
+  items: OrderItem[];
+  deliveryMethod: DeliveryMethod;
+  paymentMethod: PaymentMethod;
+  paymentStatus: PaymentStatus;
+  paymentLast5: string;
+  quotedTotal: number | null;
+  trackingNumber: string;
+  preferredDeliveryDate: string;
 };
 
 function rowToOrder(row: OrderRow): OrderRecord {
@@ -61,8 +92,29 @@ function rowToOrder(row: OrderRow): OrderRecord {
     preferredDeliveryDate: row.preferred_delivery_date ?? "",
     note: row.note ?? "",
     status: row.status,
-    adminNote: row.admin_note ?? ""
+    adminNote: row.admin_note ?? "",
+    items: row.items ?? [],
+    deliveryMethod: row.delivery_method ?? "home",
+    paymentMethod: row.payment_method ?? "bank_transfer",
+    paymentStatus: row.payment_status ?? "unpaid",
+    paymentLast5: row.payment_last5 ?? "",
+    quotedTotal: row.quoted_total,
+    trackingNumber: row.tracking_number ?? ""
   };
+}
+
+export function formatDeliveryAddress(method: DeliveryMethod, delivery: DeliveryDetails) {
+  if (method === "home") {
+    return [delivery.zip, `${delivery.city ?? ""}${delivery.district ?? ""}${delivery.detail ?? ""}`]
+      .filter(Boolean)
+      .join(" ");
+  }
+  const brand = method === "cvs_711" ? "7-ELEVEN" : "全家";
+  return `${brand} ${delivery.storeName ?? ""}門市（店號 ${delivery.storeId ?? ""}）`;
+}
+
+function itemSummary(items: OrderItem[]) {
+  return items.map((item) => `${item.name} x${item.quantity}`).join("、");
 }
 
 function buildDemoOrderId() {
@@ -71,8 +123,16 @@ function buildDemoOrderId() {
   return `DEMO-${stamp}-${serial}`;
 }
 
+function readDemoOrders() {
+  try {
+    return JSON.parse(window.localStorage.getItem(DEMO_ORDER_KEY) ?? "[]") as OrderRecord[];
+  } catch {
+    return [];
+  }
+}
+
 /** 送出訂單：已連接 Supabase 時寫入資料庫，否則存在瀏覽器（展示模式）。 */
-export async function submitOrder(payload: OrderPayload): Promise<{ orderId: string; live: boolean }> {
+export async function submitOrder(payload: CheckoutPayload): Promise<{ orderId: string; live: boolean }> {
   const supabase = getSupabase();
 
   if (supabase) {
@@ -87,21 +147,42 @@ export async function submitOrder(payload: OrderPayload): Promise<{ orderId: str
     orderId: buildDemoOrderId(),
     createdAt: new Date().toISOString(),
     status: "pending",
-    ...payload
+    customerName: payload.customerName,
+    phone: payload.phone,
+    email: payload.email,
+    lineId: payload.lineId,
+    address: formatDeliveryAddress(payload.deliveryMethod, payload.delivery),
+    productName: itemSummary(payload.items),
+    category: "",
+    quantity: payload.items.reduce((sum, item) => sum + item.quantity, 0),
+    option: "",
+    preferredDeliveryDate: payload.preferredDeliveryDate,
+    note: payload.note,
+    items: payload.items,
+    deliveryMethod: payload.deliveryMethod,
+    paymentMethod: payload.paymentMethod,
+    paymentStatus: "unpaid",
+    paymentLast5: "",
+    quotedTotal: null,
+    trackingNumber: ""
   };
-  const current = JSON.parse(window.localStorage.getItem(DEMO_ORDER_KEY) ?? "[]") as OrderRecord[];
+  const current = readDemoOrders();
   current.unshift(order);
   window.localStorage.setItem(DEMO_ORDER_KEY, JSON.stringify(current));
   return { orderId: order.orderId, live: false };
 }
 
 /** 新訂單 Email 通知（Web3Forms）。失敗不影響訂單本身。 */
-export async function notifyNewOrder(orderId: string, payload: OrderPayload) {
+export async function notifyNewOrder(orderId: string, payload: CheckoutPayload) {
   const accessKey = process.env.NEXT_PUBLIC_WEB3FORMS_KEY;
   if (!accessKey) return;
 
   const controller = new AbortController();
   const timer = window.setTimeout(() => controller.abort(), 6000);
+  const lines = payload.items
+    .map((item) => `・${item.name}（${item.spec}）x ${item.quantity}`)
+    .join("\n");
+  const totalQuantity = payload.items.reduce((sum, item) => sum + item.quantity, 0);
 
   try {
     await fetch("https://api.web3forms.com/submit", {
@@ -110,19 +191,19 @@ export async function notifyNewOrder(orderId: string, payload: OrderPayload) {
       signal: controller.signal,
       body: JSON.stringify({
         access_key: accessKey,
-        subject: `【越金燕】新訂單 ${orderId}｜${payload.productName} x ${payload.quantity}`,
+        subject: `【越金燕】新訂單 ${orderId}｜共 ${totalQuantity} 件`,
         from_name: "越金燕官網",
         replyto: payload.email,
         訂單編號: orderId,
-        商品: payload.productName,
-        規格: payload.option,
-        數量: String(payload.quantity),
-        希望配送日期: payload.preferredDeliveryDate || "未指定",
-        收件人: payload.customerName,
+        商品明細: lines,
+        配送方式: deliveryLabel(payload.deliveryMethod),
+        收件地址或門市: formatDeliveryAddress(payload.deliveryMethod, payload.delivery),
+        付款方式: paymentLabel(payload.paymentMethod),
+        希望到貨日: payload.preferredDeliveryDate || "未指定",
+        訂購人: payload.customerName,
         電話: payload.phone,
         Email: payload.email,
         LINE: payload.lineId || "未填",
-        地址: payload.address,
         備註: payload.note || "無"
       })
     });
@@ -131,6 +212,76 @@ export async function notifyNewOrder(orderId: string, payload: OrderPayload) {
   } finally {
     window.clearTimeout(timer);
   }
+}
+
+function normalizePhone(value: string) {
+  return value.replace(/\D/g, "");
+}
+
+export async function trackOrder(orderId: string, phone: string): Promise<TrackedOrder | null> {
+  const supabase = getSupabase();
+
+  if (!supabase) {
+    const match = readDemoOrders().find(
+      (order) =>
+        order.orderId.toUpperCase() === orderId.trim().toUpperCase() &&
+        normalizePhone(order.phone) === normalizePhone(phone)
+    );
+    if (!match) return null;
+    return {
+      orderId: match.orderId,
+      createdAt: match.createdAt,
+      status: match.status,
+      productName: match.productName,
+      quantity: match.quantity,
+      items: match.items ?? [],
+      deliveryMethod: match.deliveryMethod ?? "home",
+      paymentMethod: match.paymentMethod ?? "bank_transfer",
+      paymentStatus: match.paymentStatus ?? "unpaid",
+      paymentLast5: match.paymentLast5 ?? "",
+      quotedTotal: match.quotedTotal ?? null,
+      trackingNumber: match.trackingNumber ?? "",
+      preferredDeliveryDate: match.preferredDeliveryDate
+    };
+  }
+
+  const { data, error } = await supabase.rpc("track_order", { p_order_id: orderId, p_phone: phone });
+  if (error) throw error;
+  const row = (data as Array<Record<string, unknown>> | null)?.[0];
+  if (!row) return null;
+  return {
+    orderId: String(row.order_id),
+    createdAt: String(row.created_at),
+    status: row.status as OrderStatus,
+    productName: String(row.product_name ?? ""),
+    quantity: Number(row.quantity ?? 0),
+    items: (row.items as OrderItem[]) ?? [],
+    deliveryMethod: (row.delivery_method as DeliveryMethod) ?? "home",
+    paymentMethod: (row.payment_method as PaymentMethod) ?? "bank_transfer",
+    paymentStatus: (row.payment_status as PaymentStatus) ?? "unpaid",
+    paymentLast5: String(row.payment_last5 ?? ""),
+    quotedTotal: row.quoted_total === null || row.quoted_total === undefined ? null : Number(row.quoted_total),
+    trackingNumber: String(row.tracking_number ?? ""),
+    preferredDeliveryDate: String(row.preferred_delivery_date ?? "")
+  };
+}
+
+export async function reportPayment(orderId: string, phone: string, last5: string) {
+  const supabase = getSupabase();
+  if (!supabase) {
+    const orders = readDemoOrders().map((order) =>
+      order.orderId === orderId ? { ...order, paymentLast5: last5, paymentStatus: "reported" as PaymentStatus } : order
+    );
+    window.localStorage.setItem(DEMO_ORDER_KEY, JSON.stringify(orders));
+    return true;
+  }
+  const { data, error } = await supabase.rpc("report_payment", {
+    p_order_id: orderId,
+    p_phone: phone,
+    p_last5: last5
+  });
+  if (error) throw error;
+  return data === true;
 }
 
 export async function fetchOrders() {
@@ -145,17 +296,26 @@ export async function fetchOrders() {
   return (data as OrderRow[]).map(rowToOrder);
 }
 
-export async function updateOrder(orderId: string, patch: { status?: OrderStatus; adminNote?: string }) {
+export type OrderPatch = {
+  status?: OrderStatus;
+  adminNote?: string;
+  paymentStatus?: PaymentStatus;
+  quotedTotal?: number | null;
+  trackingNumber?: string;
+};
+
+export async function updateOrder(orderId: string, patch: OrderPatch) {
   const supabase = getSupabase();
   if (!supabase) return;
   const update: Partial<OrderRow> = {};
   if (patch.status) update.status = patch.status;
   if (patch.adminNote !== undefined) update.admin_note = patch.adminNote;
+  if (patch.paymentStatus) update.payment_status = patch.paymentStatus;
+  if (patch.quotedTotal !== undefined) update.quoted_total = patch.quotedTotal;
+  if (patch.trackingNumber !== undefined) update.tracking_number = patch.trackingNumber;
   const { error } = await supabase.from("orders").update(update).eq("order_id", orderId);
   if (error) throw error;
 }
-
-export { isSupabaseConfigured };
 
 export async function checkIsAdmin() {
   const supabase = getSupabase();
@@ -164,3 +324,5 @@ export async function checkIsAdmin() {
   if (error) return false;
   return data === true;
 }
+
+export { isSupabaseConfigured };

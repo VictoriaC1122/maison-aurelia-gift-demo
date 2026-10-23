@@ -3,17 +3,18 @@ import Link from "next/link";
 import {
   ArrowUpRight,
   Building2,
-  CalendarDays,
   Gift,
   Headphones,
   PackageCheck,
-  Sparkles
+  Sparkles,
+  Truck
 } from "lucide-react";
 import { AutoImageRotator } from "@/components/auto-image-rotator";
 import { FadeIn } from "@/components/motion";
 import { ProductCard } from "@/components/product-card";
 import { SectionHeading } from "@/components/section-heading";
 import { StructuredData } from "@/components/structured-data";
+import { TrustBadges } from "@/components/trust-badges";
 import {
   contact,
   faqs,
@@ -45,8 +46,8 @@ export default function HomePage() {
       eyebrow: "Everyday Care",
       title: "日常保養",
       description: "從份量清楚、容易入手的本養系列開始。",
-      href: "/collections/benyang",
-      cta: "挑選本養系列",
+      href: "/products?category=benyang",
+      cta: "選購本養系列",
       images: [essentialCategory?.coverImage ?? "", ...essentialImages],
       icon: Sparkles
     },
@@ -54,8 +55,8 @@ export default function HomePage() {
       eyebrow: "Significant Gifting",
       title: "重要贈禮",
       description: "為節慶、長輩與重要客戶選一份更完整的燕禮。",
-      href: "/collections/shenyang",
-      cta: "查看深養系列",
+      href: "/products?category=shenyang",
+      cta: "選購深養系列",
       images: [reserveCategory?.coverImage ?? "", ...reserveImages],
       icon: Gift
     },
@@ -73,12 +74,12 @@ export default function HomePage() {
     {
       icon: PackageCheck,
       title: "規格先確認",
-      text: "內容、數量與包裝確認後再安排。"
+      text: "顧問確認品項與金額後才付款。"
     },
     {
-      icon: CalendarDays,
-      title: "日期可備註",
-      text: "下單時留下希望配送日期。"
+      icon: Truck,
+      title: "宅配・超商取貨",
+      text: "宅配到府或 7-11、全家門市取貨。"
     },
     {
       icon: Headphones,
@@ -140,17 +141,17 @@ export default function HomePage() {
             </p>
           </div>
           <div className="home-hero__actions flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:gap-4">
-            <Link href="#gift-guide" className="hero-button-dark min-h-[52px] justify-center px-7">
-              依送禮情境挑選
+            <Link href="/products" className="hero-button-dark min-h-[52px] justify-center px-8">
+              選購燕禮
             </Link>
-            <Link href="/collections" className="home-hero__text-link inline-flex min-h-[48px] items-center justify-center gap-2 px-2 text-sm text-ink/70 transition hover:text-ink">
-              查看全部商品
+            <Link href="#gift-guide" className="home-hero__text-link inline-flex min-h-[48px] items-center justify-center gap-2 px-2 text-sm text-ink/70 transition hover:text-ink">
+              依送禮情境挑選
               <ArrowUpRight aria-hidden="true" className="h-4 w-4" />
             </Link>
           </div>
           <div className="home-hero__assurance flex items-start gap-3 border-t border-champagne/18 pt-4 text-sm leading-6 text-ink/56">
             <PackageCheck aria-hidden="true" className="mt-0.5 h-5 w-5 shrink-0 text-champagne" />
-            <span>送出需求不會立即付款，確認品項、報價與日期後再安排。</span>
+            <span>支援宅配與 7-11／全家取貨；送出訂單後由顧問確認，確認前不會扣款。</span>
           </div>
         </FadeIn>
 
@@ -185,6 +186,10 @@ export default function HomePage() {
             </Link>
           ) : null}
         </FadeIn>
+      </section>
+
+      <section className="shell pb-4 md:pb-6">
+        <TrustBadges />
       </section>
 
       <section id="gift-guide" className="shell scroll-mt-32 space-y-7 py-10 md:space-y-9 md:py-14">
@@ -249,14 +254,14 @@ export default function HomePage() {
         <div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
           <SectionHeading
             eyebrow="Best Sellers"
-            title="三款燕禮，對應三種不同心意。"
-            description="每款皆可先查看內容，再把選擇帶入訂購表單；尚未公開的規格與售價會由顧問確認。"
+            title="人氣燕禮"
+            description="加入購物車即可結帳；尚未公開售價的品項，送出訂單後由顧問確認金額。"
           />
           <Link
-            href="/collections"
+            href="/products"
             className="inline-flex min-h-[48px] shrink-0 items-center justify-center gap-2 rounded-full border border-champagne/28 bg-white/55 px-6 text-sm text-ink transition hover:bg-white/82 active:scale-[0.99]"
           >
-            全部商品
+            查看全部商品
             <ArrowUpRight aria-hidden="true" className="h-4 w-4" />
           </Link>
         </div>

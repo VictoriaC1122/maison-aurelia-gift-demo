@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import { Noto_Serif_TC } from "next/font/google";
+import { CartDrawer } from "@/components/cart-drawer";
 import { StructuredData } from "@/components/structured-data";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
+import { CartProvider } from "@/lib/cart";
 import { buildMetadata, buildSiteSchemas } from "@/lib/seo";
 import "./globals.css";
 
@@ -24,9 +26,12 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           跳至主要內容
         </a>
         <StructuredData data={buildSiteSchemas()} />
-        <SiteHeader />
-        {children}
-        <SiteFooter />
+        <CartProvider>
+          <SiteHeader />
+          {children}
+          <SiteFooter />
+          <CartDrawer />
+        </CartProvider>
       </body>
     </html>
   );

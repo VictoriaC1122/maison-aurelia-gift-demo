@@ -23,11 +23,7 @@ export function formatCurrency(value: string, from = false) {
     return value;
   }
 
-  const formatted = new Intl.NumberFormat("zh-TW", {
-    style: "currency",
-    currency: "TWD",
-    maximumFractionDigits: 0
-  }).format(numeric);
+  const formatted = `NT$${Math.round(numeric).toLocaleString("en-US")}`;
 
   return from ? `${formatted} 起` : formatted;
 }

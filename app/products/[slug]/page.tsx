@@ -1,10 +1,14 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { Check, ChevronRight, Headphones, PackageCheck, Truck } from "lucide-react";
+import { Check, ChevronDown, ChevronRight, MessageCircleMore, ShieldCheck, Store, Truck } from "lucide-react";
+import { MobileBuyBar, ProductPurchase } from "@/components/add-to-cart";
+import { ProductCard } from "@/components/product-card";
 import { ProductGallery } from "@/components/product-gallery";
 import { StructuredData } from "@/components/structured-data";
-import { contact, getCategory, getProduct, getProducts } from "@/lib/content";
+import { enabledDeliveryOptions, enabledPaymentOptions } from "@/lib/commerce";
+import { contact, getCategory, getProduct, getProducts, site } from "@/lib/content";
+import { displaySpecification, formatTWD } from "@/lib/pricing";
 import { buildMetadata, buildProductSchema } from "@/lib/seo";
 import type { ProductDetails } from "@/lib/types";
 import { formatCurrency } from "@/lib/utils";
@@ -27,22 +31,12 @@ export function generateStaticParams() {
   return getProducts().map((product) => ({ slug: product.slug }));
 }
 
-export async function generateMetadata({
-  params
-}: {
-  params: Promise<{ slug: string }>;
-}): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
   const product = getProduct(slug);
-
   if (!product) {
-    return buildMetadata({
-      title: "商品詳情",
-      description: "查看越金燕的商品內容。",
-      path: "/collections"
-    });
+    return buildMetadata({ title: "商品詳情", description: "查看越金燕的商品內容。", path: "/products" });
   }
-
   return buildMetadata({
     title: product.nameZh,
     description: product.summary,
@@ -51,124 +45,164 @@ export async function generateMetadata({
   });
 }
 
-export default async function ProductDetailPage({
-  params
-}: {
-  params: Promise<{ slug: string }>;
-}) {
+function InfoSection({ title, children, defaultOpen = false }: { title: string; children: React.ReactNode; defaultOpen?: boolean }) {
+  return (
+    <details open={defaultOpen} className="group border-b border-champagne/15">
+      <summary className="flex min-h-[60px] cursor-pointer list-none items-center justify-between gap-4 text-base text-ink">
+        {title}
+        <ChevronDown aria-hidden="true" className="h-4 w-4 text-ink/45 transition group-open:rotate-180" />
+      </summary>
+      <div className="pb-6 text-sm leading-7 text-ink/68">{children}</div>
+    </details>
+  );
+}
+
+export default async function ProductDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const product = getProduct(slug);
   if (!product) notFound();
   const category = getCategory(product.category);
-  const specification = product.specification === "待補" ? "顧問確認" : product.specification;
+  const specification = displaySpecification(product.specification);
+  const priceLabel = formatCurrency(product.price, product.priceFrom);
   const details = DETAIL_LABELS.map(([key, label]) => [label, product.details?.[key]?.trim() ?? ""] as const).filter(
     ([, value]) => value
   );
+  const related = getProducts().filter((item) => item.slug !== product.slug).slice(0, 3);
+  const cvsFee = site.shippingPolicy.cvsShippingFee;
 
   return (
     <>
-      <main id="main-content" className="shell space-y-7 py-8 md:space-y-10 md:py-14">
+      <main id="main-content" className="shell space-y-10 pb-32 pt-6 md:space-y-14 md:pb-16 md:pt-10">
         <StructuredData data={buildProductSchema(product)} />
         <nav aria-label="麵包屑" className="flex min-w-0 items-center gap-2 overflow-hidden text-sm text-ink/48">
           <Link href="/" className="shrink-0 transition hover:text-ink">首頁</Link>
           <ChevronRight aria-hidden="true" className="h-3.5 w-3.5 shrink-0 text-champagne" />
-          <Link href="/collections" className="shrink-0 transition hover:text-ink">商品系列</Link>
+          <Link href="/products" className="shrink-0 transition hover:text-ink">全部商品</Link>
           {category ? (
             <>
               <ChevronRight aria-hidden="true" className="h-3.5 w-3.5 shrink-0 text-champagne" />
-              <Link href={`/collections/${category.slug}`} className="shrink-0 transition hover:text-ink">{category.name}</Link>
+              <Link href={`/products?category=${category.slug}`} className="shrink-0 transition hover:text-ink">{category.name}</Link>
             </>
           ) : null}
           <ChevronRight aria-hidden="true" className="h-3.5 w-3.5 shrink-0 text-champagne" />
           <span aria-current="page" className="truncate text-ink/72">{product.nameZh}</span>
         </nav>
-        <section className="grid gap-6 lg:grid-cols-[minmax(0,1.06fr)_minmax(0,0.94fr)] lg:items-start lg:gap-9">
+
+        <section className="grid gap-8 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:gap-12">
           <ProductGallery images={product.images} alt={product.nameZh} priority />
-          <div className="paper-panel min-w-0 space-y-5 p-5 md:space-y-6 md:p-8 lg:sticky lg:top-28">
-          <div className="space-y-3">
-            <p className="text-xs uppercase tracking-[0.34em] text-rosegold">{product.name}</p>
-            <h1 className="product-detail-title font-display text-[2.55rem] leading-[1.02] text-ink md:text-[3.35rem] lg:text-[3.8rem]">{product.nameZh}</h1>
-            <p className="text-base leading-8 text-ink/68 md:text-lg">{product.summary}</p>
-          </div>
-          <div className="grid gap-3 sm:grid-cols-2">
-            <div className="rounded-[1.2rem] border border-champagne/12 bg-white/55 px-4 py-3">
-              <p className="text-[11px] uppercase tracking-[0.22em] text-champagne">系列分類</p>
-              <p className="mt-2 text-base text-ink/76">{category?.name ?? product.category}</p>
+
+          <div className="min-w-0 space-y-6 lg:sticky lg:top-28 lg:self-start">
+            <div className="space-y-3">
+              {category ? (
+                <Link href={`/products?category=${category.slug}`} className="inline-flex rounded-full border border-champagne/25 px-3 py-1 text-xs tracking-[0.08em] text-ink/65 hover:bg-white">
+                  {category.name}
+                </Link>
+              ) : null}
+              <h1 className="product-detail-title font-display text-[2.2rem] leading-[1.12] text-ink md:text-[2.9rem]">{product.nameZh}</h1>
+              <p className="text-xs uppercase tracking-[0.28em] text-rosegold">{product.name}</p>
             </div>
-            <div className="rounded-[1.2rem] border border-champagne/12 bg-white/55 px-4 py-3">
-              <p className="text-[11px] uppercase tracking-[0.22em] text-champagne">規格資訊</p>
-              <p className="mt-2 text-base text-ink/76">{specification}</p>
+
+            <div className="flex flex-wrap items-end gap-x-4 gap-y-1 border-y border-champagne/15 py-4">
+              <strong className="font-display text-[2rem] font-medium leading-none text-ink">{priceLabel}</strong>
+              <span className="pb-1 text-sm text-ink/55">{specification}</span>
+              {!product.price ? (
+                <span className="w-full pt-1 text-xs leading-5 text-ink/50">售價由顧問確認，可先加入購物車送出訂單，確認前不會扣款。</span>
+              ) : null}
             </div>
-          </div>
-          <div className="flex flex-col gap-2 border-y border-champagne/15 py-5 sm:flex-row sm:items-end sm:justify-between">
-            <div>
-              <p className="text-[11px] uppercase tracking-[0.24em] text-champagne">{product.price ? "商品售價" : "報價方式"}</p>
-              <strong className="mt-2 block font-display text-2xl">{formatCurrency(product.price, product.priceFrom)}</strong>
-            </div>
-            <p className="max-w-[16rem] text-sm leading-6 text-ink/52 sm:text-right">選入訂購單後，再確認數量、規格與希望日期。</p>
-          </div>
-          <ul className="space-y-3 text-sm leading-8 text-ink/68">
-            {product.features.map((feature) => (
-              <li key={feature} className="flex items-start gap-3">
-                <span className="mt-1.5 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-champagne/12 text-champagne">
-                  <Check aria-hidden="true" className="h-3.5 w-3.5" />
-                </span>
-                <span>{feature}</span>
+
+            <p className="text-base leading-8 text-ink/70">{product.summary}</p>
+
+            <ul className="space-y-2 text-sm text-ink/70">
+              {product.features.map((feature) => (
+                <li key={feature} className="flex items-start gap-2.5">
+                  <Check aria-hidden="true" className="mt-1 h-4 w-4 shrink-0 text-champagne" />
+                  {feature}
+                </li>
+              ))}
+            </ul>
+
+            <ProductPurchase slug={product.slug} />
+
+            <ul className="grid gap-2 rounded-2xl border border-champagne/14 bg-white/50 p-4 text-sm text-ink/68">
+              <li className="flex items-center gap-2.5">
+                <Truck aria-hidden="true" className="h-4 w-4 text-champagne" />
+                宅配到府 {formatTWD(site.shippingPolicy.standardShippingFee)}，滿 {formatTWD(site.shippingPolicy.freeShippingThreshold)} 免運
               </li>
-            ))}
-          </ul>
-          {details.length > 0 ? (
-            <section aria-labelledby="product-details-title" className="rounded-[1.2rem] border border-champagne/14 bg-white/50 p-4 md:p-5">
-              <h2 id="product-details-title" className="text-[11px] uppercase tracking-[0.24em] text-champagne">商品資訊</h2>
-              <dl className="mt-3 divide-y divide-champagne/12 text-sm">
+              <li className="flex items-center gap-2.5">
+                <Store aria-hidden="true" className="h-4 w-4 text-champagne" />
+                7-11／全家超商取貨{cvsFee ? ` ${formatTWD(cvsFee)}` : ""}
+              </li>
+              <li className="flex items-center gap-2.5">
+                <ShieldCheck aria-hidden="true" className="h-4 w-4 text-champagne" />
+                顧問確認品項與金額後才付款
+              </li>
+            </ul>
+
+            <a
+              href={`https://line.me/R/ti/p/~${contact.line}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 text-sm text-ink/65 underline decoration-champagne/50 underline-offset-4 hover:text-ink"
+            >
+              <MessageCircleMore aria-hidden="true" className="h-4 w-4" />
+              想先問問看？LINE 諮詢顧問
+            </a>
+          </div>
+        </section>
+
+        <section className="mx-auto max-w-3xl border-t border-champagne/15">
+          <InfoSection title="商品介紹" defaultOpen>
+            <p>{product.summary}</p>
+            <ul className="mt-3 list-disc space-y-1 pl-5">
+              {product.features.map((feature) => <li key={feature}>{feature}</li>)}
+            </ul>
+          </InfoSection>
+          <InfoSection title="商品規格與標示">
+            {details.length > 0 ? (
+              <dl className="divide-y divide-champagne/12">
                 {details.map(([label, value]) => (
-                  <div key={label} className="grid grid-cols-[6.5rem_minmax(0,1fr)] gap-3 py-2.5">
+                  <div key={label} className="grid grid-cols-[7rem_minmax(0,1fr)] gap-3 py-2.5">
                     <dt className="text-ink/48">{label}</dt>
-                    <dd className="whitespace-pre-line break-words text-ink/76">{value}</dd>
+                    <dd className="whitespace-pre-line break-words text-ink/78">{value}</dd>
                   </div>
                 ))}
               </dl>
-            </section>
-          ) : null}
-          <div className="grid gap-3 sm:grid-cols-3">
-            <Link href="/ordering" className="rounded-[1.1rem] border border-champagne/14 bg-cream/42 p-4 transition hover:bg-white/75">
-              <PackageCheck aria-hidden="true" className="h-5 w-5 text-champagne" />
-              <p className="mt-3 text-sm text-ink">專人確認</p>
-              <p className="mt-1 text-xs leading-5 text-ink/50">送出後確認品項與交期</p>
-            </Link>
-            <Link href="/shipping" className="rounded-[1.1rem] border border-champagne/14 bg-cream/42 p-4 transition hover:bg-white/75">
-              <Truck aria-hidden="true" className="h-5 w-5 text-champagne" />
-              <p className="mt-3 text-sm text-ink">配送說明</p>
-              <p className="mt-1 text-xs leading-5 text-ink/50">查看運費與配送安排</p>
-            </Link>
-            <a href={`https://line.me/R/ti/p/~${contact.line}`} className="rounded-[1.1rem] border border-champagne/14 bg-cream/42 p-4 transition hover:bg-white/75">
-              <Headphones aria-hidden="true" className="h-5 w-5 text-champagne" />
-              <p className="mt-3 text-sm text-ink">LINE 顧問</p>
-              <p className="mt-1 text-xs leading-5 text-ink/50">先詢問再決定也可以</p>
-            </a>
-          </div>
-          <div className="grid gap-3 sm:flex sm:flex-wrap sm:gap-4">
-            <Link href={`/order?product=${product.slug}`} className="hero-button-dark min-h-[52px] justify-center">選入訂購單</Link>
-            <Link href="/custom" className="hero-button-light min-h-[52px] justify-center">企業客製洽詢</Link>
-          </div>
-          {product.placeholder ? (
-            <p className="rounded-3xl border border-rosegold/20 bg-rosegold/10 px-4 py-3 text-sm text-ink/70">
-              本品項採專人詢價，實際規格與禮盒內容將由顧問協助確認。
+            ) : (
+              <p>規格：{specification}。完整成分、保存期限與營養標示，歡迎向顧問索取。</p>
+            )}
+          </InfoSection>
+          <InfoSection title="配送與付款">
+            <p className="text-ink">配送方式</p>
+            <ul className="mb-4 mt-1 list-disc pl-5">
+              {enabledDeliveryOptions().map((option) => <li key={option.id}>{option.label}：{option.description}</li>)}
+            </ul>
+            <p className="text-ink">付款方式</p>
+            <ul className="mt-1 list-disc pl-5">
+              {enabledPaymentOptions().map((option) => <li key={option.id}>{option.label}：{option.description}</li>)}
+            </ul>
+            <p className="mt-4">
+              詳見 <Link href="/shipping" className="underline underline-offset-4">配送與運費</Link>。
             </p>
-          ) : null}
-          </div>
+          </InfoSection>
+          <InfoSection title="退換貨說明">
+            <p>
+              未拆封商品收到後 7 日內可申請退貨；食品與客製商品依法可能不適用，詳見
+              <Link href="/returns" className="mx-1 underline underline-offset-4">退換貨說明</Link>。
+            </p>
+          </InfoSection>
         </section>
+
+        {related.length > 0 ? (
+          <section className="space-y-6">
+            <h2 className="font-display text-2xl text-ink md:text-3xl">你可能也喜歡</h2>
+            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+              {related.map((item) => <ProductCard key={item.slug} product={item} />)}
+            </div>
+          </section>
+        ) : null}
       </main>
 
-      <div className="product-mobile-dock md:hidden">
-        <div className="min-w-0">
-          <span className="block truncate text-[10px] uppercase tracking-[0.14em] text-ink/42">{specification}</span>
-          <strong className="mt-1 block truncate font-display text-base font-medium leading-none text-ink">{formatCurrency(product.price, product.priceFrom)}</strong>
-        </div>
-        <Link href={`/order?product=${product.slug}`} className="inline-flex min-h-[50px] shrink-0 items-center justify-center rounded-full bg-ink px-6 text-sm text-pearl active:scale-[0.98]">
-          選入訂購單
-        </Link>
-      </div>
+      <MobileBuyBar slug={product.slug} priceLabel={priceLabel} specLabel={specification} />
     </>
   );
 }

@@ -1,3 +1,7 @@
+export type DeliveryMethod = "home" | "cvs_711" | "cvs_family";
+export type PaymentMethod = "bank_transfer" | "cod";
+export type PaymentStatus = "unpaid" | "reported" | "paid" | "refunded";
+
 export type OrderStatus =
   | "pending"
   | "confirmed"
@@ -84,8 +88,31 @@ export type SiteData = {
   shippingPolicy: {
     freeShippingThreshold: number;
     standardShippingFee: number;
+    /** 超商取貨運費；null 代表由顧問確認 */
+    cvsShippingFee: number | null;
     customNotes: string;
   };
+  delivery: Record<DeliveryMethod, boolean>;
+  payment: {
+    bank_transfer: boolean;
+    cod: boolean;
+    bankAccount: {
+      bankName: string;
+      bankCode: string;
+      branch: string;
+      accountNumber: string;
+      accountName: string;
+    };
+    transferDeadlineDays: number;
+  };
+};
+
+export type OrderItem = {
+  slug: string;
+  name: string;
+  spec: string;
+  quantity: number;
+  unitPrice: number | null;
 };
 
 export type OrderRecord = {
@@ -104,6 +131,13 @@ export type OrderRecord = {
   note: string;
   status: OrderStatus;
   adminNote?: string;
+  items?: OrderItem[];
+  deliveryMethod?: DeliveryMethod;
+  paymentMethod?: PaymentMethod;
+  paymentStatus?: PaymentStatus;
+  paymentLast5?: string;
+  quotedTotal?: number | null;
+  trackingNumber?: string;
 };
 
 export type OrderInput = Omit<OrderRecord, "orderId" | "createdAt" | "status"> & {
