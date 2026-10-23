@@ -1,16 +1,18 @@
 import { Gift, MapPin, ShieldCheck, Truck } from "lucide-react";
 import { site } from "@/lib/content";
+import { getMessages, type Locale } from "@/lib/i18n";
 import { formatTWD } from "@/lib/pricing";
 import { cn } from "@/lib/utils";
 
-const badges = [
-  { icon: MapPin, title: "越南燕屋溯源", text: "產地、採收到整理全程實拍" },
-  { icon: ShieldCheck, title: "專人確認訂單", text: "確認品項與金額後才付款" },
-  { icon: Gift, title: "精緻禮盒包裝", text: "送禮不需再另外包裝" },
-  { icon: Truck, title: "宅配・超商取貨", text: `滿 ${formatTWD(site.shippingPolicy.freeShippingThreshold)} 免運` }
-];
+export function TrustBadges({ className, compact = false, locale = "zh" }: { className?: string; compact?: boolean; locale?: Locale }) {
+  const t = getMessages(locale).trust;
+  const badges = [
+    { icon: MapPin, title: t.origin.title, text: t.origin.text },
+    { icon: ShieldCheck, title: t.confirm.title, text: t.confirm.text },
+    { icon: Gift, title: t.gift.title, text: t.gift.text },
+    { icon: Truck, title: t.delivery.title, text: t.delivery.text(formatTWD(site.shippingPolicy.freeShippingThreshold)) }
+  ];
 
-export function TrustBadges({ className, compact = false }: { className?: string; compact?: boolean }) {
   return (
     <ul className={cn("grid grid-cols-2 gap-3 lg:grid-cols-4", className)}>
       {badges.map(({ icon: Icon, title, text }) => (

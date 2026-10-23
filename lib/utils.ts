@@ -1,4 +1,5 @@
 import { clsx } from "clsx";
+import { getMessages, type Locale } from "@/lib/i18n";
 
 export function cn(...values: Array<string | false | null | undefined>) {
   return clsx(values);
@@ -13,9 +14,10 @@ export function withBasePath(path: string) {
   return `${basePath}${path}`;
 }
 
-export function formatCurrency(value: string, from = false) {
+export function formatCurrency(value: string, from = false, locale: Locale = "zh") {
+  const messages = getMessages(locale);
   if (!value) {
-    return "專人報價";
+    return messages.common.priceOnRequest;
   }
 
   const numeric = Number(value);
@@ -25,7 +27,7 @@ export function formatCurrency(value: string, from = false) {
 
   const formatted = `NT$${Math.round(numeric).toLocaleString("en-US")}`;
 
-  return from ? `${formatted} 起` : formatted;
+  return from ? messages.common.priceFrom(formatted) : formatted;
 }
 
 export function formatDate(value: string) {

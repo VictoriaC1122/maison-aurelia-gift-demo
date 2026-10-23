@@ -1,4 +1,5 @@
 import { site } from "@/lib/content";
+import { getMessages, type Locale } from "@/lib/i18n";
 import type { DeliveryMethod, OrderStatus, PaymentMethod, PaymentStatus } from "@/lib/types";
 
 export type DeliveryOption = {
@@ -54,20 +55,35 @@ export const PAYMENT_OPTIONS: PaymentOption[] = [
   }
 ];
 
-export function enabledDeliveryOptions() {
-  return DELIVERY_OPTIONS.filter((option) => site.delivery[option.id]);
+/** 依語言套用顯示文字（後台與通知信固定使用中文） */
+function localizeDelivery(option: DeliveryOption, locale: Locale): DeliveryOption {
+  if (locale === "zh") return option;
+  const text = getMessages(locale).delivery[option.id] as { label: string; description: string; storeIdHint?: string };
+  return { ...option, label: text.label, shortLabel: text.label, description: text.description, storeIdHint: text.storeIdHint ?? option.storeIdHint };
 }
 
-export function enabledPaymentOptions() {
-  return PAYMENT_OPTIONS.filter((option) => site.payment[option.id]);
+function localizePayment(option: PaymentOption, locale: Locale): PaymentOption {
+  if (locale === "zh") return option;
+  const text = getMessages(locale).payment[option.id];
+  return { ...option, label: text.label, description: text.description };
 }
 
-export function deliveryLabel(method?: string) {
-  return DELIVERY_OPTIONS.find((option) => option.id === method)?.label ?? "宅配到府";
+export function enabledDeliveryOptions(locale: Locale = "zh") {
+  return DELIVERY_OPTIONS.filter((option) => site.delivery[option.id]).map((option) => localizeDelivery(option, locale));
 }
 
-export function paymentLabel(method?: string) {
-  return PAYMENT_OPTIONS.find((option) => option.id === method)?.label ?? "銀行轉帳／ATM";
+export function enabledPaymentOptions(locale: Locale = "zh") {
+  return PAYMENT_OPTIONS.filter((option) => site.payment[option.id]).map((option) => localizePayment(option, locale));
+}
+
+export function deliveryLabel(method?: string, locale: Locale = "zh") {
+  const option = DELIVERY_OPTIONS.find((item) => item.id === method) ?? DELIVERY_OPTIONS[0];
+  return localizeDelivery(option, locale).label;
+}
+
+export function paymentLabel(method?: string, locale: Locale = "zh") {
+  const option = PAYMENT_OPTIONS.find((item) => item.id === method) ?? PAYMENT_OPTIONS[0];
+  return localizePayment(option, locale).label;
 }
 
 /** 依配送方式回傳運費基準；null 代表由顧問確認 */

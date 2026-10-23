@@ -1,4 +1,5 @@
 import { site } from "@/lib/content";
+import { getMessages, type Locale } from "@/lib/i18n";
 import type { Product } from "@/lib/types";
 
 export type CartLine = { slug: string; quantity: number };
@@ -28,8 +29,8 @@ export function parsePrice(value: string | undefined) {
   return Number.isFinite(numeric) && numeric > 0 ? Math.round(numeric) : null;
 }
 
-export function displaySpecification(value: string) {
-  return !value || value === "待補" ? "規格由顧問確認" : value;
+export function displaySpecification(value: string, locale: Locale = "zh") {
+  return !value || value === "待補" ? getMessages(locale).common.specOnRequest : value;
 }
 
 export function formatTWD(value: number) {

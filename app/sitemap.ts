@@ -1,12 +1,12 @@
 import type { MetadataRoute } from "next";
 import { getCategories, getProducts } from "@/lib/content";
-import { absoluteSiteUrl } from "@/lib/seo";
+import { localeUrl } from "@/lib/seo";
 
 export const dynamic = "force-static";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const staticRoutes = [
-    "",
+  const paths = [
+    "/",
     "/products",
     "/about",
     "/collections",
@@ -16,18 +16,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/faq",
     "/contact",
     "/returns",
-    "/privacy"
+    "/privacy",
+    ...getCategories().map((category) => `/collections/${category.slug}`),
+    ...getProducts().map((product) => `/products/${product.slug}`)
   ];
+  const lastModified = new Date();
 
-  return [
-    ...staticRoutes.map((route) => ({ url: absoluteSiteUrl(route || "/"), lastModified: new Date() })),
-    ...getCategories().map((category) => ({
-      url: absoluteSiteUrl(`/collections/${category.slug}`),
-      lastModified: new Date()
-    })),
-    ...getProducts().map((product) => ({
-      url: absoluteSiteUrl(`/products/${product.slug}`),
-      lastModified: new Date()
-    }))
-  ];
+  // 每個頁面列出中文與英文兩個網址，並互相標示對應語言版本
+  return paths.flatMap((path) => {
+    const languages = { "zh-Hant-TW": localeUrl("zh", path), en: localeUrl("en", path) };
+    return [
+      { url: localeUrl("zh", path), lastModified, alternates: { languages } },
+      { url: localeUrl("en", path), lastModified, alternates: { languages } }
+    ];
+  });
 }

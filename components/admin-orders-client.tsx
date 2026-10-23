@@ -274,7 +274,7 @@ export function AdminOrdersClient({ initialOrders }: { initialOrders: OrderRecor
   if (authState === "signed-out" || authState === "not-admin") {
     return (
       <div className="paper-panel mx-auto max-w-md p-6 md:p-8">
-        <p className="text-[11px] uppercase tracking-[0.3em] text-champagne">Admin</p>
+        <p className="text-[11px] uppercase tracking-[0.3em] text-champagne">店家後台</p>
         <h1 className="mt-2 font-display text-3xl text-ink">訂單後台登入</h1>
         {authState === "not-admin" ? (
           <div className="mt-5 space-y-3 rounded-[1rem] border border-rosegold/20 bg-rosegold/10 p-4 text-sm leading-6 text-ink/72">
@@ -311,7 +311,7 @@ export function AdminOrdersClient({ initialOrders }: { initialOrders: OrderRecor
 
       <div className="flex flex-col gap-4 rounded-luxe border border-white/60 bg-white/70 p-6 shadow-glass backdrop-blur lg:flex-row lg:items-center lg:justify-between">
         <div>
-          <p className="text-xs uppercase tracking-[0.3em] text-champagne">Order Ledger</p>
+          <p className="text-xs uppercase tracking-[0.3em] text-champagne">訂單管理</p>
           <h1 className="font-display text-3xl text-ink">訂單後台</h1>
         </div>
         <div className="flex flex-col gap-3 md:flex-row md:items-center">

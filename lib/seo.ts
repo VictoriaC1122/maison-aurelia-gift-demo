@@ -1,23 +1,31 @@
 import type { Metadata } from "next";
-import { site } from "@/lib/content";
+import { productName, productSummary, site } from "@/lib/content";
+import { getMessages, hasEnglishVersion, localePath, type Locale } from "@/lib/i18n";
 import type { Product } from "@/lib/types";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 const siteUrlWithSlash = siteUrl.endsWith("/") ? siteUrl : `${siteUrl}/`;
+const trailingSlash = process.env.GITHUB_PAGES === "true";
 
 export function absoluteSiteUrl(path = "/") {
-  const normalizedPath = path === "/" ? "" : path.replace(/^\//, "");
+  let normalizedPath = path === "/" ? "" : path.replace(/^\//, "");
+  // 靜態網站的頁面網址以「/」結尾（圖片等檔案除外），避免多一次轉址
+  if (trailingSlash && normalizedPath && !normalizedPath.endsWith("/") && !/\.[a-z0-9]+$/i.test(normalizedPath)) {
+    normalizedPath = `${normalizedPath}/`;
+  }
   return new URL(normalizedPath, siteUrlWithSlash).toString();
 }
 
-function resolveTitle(title?: string) {
-  if (!title || title === site.metaTitle) {
-    return site.metaTitle;
-  }
+/** 指定語言版本的完整網址 */
+export function localeUrl(locale: Locale, path = "/") {
+  return absoluteSiteUrl(localePath(locale, path));
+}
 
-  return title.includes(site.brandNameZh) || title.includes(site.brandName)
-    ? title
-    : `${title}｜${site.brandNameZh}`;
+function resolveTitle(title: string | undefined, locale: Locale) {
+  const fallback = getMessages(locale).home.metaTitle;
+  if (!title) return fallback;
+  if (title.includes(site.brandNameZh) || title.includes(site.brandName)) return title;
+  return locale === "en" ? `${title} | ${site.brandName}` : `${title}｜${site.brandNameZh}`;
 }
 
 export function buildMetadata({
@@ -25,37 +33,50 @@ export function buildMetadata({
   description,
   path = "/",
   image = site.ogImage,
-  noIndex = false
+  noIndex = false,
+  locale = "zh"
 }: {
   title?: string;
   description?: string;
+  /** 不含 /en 的頁面路徑 */
   path?: string;
   image?: string;
   noIndex?: boolean;
+  locale?: Locale;
 } = {}): Metadata {
-  const resolvedTitle = resolveTitle(title);
-  const resolvedDescription = description ?? site.metaDescription;
-  const canonical = absoluteSiteUrl(path);
+  const messages = getMessages(locale);
+  const resolvedTitle = resolveTitle(title, locale);
+  const resolvedDescription = description ?? messages.home.metaDescription;
+  const canonical = localeUrl(locale, path);
   const ogImage = absoluteSiteUrl(image.startsWith("/") ? image : `/${image}`);
+  const bilingual = hasEnglishVersion(path);
 
   return {
     title: resolvedTitle,
     description: resolvedDescription,
     metadataBase: new URL(siteUrlWithSlash),
     alternates: {
-      canonical
+      canonical,
+      languages: bilingual
+        ? {
+            "zh-Hant-TW": localeUrl("zh", path),
+            en: localeUrl("en", path),
+            "x-default": localeUrl("zh", path)
+          }
+        : undefined
     },
     openGraph: {
       title: resolvedTitle,
       description: resolvedDescription,
       url: canonical,
-      siteName: site.brandNameZh,
-      locale: "zh_TW",
+      siteName: locale === "en" ? site.brandName : site.brandNameZh,
+      locale: messages.ogLocale,
+      alternateLocale: bilingual ? [locale === "en" ? "zh_TW" : "en_US"] : undefined,
       type: "website",
       images: [
         {
           url: ogImage,
-          alt: site.brandNameZh
+          alt: locale === "en" ? site.brandName : site.brandNameZh
         }
       ]
     },
@@ -74,42 +95,44 @@ export function buildMetadata({
   };
 }
 
-export function buildSiteSchemas() {
+export function buildSiteSchemas(locale: Locale = "zh") {
+  const messages = getMessages(locale);
   return [
     {
       "@context": "https://schema.org",
       "@type": "Organization",
-      name: site.brandNameZh,
-      alternateName: site.brandName,
-      url: absoluteSiteUrl("/"),
-      slogan: site.chineseSlogan,
+      name: locale === "en" ? site.brandName : site.brandNameZh,
+      alternateName: locale === "en" ? site.brandNameZh : site.brandName,
+      url: localeUrl(locale, "/"),
+      slogan: locale === "en" ? site.englishSlogan : site.chineseSlogan,
       logo: absoluteSiteUrl(site.ogImage),
       contactPoint: {
         "@type": "ContactPoint",
         contactType: "customer service",
         availableLanguage: ["zh-Hant", "en"],
-        url: absoluteSiteUrl("/contact")
+        url: localeUrl(locale, "/contact")
       },
       sameAs: [site.socialLinks.instagram, `https://line.me/R/ti/p/~${site.socialLinks.line}`].filter(Boolean)
     },
     {
       "@context": "https://schema.org",
       "@type": "WebSite",
-      name: site.brandName,
-      url: absoluteSiteUrl("/"),
-      description: site.metaDescription,
-      inLanguage: "zh-Hant"
+      name: locale === "en" ? site.brandName : site.brandNameZh,
+      url: localeUrl(locale, "/"),
+      description: messages.home.metaDescription,
+      inLanguage: messages.htmlLang
     }
   ];
 }
 
-export function buildProductSchema(product: Product) {
+export function buildProductSchema(product: Product, locale: Locale = "zh") {
+  const url = localeUrl(locale, `/products/${product.slug}`);
   const offers = product.price
     ? {
         "@type": "Offer",
         priceCurrency: "TWD",
         availability: "https://schema.org/InStock",
-        url: absoluteSiteUrl(`/products/${product.slug}`),
+        url,
         price: product.price,
         priceSpecification: {
           "@type": "PriceSpecification",
@@ -122,9 +145,9 @@ export function buildProductSchema(product: Product) {
   return {
     "@context": "https://schema.org",
     "@type": "Product",
-    name: product.nameZh,
-    alternateName: product.name,
-    description: product.summary,
+    name: productName(product, locale),
+    alternateName: locale === "en" ? product.nameZh : product.name,
+    description: productSummary(product, locale),
     image: product.images.map((image) => absoluteSiteUrl(image)),
     brand: {
       "@type": "Brand",

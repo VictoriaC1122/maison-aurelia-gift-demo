@@ -10,6 +10,13 @@ const nextConfig: NextConfig = {
   trailingSlash: isGithubPages,
   basePath,
   assetPrefix: basePath ? `${basePath}/` : undefined,
+  experimental: {
+    // 中英文各自是獨立的 root layout，404 頁面需要自己的外框
+    globalNotFound: true
+  },
+  env: {
+    NEXT_PUBLIC_TRAILING_SLASH: isGithubPages ? "true" : ""
+  },
   images: {
     unoptimized: true
   }

@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useMemo, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useLocale } from "@/components/locale-provider";
 import { cn, withBasePath } from "@/lib/utils";
 
 export function ProductGallery({
@@ -16,6 +17,7 @@ export function ProductGallery({
   priority?: boolean;
 }) {
   const uniqueImages = useMemo(() => Array.from(new Set(images.filter(Boolean))), [images]);
+  const { t } = useLocale();
   const [index, setIndex] = useState(0);
   const reduceMotion = useReducedMotion();
 
@@ -49,7 +51,7 @@ export function ProductGallery({
           >
             <Image
               src={withBasePath(uniqueImages[index])}
-              alt={`${alt}，圖片 ${index + 1}`}
+              alt={t.gallery.image(alt, index + 1)}
               fill
               priority={priority && index === 0}
               sizes="(max-width: 1024px) 100vw, 610px"
@@ -63,7 +65,7 @@ export function ProductGallery({
           <>
             <button
               type="button"
-              aria-label="上一張商品圖片"
+              aria-label={t.gallery.previous}
               onClick={showPrevious}
               className="product-gallery__arrow absolute left-3 top-1/2 z-10 inline-flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-white/55 bg-pearl/80 text-ink shadow-[0_10px_24px_rgba(22,16,12,0.12)] backdrop-blur-lg transition hover:bg-pearl active:scale-[0.96]"
             >
@@ -71,7 +73,7 @@ export function ProductGallery({
             </button>
             <button
               type="button"
-              aria-label="下一張商品圖片"
+              aria-label={t.gallery.next}
               onClick={showNext}
               className="product-gallery__arrow absolute right-3 top-1/2 z-10 inline-flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-white/55 bg-pearl/80 text-ink shadow-[0_10px_24px_rgba(22,16,12,0.12)] backdrop-blur-lg transition hover:bg-pearl active:scale-[0.96]"
             >
@@ -86,12 +88,12 @@ export function ProductGallery({
       </div>
 
       {uniqueImages.length > 1 ? (
-        <div className="product-gallery__thumbs grid grid-cols-3 gap-3" aria-label="選擇商品圖片">
+        <div className="product-gallery__thumbs grid grid-cols-3 gap-3" aria-label={t.gallery.pick}>
           {uniqueImages.map((image, imageIndex) => (
             <button
               key={image}
               type="button"
-              aria-label={`顯示第 ${imageIndex + 1} 張商品圖片`}
+              aria-label={t.gallery.show(imageIndex + 1)}
               aria-pressed={imageIndex === index}
               onClick={() => setIndex(imageIndex)}
               className={cn(
@@ -114,7 +116,7 @@ export function ProductGallery({
       ) : null}
 
       <p className="sr-only" aria-live="polite">
-        目前顯示第 {index + 1} 張，共 {uniqueImages.length} 張商品圖片。
+        {t.gallery.status(index + 1, uniqueImages.length)}
       </p>
     </div>
   );

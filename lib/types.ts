@@ -13,7 +13,10 @@ export type Category = {
   slug: string;
   name: string;
   englishName: string;
+  /** 英文版顯示的系列名稱 */
+  nameEn?: string;
   description: string;
+  descriptionEn?: string;
   coverImage: string;
   sourceFolder: string;
 };
@@ -38,13 +41,17 @@ export type Product = {
   nameZh: string;
   category: string;
   summary: string;
+  summaryEn?: string;
   features: string[];
+  featuresEn?: string[];
   price: string;
   priceFrom?: boolean;
   specification: string;
   images: string[];
   placeholder: boolean;
   details?: ProductDetails;
+  /** 英文版的商品標示；未填寫的欄位會沿用中文 */
+  detailsEn?: ProductDetails;
 };
 
 export type ProductsData = {
@@ -52,6 +59,14 @@ export type ProductsData = {
   products: Product[];
   factoryGallery: string[];
   factoryCaptions?: Record<string, string>;
+  factoryCaptionsEn?: Record<string, string>;
+};
+
+export type FaqItem = {
+  question: string;
+  answer: string;
+  questionEn?: string;
+  answerEn?: string;
 };
 
 export type ContactData = {

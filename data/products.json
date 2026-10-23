@@ -6,7 +6,9 @@
       "englishName": "Essential Nourishment",
       "description": "以柔和留白與日常奢養為主軸的入門系列。",
       "coverImage": "/assets/categories/benyang/S__75194507_0.webp",
-      "sourceFolder": "燕序·本養"
+      "sourceFolder": "燕序·本養",
+      "nameEn": "Yanxu Essential",
+      "descriptionEn": "Our approachable everyday collection, built around soft tones and quiet luxury."
     },
     {
       "slug": "shenyang",
@@ -14,7 +16,9 @@
       "englishName": "Deep Reserve",
       "description": "更濃縮、更具收藏感的高端旗艦系列。",
       "coverImage": "/assets/categories/shenyang/S__75194502_0.webp",
-      "sourceFolder": "燕序·深養"
+      "sourceFolder": "燕序·深養",
+      "nameEn": "Yanxu Deep Reserve",
+      "descriptionEn": "Our flagship collection—richer, more concentrated and made to be treasured."
     },
     {
       "slug": "factory",
@@ -22,7 +26,9 @@
       "englishName": "Origin Atelier",
       "description": "來自越南燕廠的產地與工序實景，看見每一盞燕窩的來處。",
       "coverImage": "/assets/categories/factory/S__75194516_0.webp",
-      "sourceFolder": "越南燕廠"
+      "sourceFolder": "越南燕廠",
+      "nameEn": "Vietnam Origin",
+      "descriptionEn": "Real footage of our Vietnamese swiftlet houses and process, so you can see where every nest comes from."
     }
   ],
   "products": [
@@ -32,10 +38,16 @@
       "nameZh": "燕序・本養 6 入禮盒",
       "category": "benyang",
       "summary": "日常奢養的入門燕禮，適合節慶送禮與個人保養。",
+      "summaryEn": "An approachable everyday bird's nest gift, perfect for festive gifting or your own wellness ritual.",
       "features": [
         "柔粉色精品禮盒包裝",
         "初次品嚐燕窩的入門選擇",
         "盒裝完整，可直接送禮"
+      ],
+      "featuresEn": [
+        "Soft pink premium gift box",
+        "An ideal first taste of bird's nest",
+        "Fully boxed and ready to give"
       ],
       "price": "",
       "priceFrom": false,
@@ -66,10 +78,16 @@
       "nameZh": "燕序・本養 精選禮盒",
       "category": "benyang",
       "summary": "以東方筆觸與留白設計的禮盒，適合正式送禮場合。",
+      "summaryEn": "A gift box with Eastern brushwork and generous white space, suited to formal occasions.",
       "features": [
         "可加購企業客製腰封",
         "適合企業贈禮與會員禮",
         "規格與內容可由顧問依需求搭配"
+      ],
+      "featuresEn": [
+        "Optional custom corporate sleeve",
+        "Ideal for corporate and member gifts",
+        "Contents can be tailored by our advisor"
       ],
       "price": "",
       "priceFrom": false,
@@ -100,10 +118,16 @@
       "nameZh": "燕序・深養 6 入禮盒",
       "category": "shenyang",
       "summary": "以精品禮盒收藏感呈現高端燕窩系列，適合重要客戶與節慶大禮。",
+      "summaryEn": "Our premium bird's nest collection presented as a collectible gift box—made for important clients and festive occasions.",
       "features": [
         "盒裝陳列更有儀式感",
         "長輩、重要客戶與節慶送禮推薦",
         "可依需求規劃企業客製方案"
+      ],
+      "featuresEn": [
+        "A boxed presentation with a sense of ceremony",
+        "Recommended for elders, key clients and holidays",
+        "Corporate customization available on request"
       ],
       "price": "",
       "priceFrom": false,
@@ -152,5 +176,17 @@
     "/assets/categories/factory/S__75194525_0.webp": "燕屋內的採收作業",
     "/assets/categories/factory/S__75194526_0.webp": "棲息在燕屋木樑的金絲燕",
     "/assets/categories/factory/S__75194527_0.webp": "金絲燕與樑上的燕窩"
+  },
+  "factoryCaptionsEn": {
+    "/assets/categories/factory/S__75194516_0.webp": "Freshly harvested raw nests from the swiftlet house",
+    "/assets/categories/factory/S__75194517_0.webp": "Cleaned and shaped bird's nests",
+    "/assets/categories/factory/S__75194518_0.webp": "Boxed bird's nests",
+    "/assets/categories/factory/S__75194519_0.webp": "Bird's nest strips being sorted",
+    "/assets/categories/factory/S__75194520_0.webp": "Boxed bird's nest strips",
+    "/assets/categories/factory/S__75194523_0.webp": "Hand-harvesting with a scraper on the wooden beams",
+    "/assets/categories/factory/S__75194524_0.webp": "A swiftlet nest built on a wooden beam",
+    "/assets/categories/factory/S__75194525_0.webp": "Harvesting inside the swiftlet house",
+    "/assets/categories/factory/S__75194526_0.webp": "Swiftlets resting on the beams",
+    "/assets/categories/factory/S__75194527_0.webp": "Swiftlets beside their nests"
   }
 }

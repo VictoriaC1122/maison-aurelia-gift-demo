@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Check, ShoppingBag } from "lucide-react";
+import { useLocale } from "@/components/locale-provider";
 import { QuantityStepper } from "@/components/quantity-stepper";
 import { useCart } from "@/lib/cart";
 import { cn } from "@/lib/utils";
@@ -10,13 +11,14 @@ import { cn } from "@/lib/utils";
 export function AddToCartButton({
   slug,
   className,
-  label = "加入購物車"
+  label
 }: {
   slug: string;
   className?: string;
   label?: string;
 }) {
   const { add } = useCart();
+  const { t } = useLocale();
   const [added, setAdded] = useState(false);
 
   return (
@@ -33,7 +35,7 @@ export function AddToCartButton({
       )}
     >
       {added ? <Check aria-hidden="true" className="h-4 w-4" /> : <ShoppingBag aria-hidden="true" className="h-4 w-4" />}
-      {added ? "已加入" : label}
+      {added ? t.common.added : label ?? t.common.addToCart}
     </button>
   );
 }
@@ -41,12 +43,13 @@ export function AddToCartButton({
 export function ProductPurchase({ slug }: { slug: string }) {
   const { add } = useCart();
   const router = useRouter();
+  const { t, href } = useLocale();
   const [quantity, setQuantity] = useState(1);
 
   return (
     <div className="space-y-3">
       <div className="flex flex-wrap items-center gap-3">
-        <span className="text-sm text-ink/55">數量</span>
+        <span className="text-sm text-ink/55">{t.common.quantity}</span>
         <QuantityStepper value={quantity} onChange={setQuantity} />
       </div>
       <div className="grid gap-3 sm:grid-cols-2">
@@ -56,17 +59,17 @@ export function ProductPurchase({ slug }: { slug: string }) {
           className="inline-flex min-h-[54px] items-center justify-center gap-2 rounded-full border border-ink bg-white/70 px-6 text-[0.95rem] text-ink transition hover:bg-white active:scale-[0.99]"
         >
           <ShoppingBag aria-hidden="true" className="h-4 w-4" />
-          加入購物車
+          {t.common.addToCart}
         </button>
         <button
           type="button"
           onClick={() => {
             add(slug, quantity, { open: false });
-            router.push("/checkout");
+            router.push(href("/checkout"));
           }}
           className="inline-flex min-h-[54px] items-center justify-center rounded-full bg-ink px-6 text-[0.95rem] text-pearl transition hover:-translate-y-0.5 active:scale-[0.99]"
         >
-          立即購買
+          {t.common.buyNow}
         </button>
       </div>
     </div>
@@ -76,6 +79,7 @@ export function ProductPurchase({ slug }: { slug: string }) {
 export function MobileBuyBar({ slug, priceLabel, specLabel }: { slug: string; priceLabel: string; specLabel: string }) {
   const { add } = useCart();
   const router = useRouter();
+  const { t, href } = useLocale();
 
   return (
     <div className="product-mobile-dock md:hidden">
@@ -87,7 +91,7 @@ export function MobileBuyBar({ slug, priceLabel, specLabel }: { slug: string; pr
         <button
           type="button"
           onClick={() => add(slug, 1)}
-          aria-label="加入購物車"
+          aria-label={t.common.addToCart}
           className="inline-flex h-[50px] w-[50px] items-center justify-center rounded-full border border-ink text-ink active:scale-[0.98]"
         >
           <ShoppingBag aria-hidden="true" className="h-5 w-5" />
@@ -96,11 +100,11 @@ export function MobileBuyBar({ slug, priceLabel, specLabel }: { slug: string; pr
           type="button"
           onClick={() => {
             add(slug, 1, { open: false });
-            router.push("/checkout");
+            router.push(href("/checkout"));
           }}
           className="inline-flex min-h-[50px] items-center justify-center rounded-full bg-ink px-6 text-sm text-pearl active:scale-[0.98]"
         >
-          立即購買
+          {t.common.buyNow}
         </button>
       </div>
     </div>

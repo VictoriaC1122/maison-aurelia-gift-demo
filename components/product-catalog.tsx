@@ -1,7 +1,9 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { useLocale } from "@/components/locale-provider";
 import { ProductCard } from "@/components/product-card";
+import { categoryName } from "@/lib/content";
 import type { Category, Product } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
@@ -12,6 +14,7 @@ export function ProductCatalog({ products, categories }: { products: Product[]; 
     () => categories.filter((item) => products.some((product) => product.category === item.slug)),
     [categories, products]
   );
+  const { locale, t } = useLocale();
   const [category, setCategory] = useState<string>("all");
   const [sort, setSort] = useState<SortKey>("featured");
 
@@ -34,8 +37,8 @@ export function ProductCatalog({ products, categories }: { products: Product[]; 
   return (
     <div className="space-y-6">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <div role="tablist" aria-label="商品分類" className="flex gap-2 overflow-x-auto pb-1 [scrollbar-width:none]">
-          {[{ slug: "all", name: "全部" }, ...shoppable].map((item) => (
+        <div role="tablist" aria-label={t.catalog.tabs} className="flex gap-2 overflow-x-auto pb-1 [scrollbar-width:none]">
+          {[{ slug: "all", name: t.catalog.all }, ...shoppable.map((item) => ({ slug: item.slug, name: categoryName(item, locale) }))].map((item) => (
             <button
               key={item.slug}
               type="button"
@@ -52,18 +55,18 @@ export function ProductCatalog({ products, categories }: { products: Product[]; 
           ))}
         </div>
         <div className="flex items-center gap-3 text-sm text-ink/55">
-          <span>{visible.length} 件商品</span>
+          <span>{t.common.productCount(visible.length)}</span>
           {hasPrices ? (
             <label className="flex items-center gap-2">
-              <span className="sr-only">排序</span>
+              <span className="sr-only">{t.catalog.sort}</span>
               <select
                 value={sort}
                 onChange={(event) => setSort(event.target.value as SortKey)}
                 className="min-h-[40px] rounded-full border border-champagne/20 bg-white/70 px-3 text-sm text-ink"
               >
-                <option value="featured">推薦排序</option>
-                <option value="price-asc">價格低到高</option>
-                <option value="price-desc">價格高到低</option>
+                <option value="featured">{t.catalog.featured}</option>
+                <option value="price-asc">{t.catalog.priceAsc}</option>
+                <option value="price-desc">{t.catalog.priceDesc}</option>
               </select>
             </label>
           ) : null}
@@ -71,7 +74,7 @@ export function ProductCatalog({ products, categories }: { products: Product[]; 
       </div>
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {visible.map((product) => (
-          <ProductCard key={product.slug} product={product} />
+          <ProductCard key={product.slug} product={product} locale={locale} />
         ))}
       </div>
     </div>

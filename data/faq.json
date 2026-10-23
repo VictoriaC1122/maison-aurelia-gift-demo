@@ -1,26 +1,38 @@
 [
   {
     "question": "可以直接在網站下單嗎？",
-    "answer": "可以。把商品加入購物車後前往結帳，填寫收件、配送與付款方式即可送出訂單。顧問會先確認品項與金額，確認前不會扣款。"
+    "answer": "可以。把商品加入購物車後前往結帳，填寫收件、配送與付款方式即可送出訂單。顧問會先確認品項與金額，確認前不會扣款。",
+    "questionEn": "Can I order directly on the website?",
+    "answerEn": "Yes. Add items to your cart, go to checkout, and fill in your delivery and payment details to place your order. Our advisor will confirm the items and amount first—you won't be charged before that."
   },
   {
     "question": "有哪些付款方式？",
-    "answer": "提供銀行轉帳／ATM 與貨到付款（超商取貨付款）。選擇轉帳時，顧問確認金額後，可在「訂單查詢」看到應付金額與匯款資訊，轉帳後回報帳號後五碼即可。"
+    "answer": "提供銀行轉帳／ATM 與貨到付款（超商取貨付款）。選擇轉帳時，顧問確認金額後，可在「訂單查詢」看到應付金額與匯款資訊，轉帳後回報帳號後五碼即可。",
+    "questionEn": "Which payment methods do you accept?",
+    "answerEn": "We accept bank transfer / ATM and cash on delivery (including pay at convenience-store pickup). For bank transfer, once our advisor confirms the amount you'll see the amount due and transfer details on the Track Order page. After transferring, just report the last five digits of your account."
   },
   {
     "question": "可以超商取貨嗎？",
-    "answer": "可以，支援 7-ELEVEN 與全家超商取貨。結帳時填寫門市店號與門市名稱，頁面上有官方門市地圖可以查詢。"
+    "answer": "可以，支援 7-ELEVEN 與全家超商取貨。結帳時填寫門市店號與門市名稱，頁面上有官方門市地圖可以查詢。",
+    "questionEn": "Can I pick up my order at a convenience store?",
+    "answerEn": "Yes, we support 7-ELEVEN and FamilyMart pickup. At checkout, enter the store number and store name—links to the official store maps are provided on the page."
   },
   {
     "question": "運費怎麼計算？",
-    "answer": "宅配與超商取貨皆享全館滿額免運；未達門檻依配送方式計算運費。離島、急件與指定時段配送會另行說明。"
+    "answer": "宅配與超商取貨皆享全館滿額免運；未達門檻依配送方式計算運費。離島、急件與指定時段配送會另行說明。",
+    "questionEn": "How is shipping calculated?",
+    "answerEn": "Free shipping applies to both home delivery and store pickup once your order reaches the threshold; below it, shipping is calculated by delivery method. Outlying islands, rush orders and specific time slots are quoted separately."
   },
   {
     "question": "怎麼查詢訂單進度？",
-    "answer": "在「訂單查詢」輸入訂單編號與下單手機號碼，即可看到處理進度、付款狀態與物流單號。"
+    "answer": "在「訂單查詢」輸入訂單編號與下單手機號碼，即可看到處理進度、付款狀態與物流單號。",
+    "questionEn": "How can I check my order status?",
+    "answerEn": "On the Track Order page, enter your order number and the mobile number used to order to see its progress, payment status and tracking number."
   },
   {
     "question": "是否提供企業贈禮或客製包裝？",
-    "answer": "提供。可依品牌活動、節慶禮贈、會員禮或客戶關係維護需求客製內容，歡迎透過 LINE 或電話洽詢。"
+    "answer": "提供。可依品牌活動、節慶禮贈、會員禮或客戶關係維護需求客製內容，歡迎透過 LINE 或電話洽詢。",
+    "questionEn": "Do you offer corporate gifting or custom packaging?",
+    "answerEn": "Yes. We can customize contents for brand events, festive gifting, member gifts or client relations. Feel free to reach us on LINE or by phone."
   }
 ]

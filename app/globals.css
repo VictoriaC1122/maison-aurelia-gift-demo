@@ -825,3 +825,26 @@ summary {
     margin-right: 0;
   }
 }
+
+/* ---------- 英文版：英文字較長，標題字級略縮小 ---------- */
+html[lang="en"] .home-hero__title {
+  font-size: clamp(2.6rem, 4vw, 3.3rem);
+  line-height: 1.1;
+}
+
+html[lang="en"] .home-film__copy h2 {
+  font-size: clamp(1.9rem, 3vw, 2.6rem);
+}
+
+@media (min-width: 769px) and (max-width: 1279px) {
+  html[lang="en"] .home-hero__title {
+    font-size: clamp(2.3rem, 4vw, 2.8rem);
+  }
+}
+
+@media (max-width: 768px) {
+  html[lang="en"] .home-hero__title {
+    font-size: clamp(31px, 8.2vw, 38px);
+    letter-spacing: 0;
+  }
+}

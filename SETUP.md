@@ -57,4 +57,13 @@ NEXT_PUBLIC_WEB3FORMS_KEY=xxxx-xxxx
 | `data/products.json` | 「燕序・本養 精選禮盒」的規格 |
 | `data/site.json` → `company` | 公司／商號名稱、統一編號、食品業者登錄字號、產品責任險、公司地址（顯示在頁尾） |
 | `data/contact.json` | Instagram、門市／辦公地址、營業時間 |
-| `app/returns/page.tsx` | 確認退換貨條款（破損 3 日內通知、7 個工作天退款）是否符合店家做法 |
+| `lib/messages/zh.ts`、`lib/messages/en.ts` → `returns` | 確認退換貨條款（破損 3 日內通知、7 個工作天退款）是否符合店家做法 |
+
+## 7. 中英文版
+
+- 中文版網址不變（例如 `/products`）；英文版加上 `/en`（例如 https://yue-jin-yan.com/en/products/）。
+- 每頁右上角有「中文｜EN」切換鈕（手機版在選單裡與右上角），頁尾也有；切換後停留在同一頁。
+- 網站上的固定文字：中文在 `lib/messages/zh.ts`，英文在 `lib/messages/en.ts`，兩個檔案的欄位一一對應。
+- 商品與 FAQ 的英文：`data/products.json` 的 `summaryEn`、`featuresEn`、`nameEn`、`descriptionEn`、`factoryCaptionsEn`，以及 `data/faq.json` 的 `questionEn`、`answerEn`。商品英文名稱用 `name`。
+- 商品標示（成分、保存方式等）如需英文，可在商品加上 `detailsEn`（欄位同 `details`）；沒填的欄位會顯示中文。
+- 後台與新訂單通知信維持中文；英文網站下的訂單，備註開頭會標示「【英文網站訂單】」。
