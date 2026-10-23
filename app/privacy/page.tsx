@@ -27,7 +27,7 @@ export default function PrivacyPage() {
           <ul className="list-disc space-y-2 pl-5">
             <li>期間：自你提供資料起，至蒐集目的完成或依法令規定的保存期限為止。</li>
             <li>地區：中華民國境內，以及我們使用的雲端資料庫服務所在地。</li>
-            <li>對象：我們，以及為完成配送所需的物流業者（僅提供收件所需資料）。</li>
+            <li>對象：我們；為完成配送所需的物流業者（僅提供收件所需資料）；以及我們用來接收新訂單通知的 Email 寄送服務（Web3Forms）。</li>
             <li>方式：以電子或書面方式處理，僅用於上述目的。我們不會出售或出租你的個人資料。</li>
           </ul>
         </PolicySection>
