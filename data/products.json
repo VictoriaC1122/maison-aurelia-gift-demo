@@ -1,26 +1,37 @@
 {
   "categories": [
     {
-      "slug": "benyang",
-      "name": "燕序・本養",
-      "englishName": "Essential Nourishment",
-      "tagline": "日常奢養・入門之選",
-      "description": "以柔和留白與日常奢養為主軸的入門系列。",
-      "coverImage": "/assets/categories/benyang/S__75194507_0.webp",
-      "sourceFolder": "燕序·本養",
-      "nameEn": "Yanxu Essential",
-      "descriptionEn": "Our approachable everyday collection, built around soft tones and quiet luxury."
+      "slug": "riyang",
+      "name": "燕序・日養",
+      "englishName": "Daily Nourishment",
+      "tagline": "日常保養・全燉燕窩",
+      "nameEn": "Yanxu Daily",
+      "description": "全燉燕窩，適合日常保養與初次品嚐，水彩禮盒也很適合送禮。",
+      "descriptionEn": "Whole-stewed bird's nest for everyday wellness and a first taste—its watercolor gift box makes a lovely present too.",
+      "coverImage": "/assets/categories/riyang/S__75194511_0.webp",
+      "sourceFolder": "燕序·日養"
     },
     {
       "slug": "shenyang",
       "name": "燕序・深養",
-      "englishName": "Deep Reserve",
-      "tagline": "高端旗艦・收藏之選",
-      "description": "更濃縮、更具收藏感的高端旗艦系列。",
+      "englishName": "Deep Nourishment",
+      "tagline": "即飲燕窩・精品禮盒",
+      "nameEn": "Yanxu Deep",
+      "description": "即飲燕窩精品禮盒，適合長輩、重要客戶與節慶送禮。",
+      "descriptionEn": "Ready-to-drink bird's nest in a premium gift box, for elders, important clients and festive occasions.",
       "coverImage": "/assets/categories/shenyang/S__75194502_0.webp",
-      "sourceFolder": "燕序·深養",
-      "nameEn": "Yanxu Deep Reserve",
-      "descriptionEn": "Our flagship collection—richer, more concentrated and made to be treasured."
+      "sourceFolder": "燕序·深養"
+    },
+    {
+      "slug": "benyang",
+      "name": "燕序・本養",
+      "englishName": "Origin Reserve",
+      "tagline": "頂級燕窩・原料直選",
+      "nameEn": "Yanxu Origin",
+      "description": "越南燕屋嚴選燕窩原料，一公斤裝，適合自行燉煮、長期保養或高端贈禮。",
+      "descriptionEn": "Premium bird's nest selected from Vietnamese swiftlet houses, in a 1 kg pack—for home stewing, long-term wellness or a top-tier gift.",
+      "coverImage": "/assets/categories/factory/S__75194517_0.webp",
+      "sourceFolder": "越南燕廠"
     },
     {
       "slug": "factory",
@@ -36,71 +47,32 @@
   ],
   "products": [
     {
-      "slug": "yanxu-essential-6",
-      "name": "Yanxu Essential Gift Box",
-      "nameZh": "燕序・本養 6 入禮盒",
-      "category": "benyang",
-      "summary": "日常奢養的入門燕禮，適合節慶送禮與個人保養。",
-      "summaryEn": "An approachable everyday bird's nest gift, perfect for festive gifting or your own wellness ritual.",
+      "slug": "yanxu-riyang",
+      "name": "Yanxu Daily · Whole-Stewed Bird's Nest",
+      "nameZh": "燕序・日養 全燉燕窩",
+      "category": "riyang",
+      "summary": "全燉燕窩，適合每天的日常保養，也是初次品嚐燕窩的好選擇；水彩手繪禮盒，可直接送禮。",
+      "summaryEn": "Whole-stewed bird's nest for your everyday wellness ritual and a great first taste of bird's nest—presented in a hand-painted watercolor gift box.",
       "features": [
-        "柔粉色精品禮盒包裝",
-        "初次品嚐燕窩的入門選擇",
-        "盒裝完整，可直接送禮"
+        "全燉燕窩，適合日常享用",
+        "水彩手繪禮盒，可直接送禮",
+        "初次品嚐燕窩的入門選擇"
       ],
       "featuresEn": [
-        "Soft pink premium gift box",
-        "An ideal first taste of bird's nest",
-        "Fully boxed and ready to give"
+        "Whole-stewed bird's nest for everyday enjoyment",
+        "Hand-painted watercolor gift box, ready to give",
+        "An ideal first taste of bird's nest"
       ],
-      "price": "",
-      "priceFrom": false,
-      "specification": "6 x 75ml",
-      "images": [
-        "/assets/categories/benyang/S__75194507_0.webp",
-        "/assets/categories/benyang/S__75194508_0.webp",
-        "/assets/categories/benyang/S__75194509_0.webp"
-      ],
-      "placeholder": true,
-      "details": {
-        "netContent": "",
-        "nestContent": "",
-        "ingredients": "",
-        "sweetness": "",
-        "howToEnjoy": "",
-        "storage": "",
-        "shelfLife": "",
-        "origin": "",
-        "manufacturer": "",
-        "allergens": "",
-        "nutrition": ""
-      }
-    },
-    {
-      "slug": "yanxu-essential-signature",
-      "name": "Yanxu Essential Signature Box",
-      "nameZh": "燕序・本養 精選禮盒",
-      "category": "benyang",
-      "summary": "以東方筆觸與留白設計的禮盒，適合正式送禮場合。",
-      "summaryEn": "A gift box with Eastern brushwork and generous white space, suited to formal occasions.",
-      "features": [
-        "可加購企業客製腰封",
-        "適合企業贈禮與會員禮",
-        "規格與內容可由顧問依需求搭配"
-      ],
-      "featuresEn": [
-        "Optional custom corporate sleeve",
-        "Ideal for corporate and member gifts",
-        "Contents can be tailored by our advisor"
-      ],
-      "price": "",
+      "price": "1500",
       "priceFrom": false,
       "specification": "待補",
       "images": [
-        "/assets/categories/benyang/S__75194510_0.webp",
-        "/assets/categories/benyang/S__75194511_0.webp",
-        "/assets/categories/benyang/S__75194512_0.webp"
+        "/assets/categories/riyang/S__75194511_0.webp",
+        "/assets/categories/riyang/S__75194512_0.webp",
+        "/assets/categories/riyang/S__75194510_0.webp",
+        "/assets/categories/riyang/S__75194507_0.webp"
       ],
-      "placeholder": true,
+      "placeholder": false,
       "details": {
         "netContent": "",
         "nestContent": "",
@@ -116,23 +88,23 @@
       }
     },
     {
-      "slug": "yanxu-deep-reserve-6",
-      "name": "Yanxu Deep Reserve Box",
-      "nameZh": "燕序・深養 6 入禮盒",
+      "slug": "yanxu-shenyang",
+      "name": "Yanxu Deep · Ready-to-Drink Gift Box",
+      "nameZh": "燕序・深養 即飲燕窩禮盒",
       "category": "shenyang",
-      "summary": "以精品禮盒收藏感呈現高端燕窩系列，適合重要客戶與節慶大禮。",
-      "summaryEn": "Our premium bird's nest collection presented as a collectible gift box—made for important clients and festive occasions.",
+      "summary": "六瓶即飲燕窩裝入粉紫色精品禮盒，送長輩、重要客戶或節慶大禮都體面。",
+      "summaryEn": "Six bottles of ready-to-drink bird's nest in a pink-and-lilac premium gift box—a gracious gift for elders, important clients and festive occasions.",
       "features": [
-        "盒裝陳列更有儀式感",
-        "長輩、重要客戶與節慶送禮推薦",
-        "可依需求規劃企業客製方案"
+        "六瓶即飲燕窩，開瓶即飲",
+        "粉紫色精品禮盒，送禮有儀式感",
+        "長輩、重要客戶與節慶推薦"
       ],
       "featuresEn": [
-        "A boxed presentation with a sense of ceremony",
-        "Recommended for elders, key clients and holidays",
-        "Corporate customization available on request"
+        "Six ready-to-drink bottles",
+        "Premium pink-and-lilac gift box with a sense of ceremony",
+        "Recommended for elders, key clients and holidays"
       ],
-      "price": "",
+      "price": "5000",
       "priceFrom": false,
       "specification": "6 x 75ml",
       "images": [
@@ -140,7 +112,48 @@
         "/assets/categories/shenyang/S__75194503_0.webp",
         "/assets/categories/shenyang/S__75194504_0.webp"
       ],
-      "placeholder": true,
+      "placeholder": false,
+      "details": {
+        "netContent": "",
+        "nestContent": "",
+        "ingredients": "",
+        "sweetness": "",
+        "howToEnjoy": "",
+        "storage": "",
+        "shelfLife": "",
+        "origin": "",
+        "manufacturer": "",
+        "allergens": "",
+        "nutrition": ""
+      }
+    },
+    {
+      "slug": "yanxu-benyang-1kg",
+      "name": "Yanxu Origin · Premium Bird's Nest 1kg",
+      "nameZh": "燕序・本養 頂級燕窩 1kg",
+      "category": "benyang",
+      "summary": "越南燕屋嚴選燕窩原料，一公斤裝，適合自行燉煮、家庭長期保養或高端贈禮。",
+      "summaryEn": "Premium bird's nest selected from Vietnamese swiftlet houses, in a 1 kg pack—for home stewing, long-term family wellness or a top-tier gift.",
+      "features": [
+        "越南燕屋產地直選",
+        "1kg 大份量，適合長期保養",
+        "挑選與燉煮方式可由顧問說明"
+      ],
+      "featuresEn": [
+        "Sourced directly from Vietnamese swiftlet houses",
+        "Generous 1 kg pack for long-term wellness",
+        "Our advisor can guide you on selection and stewing"
+      ],
+      "price": "120000",
+      "priceFrom": false,
+      "specification": "1kg",
+      "images": [
+        "/assets/categories/factory/S__75194517_0.webp",
+        "/assets/categories/factory/S__75194520_0.webp",
+        "/assets/categories/factory/S__75194518_0.webp",
+        "/assets/categories/factory/S__75194519_0.webp"
+      ],
+      "placeholder": false,
       "details": {
         "netContent": "",
         "nestContent": "",

@@ -151,7 +151,7 @@ export const en: Messages = {
 
   home: {
     metaTitle: "YUA JIN YAN 越金燕 | Premium Bird's Nest Gifts",
-    metaDescription: "YUA JIN YAN crafts premium bird's nest from Vietnamese swiftlet houses. Shop the Yanxu Essential and Deep Reserve gift boxes, with corporate gifting and personal advisor service.",
+    metaDescription: "YUA JIN YAN crafts premium bird's nest from Vietnamese swiftlet houses. Shop Yanxu Daily whole-stewed bird's nest, Yanxu Deep ready-to-drink gift boxes and Yanxu Origin premium bird's nest, with corporate gifting and personal advisor service.",
     heroEyebrow: "Premium Bird's Nest, Expertly Selected",
     heroTitle: ["A thoughtful gift", "for the people who matter."],
     heroBody: "From everyday wellness and festive gifting to corporate gifts—choose the occasion and size, and our advisor will confirm the details and delivery.",
@@ -163,8 +163,8 @@ export const en: Messages = {
     asideLabel: "Concierge",
     asideContact: "Contact",
     occasions: [
-      { eyebrow: "Everyday Care", title: "Daily Wellness", description: "Start with the approachable, clearly portioned Essential collection.", cta: "Shop Essential" },
-      { eyebrow: "Significant Gifting", title: "Meaningful Gifts", description: "A more complete gift for holidays, elders and important clients.", cta: "Shop Deep Reserve" },
+      { eyebrow: "Everyday Care", title: "Daily Wellness", description: "Start with approachable Yanxu Daily whole-stewed bird's nest—a little care every day.", cta: "Shop Yanxu Daily" },
+      { eyebrow: "Significant Gifting", title: "Meaningful Gifts", description: "A ready-to-drink bird's nest gift box for holidays, elders and important clients.", cta: "Shop Yanxu Deep" },
       { eyebrow: "Corporate Gifting", title: "Corporate Orders", description: "Our advisor tailors quantity, packaging and delivery for your company.", cta: "Explore corporate gifts" }
     ],
     servicePoints: [
@@ -177,7 +177,7 @@ export const en: Messages = {
     guideDescription: "No need to learn every collection first—starting from the occasion makes it easier to find the right size and packaging.",
     bestEyebrow: "Best Sellers",
     bestTitle: "Bestselling Gifts",
-    bestDescription: "Add to your bag and check out. For items priced on request, our advisor confirms the total after you order.",
+    bestDescription: "From everyday wellness to premium raw bird's nest—add to your bag and check out, and our advisor will confirm and arrange delivery.",
     originEyebrow: "Origin & Craft",
     originTitle: "Know where it comes from, and give with confidence.",
     originText: "Origin photos, nest details and gift presentation, all in one place—so you see how each gift is prepared, not just the box.",
@@ -209,10 +209,10 @@ export const en: Messages = {
 
   productsPage: {
     metaTitle: "Shop All",
-    metaDescription: "Shop YUA JIN YAN Yanxu Essential and Deep Reserve bird's nest gift boxes, with home delivery and 7-ELEVEN / FamilyMart pickup in Taiwan.",
+    metaDescription: "Shop YUA JIN YAN Yanxu Daily, Deep and Origin bird's nest, with home delivery and 7-ELEVEN / FamilyMart pickup in Taiwan.",
     eyebrow: "Shop",
     title: "All Products",
-    description: "Yanxu Essential is ideal for daily wellness and first-timers; Yanxu Deep Reserve is made for elders, important clients and festive gifting."
+    description: "Yanxu Daily whole-stewed bird's nest is made for everyday wellness; the Yanxu Deep ready-to-drink gift box is made for gifting; Yanxu Origin premium bird's nest is for home stewing and top-tier gifts."
   },
 
   product: {
@@ -250,10 +250,10 @@ export const en: Messages = {
 
   collections: {
     metaTitle: "Collections",
-    metaDescription: "Browse YUA JIN YAN collections: Yanxu Essential, Yanxu Deep Reserve and our Vietnamese origin story.",
+    metaDescription: "Browse YUA JIN YAN collections: Yanxu Daily, Yanxu Deep, Yanxu Origin and our Vietnamese origin story.",
     eyebrow: "Collections",
     title: "Our Collections",
-    description: "Browse by occasion and richness: Essential, Deep Reserve and our origin story.",
+    description: "Browse by occasion and size: Daily, Deep, Origin and our origin story.",
     detailEyebrow: "Collection",
     count: (count: number) => `${count} ${count === 1 ? "product" : "products"}`,
     switchLabel: "Switch collection",
@@ -272,7 +272,7 @@ export const en: Messages = {
       { title: "Nest building", text: "Swiftlets build their nests layer by layer on the wooden beams of our Vietnamese swiftlet houses, kept quiet and dim so the birds can rest undisturbed." },
       { title: "Hand harvesting", text: "Each nest is carefully removed from the beams by hand with a scraper." },
       { title: "Cleaning & shaping", text: "Raw nests are cleaned, picked of feathers and shaped into whole nests and strips." },
-      { title: "Crafted into Yanxu", text: "The finished nests are prepared into our Yanxu Essential and Deep Reserve collections and packed into gift boxes for you." }
+      { title: "Crafted into Yanxu", text: "The finished nests become our Yanxu Daily and Deep collections—or reach you as Yanxu Origin premium nest—packed in gift boxes." }
     ],
     captionFallback: (index: number) => `Vietnam swiftlet house ${index}`
   },
@@ -296,7 +296,7 @@ export const en: Messages = {
       { title: "Gifts with grace", text: "Elegant gift boxes suited to everyday wellness, festive gifting and corporate gifts alike." }
     ],
     collectionsEyebrow: "Yanxu Collections",
-    collectionsTitle: "Two collections, two kinds of care",
+    collectionsTitle: "Three collections for every kind of care",
     collectionsCta: "Shop this collection",
     originEyebrow: "Our Origin",
     originTitle: "It all starts in Vietnam",
@@ -468,6 +468,7 @@ export const en: Messages = {
     pickupNote: "Bring ID matching the recipient name. Parcels not collected within 7 days are returned.",
     taiwanOnly: "We currently deliver within Taiwan only.",
     choosePayment: "Choose a payment option",
+    codLimit: (amount: string) => `For orders over ${amount}, please pay by bank transfer.`,
     note: "Order notes",
     notePlaceholder: "e.g. gift bag, card message, company tax ID",
     consent: ["I have read and agree to the ", "Privacy Policy", " and ", "Returns & Refunds", "."],

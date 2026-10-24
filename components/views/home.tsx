@@ -21,7 +21,7 @@ import {
 import { getMessages, localePath, type Locale } from "@/lib/i18n";
 import { displaySpecification } from "@/lib/pricing";
 import { absoluteSiteUrl, buildMetadata, localeUrl } from "@/lib/seo";
-import { cn, withBasePath } from "@/lib/utils";
+import { cn, formatCurrency, withBasePath } from "@/lib/utils";
 
 export function homeMetadata(locale: Locale) {
   const t = getMessages(locale).home;
@@ -29,7 +29,7 @@ export function homeMetadata(locale: Locale) {
 }
 
 const OCCASION_LINKS = [
-  { href: "/products?category=benyang", icon: Sparkles },
+  { href: "/products?category=riyang", icon: Sparkles },
   { href: "/products?category=shenyang", icon: Gift },
   { href: "/custom", icon: Building2 }
 ];
@@ -49,7 +49,12 @@ export function HomeView({ locale }: { locale: Locale }) {
       return {
         image: slide.image,
         name: productName(product, locale),
-        spec: displaySpecification(product.specification, locale),
+        // 有售價時顯示價格（與規格），否則顯示規格說明
+        spec: product.price
+          ? [formatCurrency(product.price, product.priceFrom, locale), product.specification && product.specification !== "待補" ? product.specification : null]
+              .filter(Boolean)
+              .join(" · ")
+          : displaySpecification(product.specification, locale),
         href: href(`/products/${product.slug}`)
       };
     })
@@ -63,7 +68,7 @@ export function HomeView({ locale }: { locale: Locale }) {
   }));
   const serviceIcons = [PackageCheck, Truck, Headphones];
   const servicePoints = t.servicePoints.map((text, index) => ({ ...text, icon: serviceIcons[index] }));
-  const originImages = productContent.factoryGallery.slice(0, 3);
+  const originImages = site.originImages ?? productContent.factoryGallery.slice(0, 3);
 
   const homeSchema = {
     "@context": "https://schema.org",

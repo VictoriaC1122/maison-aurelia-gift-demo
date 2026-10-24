@@ -149,7 +149,7 @@ export const zh = {
 
   home: {
     metaTitle: "越金燕 YUA JIN YAN｜頂級燕窩・專研之選",
-    metaDescription: "越金燕 YUA JIN YAN 專研頂級燕窩，提供「燕序」本養、深養系列燕窩禮盒，以及企業客製禮贈與專人顧問服務。",
+    metaDescription: "越金燕 YUA JIN YAN 專研頂級燕窩，提供「燕序」日養全燉燕窩、深養即飲燕窩禮盒與本養頂級燕窩，以及企業客製禮贈與專人顧問服務。",
     heroEyebrow: "頂級燕窩・專研之選",
     heroTitle: ["為重要的人，", "選一份妥帖燕禮。"],
     heroBody: "從日常保養、節慶送禮到企業禮贈，先選用途與份量，再由顧問協助確認規格與配送安排。",
@@ -161,8 +161,8 @@ export const zh = {
     asideLabel: "專屬顧問",
     asideContact: "聯絡",
     occasions: [
-      { eyebrow: "自用保養", title: "日常保養", description: "從份量清楚、容易入手的本養系列開始。", cta: "選購本養系列" },
-      { eyebrow: "節慶送禮", title: "重要贈禮", description: "為節慶、長輩與重要客戶選一份更完整的燕禮。", cta: "選購深養系列" },
+      { eyebrow: "自用保養", title: "日常保養", description: "從容易入手的日養全燉燕窩開始，每天一點，好好保養。", cta: "選購日養系列" },
+      { eyebrow: "節慶送禮", title: "重要贈禮", description: "即飲燕窩精品禮盒，為節慶、長輩與重要客戶送上體面心意。", cta: "選購深養系列" },
       { eyebrow: "企業採購", title: "企業客製", description: "依數量、包裝與配送需求，由顧問協助整理方案。", cta: "了解客製方式" }
     ],
     servicePoints: [
@@ -175,7 +175,7 @@ export const zh = {
     guideDescription: "不用先理解所有系列；從使用情境開始，會更容易找到適合的份量與包裝。",
     bestEyebrow: "熱銷推薦",
     bestTitle: "人氣燕禮",
-    bestDescription: "加入購物車即可結帳；尚未公開售價的品項，送出訂單後由顧問確認金額。",
+    bestDescription: "從日常保養到頂級燕窩原料，加入購物車即可結帳，顧問確認後安排出貨。",
     originEyebrow: "產地與工序",
     originTitle: "看得見來處，才更放心把心意交出去。",
     originText: "產地影像、燕盞細節與禮盒呈現分開整理，讓挑選不只看外盒，也能理解一份燕禮如何被準備。",
@@ -207,10 +207,10 @@ export const zh = {
 
   productsPage: {
     metaTitle: "全部商品",
-    metaDescription: "選購越金燕「燕序」本養、深養系列燕窩禮盒，支援宅配到府與 7-11、全家超商取貨。",
+    metaDescription: "選購越金燕「燕序」日養、深養、本養系列燕窩，支援宅配到府與 7-11、全家超商取貨。",
     eyebrow: "線上選購",
     title: "全部商品",
-    description: "燕序本養適合日常保養與初次品嚐；燕序深養適合長輩、重要客戶與節慶大禮。"
+    description: "日養全燉燕窩適合日常保養；深養即飲燕窩禮盒適合送禮；本養頂級燕窩原料適合自行燉煮與高端贈禮。"
   },
 
   product: {
@@ -248,10 +248,10 @@ export const zh = {
 
   collections: {
     metaTitle: "商品系列",
-    metaDescription: "依系列瀏覽越金燕的燕序本養、深養與產地故事。",
+    metaDescription: "依系列瀏覽越金燕的燕序日養、深養、本養與產地故事。",
     eyebrow: "燕序系列",
     title: "商品系列",
-    description: "依送禮情境與風味深度，瀏覽本養、深養與產地系列。",
+    description: "依送禮情境與份量，瀏覽日養、深養、本養與產地系列。",
     detailEyebrow: "商品系列",
     count: (count: number) => `${count} 款系列商品`,
     switchLabel: "切換商品系列",
@@ -270,7 +270,7 @@ export const zh = {
       { title: "燕屋築巢", text: "金絲燕在越南燕屋的木樑上，以唾液一層層築成燕窩。燕屋保持安靜、昏暗，讓燕子安心棲息。" },
       { title: "人工採收", text: "燕窩由採收人員在燕屋內，以刮刀從木樑上逐一手工取下。" },
       { title: "清潔整理", text: "採下的原燕盞經過清潔、挑毛與整形，成為一盞盞完整的燕盞與燕條。" },
-      { title: "製成燕序", text: "整理好的燕窩再製作成「燕序」本養、深養系列，裝入禮盒送到你手上。" }
+      { title: "製成燕序", text: "整理好的燕窩製作成「燕序」日養、深養系列，或以本養原料，裝入禮盒送到你手上。" }
     ],
     captionFallback: (index: number) => `越南燕廠實景 ${index}`
   },
@@ -294,7 +294,7 @@ export const zh = {
       { title: "送禮送得體面", text: "精緻禮盒包裝，從日常保養、節慶送禮到企業贈禮都合適。" }
     ],
     collectionsEyebrow: "燕序系列",
-    collectionsTitle: "兩個系列，對應兩種心意",
+    collectionsTitle: "三個系列，對應不同的心意",
     collectionsCta: "選購此系列",
     originEyebrow: "產地故事",
     originTitle: "一切從越南燕屋開始",
@@ -466,6 +466,7 @@ export const zh = {
     pickupNote: "取貨時請攜帶與收件人姓名相符的證件；到店後 7 天內未取件將退回。",
     taiwanOnly: "",
     choosePayment: "選擇付款方式",
+    codLimit: (amount: string) => `單筆超過 ${amount} 時，請選擇銀行轉帳。`,
     note: "訂單備註",
     notePlaceholder: "例如：需要提袋、送禮卡片內容、統一編號",
     consent: ["我已閱讀並同意", "隱私權政策", "與", "退換貨說明", "。"],

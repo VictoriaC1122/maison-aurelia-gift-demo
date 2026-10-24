@@ -30,7 +30,7 @@ export function AboutView({ locale }: { locale: Locale }) {
   const t = getMessages(locale).about;
   const href = (path: string) => localePath(locale, path);
   const featured = getFeaturedProducts();
-  const collections = ["benyang", "shenyang"].map((slug) => getCategory(slug)).filter((category) => category !== undefined);
+  const collections = ["riyang", "shenyang", "benyang"].map((slug) => getCategory(slug)).filter((category) => category !== undefined);
   // 築巢 → 採收 → 整理
   const originImages = [6, 7, 1].map((index) => productContent.factoryGallery[index]).filter(Boolean);
 
@@ -91,23 +91,23 @@ export function AboutView({ locale }: { locale: Locale }) {
       {/* 燕序系列 */}
       <section className="shell space-y-8">
         <SectionHeading eyebrow={t.collectionsEyebrow} title={t.collectionsTitle} />
-        <div className="grid gap-5 md:grid-cols-2">
+        <div className="grid gap-5 md:grid-cols-3">
           {collections.map((category, index) => (
             <FadeIn key={category.slug} delay={index * 0.08}>
               <Link
                 href={href(`/products?category=${category.slug}`)}
-                className="collection-card group grid h-full overflow-hidden rounded-[1.6rem] border border-champagne/14 bg-[rgba(255,253,249,0.88)] sm:grid-cols-[0.9fr_1.1fr]"
+                className="collection-card group flex h-full flex-col overflow-hidden rounded-[1.6rem] border border-champagne/14 bg-[rgba(255,253,249,0.88)]"
               >
-                <div className="relative aspect-[4/3] overflow-hidden sm:aspect-auto sm:min-h-[260px]">
+                <div className="relative aspect-[4/3] overflow-hidden">
                   <Image
                     src={withBasePath(category.coverImage)}
                     alt={categoryName(category, locale)}
                     fill
-                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 45vw, 280px"
+                    sizes="(max-width: 768px) 100vw, 400px"
                     className="object-cover transition duration-700 group-hover:scale-[1.03]"
                   />
                 </div>
-                <div className="flex flex-col justify-between gap-6 p-6">
+                <div className="flex flex-1 flex-col justify-between gap-6 p-6">
                   <div className="space-y-2">
                     <p className="eyebrow !text-[10px]">{categoryAltName(category, locale)}</p>
                     <h3 className="font-display text-[1.7rem] leading-tight text-ink">{categoryName(category, locale)}</h3>

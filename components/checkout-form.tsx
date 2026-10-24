@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { FormEvent, ReactNode } from "react";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { CheckCircle2, ChevronDown, ExternalLink, Lock, MapPin, ShieldCheck, ShoppingBag, Store, Truck } from "lucide-react";
 import { CartTotals } from "@/components/cart-drawer";
 import { useLocale } from "@/components/locale-provider";
@@ -15,7 +15,7 @@ import {
   enabledPaymentOptions,
   type DeliveryOption
 } from "@/lib/commerce";
-import { contact, getProducts, productName } from "@/lib/content";
+import { contact, getProducts, productName, site } from "@/lib/content";
 import type { Messages } from "@/lib/i18n";
 import { isSupabaseConfigured, notifyNewOrder, submitOrder, type CheckoutPayload } from "@/lib/orders-client";
 import { displaySpecification, formatTWD, parsePrice, summarizeCart } from "@/lib/pricing";
@@ -140,6 +140,14 @@ export function CheckoutForm() {
     () => summarizeCart(lines, getProducts(), baseShippingFee(form.deliveryMethod)),
     [lines, form.deliveryMethod]
   );
+  const codLimit = site.payment.codLimit ?? null;
+  const codBlocked = codLimit !== null && summary.subtotal !== null && summary.subtotal > codLimit;
+  useEffect(() => {
+    if (codBlocked && form.paymentMethod === "cod") {
+      const fallback = paymentOptions.find((option) => option.id !== "cod");
+      if (fallback) setForm((current) => ({ ...current, paymentMethod: fallback.id }));
+    }
+  }, [codBlocked, form.paymentMethod, paymentOptions]);
   const districts = form.city ? ZIPCODES[form.city] ?? [] : [];
   const zip = districts.find(([name]) => name === form.district)?.[1] ?? "";
   const selectedDelivery = deliveryOptions.find((option) => option.id === form.deliveryMethod) as DeliveryOption;
@@ -471,12 +479,14 @@ export function CheckoutForm() {
             <legend className="sr-only">{t.choosePayment}</legend>
             {paymentOptions.map((option) => {
               const checked = form.paymentMethod === option.id;
+              const disabled = option.id === "cod" && codBlocked;
               return (
                 <label
                   key={option.id}
                   className={cn(
-                    "flex cursor-pointer gap-3 rounded-2xl border p-4 transition",
-                    checked ? "border-ink bg-white shadow-[0_8px_20px_rgba(21,18,15,0.06)]" : "border-champagne/20 bg-white/50 hover:border-champagne/45"
+                    "flex gap-3 rounded-2xl border p-4 transition",
+                    disabled ? "cursor-not-allowed border-champagne/15 bg-white/30 opacity-60" : "cursor-pointer",
+                    !disabled && (checked ? "border-ink bg-white shadow-[0_8px_20px_rgba(21,18,15,0.06)]" : "border-champagne/20 bg-white/50 hover:border-champagne/45")
                   )}
                 >
                   <input
@@ -484,6 +494,7 @@ export function CheckoutForm() {
                     name="paymentMethod"
                     value={option.id}
                     checked={checked}
+                    disabled={disabled}
                     onChange={() => update("paymentMethod", option.id)}
                     className="mt-1 h-4 w-4 accent-[#15120F]"
                   />
@@ -491,7 +502,9 @@ export function CheckoutForm() {
                     <span className="block text-sm text-ink">
                       {option.id === "cod" && form.deliveryMethod !== "home" ? messages.payment.cod.labelPickup : option.id === "cod" ? messages.payment.cod.labelHome : option.label}
                     </span>
-                    <span className="mt-1 block text-xs leading-5 text-ink/60">{option.description}</span>
+                    <span className="mt-1 block text-xs leading-5 text-ink/60">
+                      {disabled && codLimit !== null ? t.codLimit(formatTWD(codLimit)) : option.description}
+                    </span>
                   </span>
                 </label>
               );

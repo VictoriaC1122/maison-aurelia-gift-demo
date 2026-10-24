@@ -95,6 +95,8 @@ export type SiteData = {
   heroSlides?: Array<{ product: string; image: string }>;
   /** 首頁「送禮情境」三張卡片的圖片 */
   occasionImages?: string[];
+  /** 首頁「產地與工序」三張照片 */
+  originImages?: string[];
   socialLinks: {
     instagram: string;
     line: string;
@@ -125,6 +127,8 @@ export type SiteData = {
       accountName: string;
     };
     transferDeadlineDays: number;
+    /** 貨到付款／取貨付款的單筆上限；超過時只能轉帳 */
+    codLimit?: number;
   };
 };
 

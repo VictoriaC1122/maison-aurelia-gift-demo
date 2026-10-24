@@ -52,9 +52,9 @@ NEXT_PUBLIC_WEB3FORMS_KEY=xxxx-xxxx
 
 | 放在哪裡 | 欄位 |
 | --- | --- |
-| `data/products.json` → `price` | 每項商品售價（數字，例如 `"3880"`）；若要顯示「起」，把 `priceFrom` 改成 `true` |
+| `data/products.json` → `price` | 已填入：日養 1500、深養 5000、本養 1kg 120000（改價直接改這裡的數字） |
 | `data/products.json` → `details` | 容量、每瓶燕窩含量、成分、甜度、食用方式、保存方式、保存期限、原產地、製造廠商、過敏原、營養標示（有填才會顯示） |
-| `data/products.json` | 「燕序・本養 精選禮盒」的規格 |
+| `data/products.json` → `specification` | 「燕序・日養 全燉燕窩」的規格（容量／入數） |
 | `data/site.json` → `company` | 公司／商號名稱、統一編號、食品業者登錄字號、產品責任險、公司地址（顯示在頁尾） |
 | `data/contact.json` | Instagram、門市／辦公地址、營業時間 |
 | `lib/messages/zh.ts`、`lib/messages/en.ts` → `returns` | 確認退換貨條款（破損 3 日內通知、7 個工作天退款）是否符合店家做法 |

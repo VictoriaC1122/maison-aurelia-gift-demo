@@ -15,7 +15,8 @@ import {
   updateOrder,
   type OrderPatch
 } from "@/lib/orders-client";
-import { deliveryLabel, paymentLabel } from "@/lib/commerce";
+import { baseShippingFee, deliveryLabel, paymentLabel } from "@/lib/commerce";
+import { site } from "@/lib/content";
 import { formatTWD } from "@/lib/pricing";
 import { getSupabase } from "@/lib/supabase";
 import type { OrderRecord, OrderStatus, PaymentStatus } from "@/lib/types";
@@ -53,6 +54,15 @@ const STATUS_STYLES: Record<OrderStatus, string> = {
   completed: "bg-[#e1eee2] text-[#3f6a45]",
   cancelled: "bg-ink/8 text-ink/60"
 };
+
+/** 依網站售價試算應付金額（商品＋運費）；有未定價商品時回傳 null */
+function suggestTotal(order: OrderRecord) {
+  const items = order.items ?? [];
+  if (items.length === 0 || items.some((item) => item.unitPrice === null || item.unitPrice === undefined)) return null;
+  const subtotal = items.reduce((sum, item) => sum + (item.unitPrice ?? 0) * item.quantity, 0);
+  const fee = subtotal >= site.shippingPolicy.freeShippingThreshold ? 0 : baseShippingFee(order.deliveryMethod ?? "home");
+  return { subtotal, shipping: fee, total: fee === null ? null : subtotal + fee };
+}
 
 function formatDateTime(value: string) {
   return new Intl.DateTimeFormat("zh-TW", {
@@ -449,6 +459,25 @@ export function AdminOrdersClient({ initialOrders }: { initialOrders: OrderRecor
                             value={drafts[order.orderId]?.quotedTotal ?? ""}
                             onChange={(event) => setDrafts((current) => ({ ...current, [order.orderId]: { ...(current[order.orderId] ?? draftFrom(order)), quotedTotal: event.target.value } }))}
                           />
+                          {(() => {
+                            const suggestion = suggestTotal(order);
+                            if (!suggestion) return null;
+                            const value = suggestion.total ?? suggestion.subtotal;
+                            return (
+                              <p className="flex flex-wrap items-center gap-2 text-xs text-ink/60">
+                                依網站售價試算：商品 {formatTWD(suggestion.subtotal)}
+                                {suggestion.shipping === null ? "＋運費（請另加）" : suggestion.shipping === 0 ? "（免運）" : `＋運費 ${formatTWD(suggestion.shipping)}`}
+                                {suggestion.total !== null ? `＝${formatTWD(suggestion.total)}` : ""}
+                                <button
+                                  type="button"
+                                  className="rounded-full border border-champagne/30 px-2.5 py-0.5 text-ink/75 hover:bg-white"
+                                  onClick={() => setDrafts((current) => ({ ...current, [order.orderId]: { ...(current[order.orderId] ?? draftFrom(order)), quotedTotal: String(value) } }))}
+                                >
+                                  帶入
+                                </button>
+                              </p>
+                            );
+                          })()}
                         </div>
                         <div className="field-group">
                           <label htmlFor={`pay-${order.orderId}`} className="field-label">付款狀態</label>
