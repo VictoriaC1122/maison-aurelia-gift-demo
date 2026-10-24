@@ -40,10 +40,10 @@ function draftFrom(order: OrderRecord): Draft {
 }
 
 const PAYMENT_STYLES: Record<PaymentStatus, string> = {
-  unpaid: "text-ink/55",
+  unpaid: "text-ink/60",
   reported: "text-[#a2533f]",
   paid: "text-[#3f6a45]",
-  refunded: "text-ink/45"
+  refunded: "text-ink/60"
 };
 
 const STATUS_STYLES: Record<OrderStatus, string> = {
@@ -51,7 +51,7 @@ const STATUS_STYLES: Record<OrderStatus, string> = {
   confirmed: "bg-champagne/18 text-[#7a6234]",
   shipped: "bg-[#dfe8f1] text-[#3d5873]",
   completed: "bg-[#e1eee2] text-[#3f6a45]",
-  cancelled: "bg-ink/8 text-ink/50"
+  cancelled: "bg-ink/8 text-ink/60"
 };
 
 function formatDateTime(value: string) {
@@ -274,7 +274,7 @@ export function AdminOrdersClient({ initialOrders }: { initialOrders: OrderRecor
   if (authState === "signed-out" || authState === "not-admin") {
     return (
       <div className="paper-panel mx-auto max-w-md p-6 md:p-8">
-        <p className="text-[11px] uppercase tracking-[0.3em] text-champagne">店家後台</p>
+        <p className="eyebrow">店家後台</p>
         <h1 className="mt-2 font-display text-3xl text-ink">訂單後台登入</h1>
         {authState === "not-admin" ? (
           <div className="mt-5 space-y-3 rounded-[1rem] border border-rosegold/20 bg-rosegold/10 p-4 text-sm leading-6 text-ink/72">
@@ -291,7 +291,7 @@ export function AdminOrdersClient({ initialOrders }: { initialOrders: OrderRecor
               <label htmlFor="admin-password" className="field-label">密碼</label>
               <input id="admin-password" type="password" autoComplete="current-password" required className="field" value={password} onChange={(event) => setPassword(event.target.value)} />
             </div>
-            {error ? <p role="alert" className="text-sm text-rosegold">{error}</p> : null}
+            {error ? <p role="alert" className="text-sm text-[#a2533f]">{error}</p> : null}
             <button disabled={signingIn} className="hero-button-dark min-h-[52px] w-full justify-center disabled:opacity-50">
               {signingIn ? "登入中..." : "登入"}
             </button>
@@ -311,7 +311,7 @@ export function AdminOrdersClient({ initialOrders }: { initialOrders: OrderRecor
 
       <div className="flex flex-col gap-4 rounded-luxe border border-white/60 bg-white/70 p-6 shadow-glass backdrop-blur lg:flex-row lg:items-center lg:justify-between">
         <div>
-          <p className="text-xs uppercase tracking-[0.3em] text-champagne">訂單管理</p>
+          <p className="eyebrow">訂單管理</p>
           <h1 className="font-display text-3xl text-ink">訂單後台</h1>
         </div>
         <div className="flex flex-col gap-3 md:flex-row md:items-center">
@@ -361,7 +361,7 @@ export function AdminOrdersClient({ initialOrders }: { initialOrders: OrderRecor
       {error ? <p role="alert" className="rounded-[1rem] border border-rosegold/20 bg-rosegold/10 px-4 py-3 text-sm text-ink/76">{error}</p> : null}
 
       {filteredOrders.length === 0 ? (
-        <div className="paper-panel p-8 text-center text-sm text-ink/55">{loading ? "讀取中..." : "目前沒有符合條件的訂單。"}</div>
+        <div className="paper-panel p-8 text-center text-sm text-ink/60">{loading ? "讀取中..." : "目前沒有符合條件的訂單。"}</div>
       ) : (
         <div className="space-y-3">
           {filteredOrders.map((order) => {
@@ -370,8 +370,8 @@ export function AdminOrdersClient({ initialOrders }: { initialOrders: OrderRecor
               <article key={order.orderId} className="overflow-hidden rounded-[1.3rem] border border-white/60 bg-white/75 shadow-glass">
                 <div className="grid gap-3 p-4 md:grid-cols-[minmax(0,1.3fr)_minmax(0,1.2fr)_minmax(0,1fr)_auto] md:items-center md:gap-5 md:p-5">
                   <div className="min-w-0">
-                    <p className="text-[11px] tracking-[0.12em] text-champagne">{order.orderId}</p>
-                    <p className="mt-1 text-xs text-ink/50">{formatDateTime(order.createdAt)}</p>
+                    <p className="text-[11px] tracking-[0.12em] text-gold">{order.orderId}</p>
+                    <p className="mt-1 text-xs text-ink/60">{formatDateTime(order.createdAt)}</p>
                   </div>
                   <div className="min-w-0">
                     <p className="truncate text-base text-ink">{order.customerName}</p>
@@ -379,7 +379,7 @@ export function AdminOrdersClient({ initialOrders }: { initialOrders: OrderRecor
                   </div>
                   <div className="min-w-0">
                     <p className="truncate text-sm text-ink">{order.productName}</p>
-                    <p className="text-xs text-ink/50">
+                    <p className="text-xs text-ink/60">
                       共 {order.quantity} 件・{deliveryLabel(order.deliveryMethod)}・
                       <span className={PAYMENT_STYLES[order.paymentStatus ?? "unpaid"]}>{PAYMENT_STATUS_LABELS[order.paymentStatus ?? "unpaid"]}</span>
                     </p>
@@ -415,11 +415,11 @@ export function AdminOrdersClient({ initialOrders }: { initialOrders: OrderRecor
                     <div className="space-y-4">
                       {order.items && order.items.length > 0 ? (
                         <div>
-                          <p className="text-xs text-ink/45">商品明細</p>
+                          <p className="text-xs text-ink/60">商品明細</p>
                           <ul className="mt-1 divide-y divide-champagne/12 rounded-xl border border-champagne/14 bg-white/60 px-3">
                             {order.items.map((item) => (
                               <li key={`${item.slug}-${item.name}`} className="flex justify-between gap-3 py-2">
-                                <span>{item.name}<span className="ml-1 text-xs text-ink/45">{item.spec}</span></span>
+                                <span>{item.name}<span className="ml-1 text-xs text-ink/60">{item.spec}</span></span>
                                 <span>x {item.quantity}{item.unitPrice ? `・${formatTWD(item.unitPrice * item.quantity)}` : ""}</span>
                               </li>
                             ))}
@@ -427,17 +427,17 @@ export function AdminOrdersClient({ initialOrders }: { initialOrders: OrderRecor
                         </div>
                       ) : null}
                       <dl className="grid gap-3 sm:grid-cols-2">
-                        <div><dt className="text-xs text-ink/45">Email</dt><dd className="mt-1 break-all"><a href={`mailto:${order.email}`} className="underline-offset-4 hover:underline">{order.email}</a></dd></div>
-                        <div><dt className="text-xs text-ink/45">LINE</dt><dd className="mt-1">{order.lineId || "未填"}</dd></div>
-                        <div><dt className="text-xs text-ink/45">配送方式</dt><dd className="mt-1">{deliveryLabel(order.deliveryMethod)}</dd></div>
-                        <div><dt className="text-xs text-ink/45">付款方式</dt><dd className="mt-1">{paymentLabel(order.paymentMethod)}{order.paymentLast5 ? `（後五碼 ${order.paymentLast5}）` : ""}</dd></div>
-                        <div className="sm:col-span-2"><dt className="text-xs text-ink/45">收件地址／門市</dt><dd className="mt-1 break-words">{order.address}</dd></div>
-                        <div><dt className="text-xs text-ink/45">希望到貨日</dt><dd className="mt-1">{order.preferredDeliveryDate || "未指定"}</dd></div>
-                        <div className="sm:col-span-2"><dt className="text-xs text-ink/45">客人備註</dt><dd className="mt-1 whitespace-pre-wrap break-words">{order.note || "無"}</dd></div>
+                        <div><dt className="text-xs text-ink/60">Email</dt><dd className="mt-1 break-all"><a href={`mailto:${order.email}`} className="underline-offset-4 hover:underline">{order.email}</a></dd></div>
+                        <div><dt className="text-xs text-ink/60">LINE</dt><dd className="mt-1">{order.lineId || "未填"}</dd></div>
+                        <div><dt className="text-xs text-ink/60">配送方式</dt><dd className="mt-1">{deliveryLabel(order.deliveryMethod)}</dd></div>
+                        <div><dt className="text-xs text-ink/60">付款方式</dt><dd className="mt-1">{paymentLabel(order.paymentMethod)}{order.paymentLast5 ? `（後五碼 ${order.paymentLast5}）` : ""}</dd></div>
+                        <div className="sm:col-span-2"><dt className="text-xs text-ink/60">收件地址／門市</dt><dd className="mt-1 break-words">{order.address}</dd></div>
+                        <div><dt className="text-xs text-ink/60">希望到貨日</dt><dd className="mt-1">{order.preferredDeliveryDate || "未指定"}</dd></div>
+                        <div className="sm:col-span-2"><dt className="text-xs text-ink/60">客人備註</dt><dd className="mt-1 whitespace-pre-wrap break-words">{order.note || "無"}</dd></div>
                       </dl>
                     </div>
                     <div className="space-y-3">
-                      <p className="text-xs text-ink/45">訂單處理（應付金額、付款狀態與物流單號會顯示在客人的訂單查詢頁）</p>
+                      <p className="text-xs text-ink/60">訂單處理（應付金額、付款狀態與物流單號會顯示在客人的訂單查詢頁）</p>
                       <div className="grid gap-3 sm:grid-cols-2">
                         <div className="field-group">
                           <label htmlFor={`total-${order.orderId}`} className="field-label">應付金額（含運）</label>

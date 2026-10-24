@@ -93,7 +93,7 @@ function Section({ step, title, icon, children }: { step: number; title: string;
       <h2 className="mb-5 flex items-center gap-3 border-b border-champagne/14 pb-4 font-display text-xl text-ink md:text-2xl">
         <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-ink text-xs text-pearl">{step}</span>
         {title}
-        <span className="ml-auto text-champagne">{icon}</span>
+        <span className="ml-auto text-gold">{icon}</span>
       </h2>
       {children}
     </section>
@@ -223,10 +223,10 @@ export function CheckoutForm() {
     const bank = success.paymentMethod === "bank_transfer";
     return (
       <section role="status" aria-live="polite" className="paper-panel mx-auto max-w-3xl p-6 text-center md:p-10">
-        <span className="mx-auto inline-flex h-14 w-14 items-center justify-center rounded-full bg-champagne/14 text-champagne">
+        <span className="mx-auto inline-flex h-14 w-14 items-center justify-center rounded-full bg-champagne/14 text-gold">
           <CheckCircle2 aria-hidden="true" className="h-7 w-7" />
         </span>
-        <p className="mt-5 text-[11px] uppercase tracking-[0.28em] text-champagne">{t.success.eyebrow}</p>
+        <p className="mt-5 eyebrow">{t.success.eyebrow}</p>
         <h2 className="mt-3 font-display text-[2rem] leading-tight text-ink md:text-[2.6rem]">{t.success.title}</h2>
         <p className="mt-4 text-base leading-8 text-ink/65">
           {t.success.orderNumber} <strong className="text-ink">{success.orderId}</strong>
@@ -245,7 +245,7 @@ export function CheckoutForm() {
             t.success.stepShip
           ].map((text, index) => (
             <li key={text} className="rounded-2xl border border-champagne/14 bg-white/55 p-4 text-sm leading-6 text-ink/70">
-              <span className="block text-[11px] tracking-[0.2em] text-champagne">0{index + 1}</span>
+              <span className="block text-[11px] tracking-[0.2em] text-gold">0{index + 1}</span>
               {text}
             </li>
           ))}
@@ -258,24 +258,29 @@ export function CheckoutForm() {
             {t.success.continueShopping}
           </Link>
         </div>
-        <p className="mt-6 text-sm text-ink/50">{t.success.remember}</p>
+        <p className="mt-6 text-sm text-ink/60">{t.success.remember}</p>
       </section>
     );
   }
 
   if (!ready) {
-    return <div className="paper-panel p-8 text-center text-sm text-ink/55">{t.loadingCart}</div>;
+    // 與空購物車區塊同高，避免載入後版面跳動
+    return (
+      <div role="status" className="paper-panel mx-auto flex min-h-[22rem] max-w-xl items-center justify-center p-8 text-center text-sm text-ink/60">
+        {t.loadingCart}
+      </div>
+    );
   }
 
   if (summary.lines.length === 0) {
     return (
-      <section className="paper-panel mx-auto max-w-xl p-8 text-center md:p-10">
-        <span className="mx-auto inline-flex h-14 w-14 items-center justify-center rounded-full bg-champagne/12 text-champagne">
+      <section className="paper-panel mx-auto flex min-h-[22rem] max-w-xl flex-col items-center justify-center p-8 text-center md:p-10">
+        <span className="mx-auto inline-flex h-14 w-14 items-center justify-center rounded-full bg-champagne/12 text-gold">
           <ShoppingBag aria-hidden="true" className="h-6 w-6" />
         </span>
         <h2 className="mt-5 font-display text-2xl text-ink">{t.emptyTitle}</h2>
         <p className="mt-2 text-sm leading-7 text-ink/60">{t.emptyText}</p>
-        <Link href={href("/products")} className="hero-button-dark mt-6 min-h-[52px] justify-center px-8">
+        <Link href={href("/products")} className="hero-button-dark mt-6 min-h-[52px] justify-center px-8 md:w-auto">
           {messages.common.shopNow}
         </Link>
       </section>
@@ -295,13 +300,13 @@ export function CheckoutForm() {
             </div>
             <div className="min-w-0 flex-1">
               <p className="truncate text-sm text-ink">{productName(line.product, locale)}</p>
-              <p className="text-xs text-ink/50">{displaySpecification(line.product.specification, locale)}</p>
+              <p className="text-xs text-ink/60">{displaySpecification(line.product.specification, locale)}</p>
             </div>
             <span className="text-sm text-ink">{line.lineTotal === null ? messages.common.priceOnRequest : formatTWD(line.lineTotal)}</span>
           </li>
         ))}
       </ul>
-      <button type="button" onClick={open} className="text-sm text-ink/55 underline decoration-champagne/50 underline-offset-4 hover:text-ink">
+      <button type="button" onClick={open} className="text-sm text-ink/60 underline decoration-champagne/50 underline-offset-4 hover:text-ink">
         {t.editCart}
       </button>
       <CartTotals summary={summary} />
@@ -313,7 +318,7 @@ export function CheckoutForm() {
       <details className="paper-panel group p-5 lg:hidden">
         <summary className="flex cursor-pointer list-none items-center justify-between gap-3">
           <span className="flex items-center gap-2 text-sm text-ink">
-            <ShoppingBag aria-hidden="true" className="h-4 w-4 text-champagne" />
+            <ShoppingBag aria-hidden="true" className="h-4 w-4 text-gold" />
             {t.summaryCount(summary.itemCount)}
             <ChevronDown aria-hidden="true" className="h-4 w-4 transition group-open:rotate-180" />
           </span>
@@ -382,17 +387,17 @@ export function CheckoutForm() {
                         onChange={() => update("deliveryMethod", option.id)}
                         className="h-4 w-4 accent-[#15120F]"
                       />
-                      {option.id === "home" ? <Truck aria-hidden="true" className="h-4 w-4 text-champagne" /> : <Store aria-hidden="true" className="h-4 w-4 text-champagne" />}
+                      {option.id === "home" ? <Truck aria-hidden="true" className="h-4 w-4 text-gold" /> : <Store aria-hidden="true" className="h-4 w-4 text-gold" />}
                       {option.label}
                     </span>
-                    <span className="pl-6 text-xs leading-5 text-ink/50">{option.description}</span>
+                    <span className="pl-6 text-xs leading-5 text-ink/60">{option.description}</span>
                   </label>
                 );
               })}
             </div>
           </fieldset>
 
-          {t.taiwanOnly ? <p className="mt-3 text-xs leading-5 text-ink/50">{t.taiwanOnly}</p> : null}
+          {t.taiwanOnly ? <p className="mt-3 text-xs leading-5 text-ink/60">{t.taiwanOnly}</p> : null}
 
           {form.deliveryMethod === "home" ? (
             <div className="mt-5 grid gap-4 md:grid-cols-[1fr_1fr_110px]">
@@ -439,10 +444,10 @@ export function CheckoutForm() {
                 className="flex items-center justify-between gap-3 rounded-2xl border border-champagne/25 bg-white/60 px-4 py-3 text-sm text-ink transition hover:bg-white"
               >
                 <span className="flex items-center gap-2">
-                  <MapPin aria-hidden="true" className="h-4 w-4 text-champagne" />
+                  <MapPin aria-hidden="true" className="h-4 w-4 text-gold" />
                   {selectedDelivery.id === "cvs_711" ? messages.delivery.cvs_711.mapButton : messages.delivery.cvs_family.mapButton}
                 </span>
-                <ExternalLink aria-hidden="true" className="h-4 w-4 text-ink/45" />
+                <ExternalLink aria-hidden="true" className="h-4 w-4 text-ink/60" />
               </a>
               <div className="grid gap-4 md:grid-cols-[180px_1fr]">
                 <div className="field-group">
@@ -456,7 +461,7 @@ export function CheckoutForm() {
                   <FieldError id="storeName" message={errors.storeName} />
                 </div>
               </div>
-              <p className="text-xs leading-6 text-ink/50">{t.pickupNote}</p>
+              <p className="text-xs leading-6 text-ink/60">{t.pickupNote}</p>
             </div>
           )}
         </Section>
@@ -486,7 +491,7 @@ export function CheckoutForm() {
                     <span className="block text-sm text-ink">
                       {option.id === "cod" && form.deliveryMethod !== "home" ? messages.payment.cod.labelPickup : option.id === "cod" ? messages.payment.cod.labelHome : option.label}
                     </span>
-                    <span className="mt-1 block text-xs leading-5 text-ink/50">{option.description}</span>
+                    <span className="mt-1 block text-xs leading-5 text-ink/60">{option.description}</span>
                   </span>
                 </label>
               );
@@ -530,7 +535,7 @@ export function CheckoutForm() {
             <Lock aria-hidden="true" className="h-4 w-4" />
             {submitting ? t.submitting : t.submit}
           </button>
-          <p className="text-center text-xs leading-6 text-ink/50">{t.submitNote}</p>
+          <p className="text-center text-xs leading-6 text-ink/60">{t.submitNote}</p>
         </div>
       </form>
 

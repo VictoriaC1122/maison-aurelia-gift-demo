@@ -28,7 +28,7 @@ export function CollectionsView({ locale }: { locale: Locale }) {
               />
             </div>
             <div className="space-y-2 p-5 md:p-6">
-              <p className="text-xs uppercase tracking-[0.3em] text-champagne">{categoryAltName(category, locale)}</p>
+              <p className="eyebrow">{categoryAltName(category, locale)}</p>
               <h2 className="font-display text-[2rem] leading-[1.08] md:text-3xl">{categoryName(category, locale)}</h2>
               <p className="text-sm leading-7 text-ink/65">{categoryDescription(category, locale)}</p>
             </div>

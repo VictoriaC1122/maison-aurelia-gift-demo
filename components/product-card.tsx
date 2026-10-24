@@ -7,7 +7,17 @@ import { displaySpecification } from "@/lib/pricing";
 import type { Product } from "@/lib/types";
 import { formatCurrency, withBasePath } from "@/lib/utils";
 
-export function ProductCard({ product, locale = "zh" }: { product: Product; locale?: Locale }) {
+export function ProductCard({
+  product,
+  locale = "zh",
+  headingLevel = "h3"
+}: {
+  product: Product;
+  locale?: Locale;
+  /** 標題層級：放在 h1 底下時用 h2，放在 h2 區塊內時用 h3 */
+  headingLevel?: "h2" | "h3";
+}) {
+  const Heading = headingLevel;
   const t = getMessages(locale);
   const name = productName(product, locale);
   const href = localePath(locale, `/products/${product.slug}`);
@@ -48,12 +58,12 @@ export function ProductCard({ product, locale = "zh" }: { product: Product; loca
       </Link>
       <div className="flex min-w-0 flex-1 flex-col gap-3 p-4 md:p-5">
         <div className="space-y-1.5">
-          <h3 className="font-display text-[1.25rem] leading-snug text-ink md:text-[1.35rem]">
+          <Heading className="font-display text-[1.25rem] leading-snug text-ink md:text-[1.35rem]">
             <Link href={href} className="transition hover:text-ink/70">
               {name}
             </Link>
-          </h3>
-          <p className="text-xs text-ink/50">{displaySpecification(product.specification, locale)}</p>
+          </Heading>
+          <p className="text-xs text-ink/60">{displaySpecification(product.specification, locale)}</p>
           <p className="line-clamp-2 text-sm leading-6 text-ink/62">{productSummary(product, locale)}</p>
         </div>
         <div className="mt-auto flex items-center justify-between gap-3 border-t border-champagne/12 pt-3">

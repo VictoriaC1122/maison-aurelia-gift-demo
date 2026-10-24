@@ -14,21 +14,21 @@ export function TrustBadges({ className, compact = false, locale = "zh" }: { cla
   ];
 
   return (
-    <ul className={cn("grid grid-cols-2 gap-3 lg:grid-cols-4", className)}>
+    <ul className={cn("grid grid-cols-2 gap-2.5 sm:gap-3 lg:grid-cols-4", className)}>
       {badges.map(({ icon: Icon, title, text }) => (
         <li
           key={title}
           className={cn(
-            "flex items-start gap-3 rounded-2xl border border-champagne/14 bg-white/55",
-            compact ? "p-3" : "p-4 md:p-5"
+            "flex flex-col gap-2.5 rounded-2xl border border-champagne/14 bg-white/60 sm:flex-row sm:items-start sm:gap-3",
+            compact ? "p-3" : "p-3.5 sm:p-4 md:p-5"
           )}
         >
-          <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-champagne/12 text-champagne">
+          <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-champagne/14 text-gold">
             <Icon aria-hidden="true" className="h-4 w-4" />
           </span>
           <span className="min-w-0">
-            <span className="block text-sm text-ink">{title}</span>
-            <span className="mt-0.5 block text-xs leading-5 text-ink/52">{text}</span>
+            <span className="block text-[0.92rem] leading-6 text-ink sm:text-sm">{title}</span>
+            <span className="text-pretty mt-0.5 block text-xs leading-5 text-ink/60">{text}</span>
           </span>
         </li>
       ))}

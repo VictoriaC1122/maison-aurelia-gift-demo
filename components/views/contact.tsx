@@ -40,7 +40,7 @@ export function ContactView({ locale }: { locale: Locale }) {
           />
           <div className="absolute inset-0 bg-gradient-to-t from-[rgba(23,18,15,0.45)] via-[rgba(23,18,15,0.12)] to-transparent" />
           <div className="absolute bottom-4 left-4 right-4 z-10 rounded-[1.45rem] border border-white/35 bg-[rgba(248,241,232,0.74)] p-4 backdrop-blur-xl md:bottom-6 md:left-6 md:right-6 md:rounded-[1.6rem] md:p-5">
-            <p className="text-[11px] uppercase tracking-[0.3em] text-champagne">{t.overlayEyebrow}</p>
+            <p className="eyebrow">{t.overlayEyebrow}</p>
             <p className="mt-2 text-sm leading-7 text-ink/75">{t.overlayText}</p>
           </div>
         </div>
@@ -48,7 +48,7 @@ export function ContactView({ locale }: { locale: Locale }) {
           {contactItems.map(([label, value, href]) => {
             const content = (
               <>
-                <p className="text-xs uppercase tracking-[0.28em] text-champagne">{label}</p>
+                <p className="eyebrow">{label}</p>
                 <p className="mt-2 text-base text-ink/75">{value}</p>
               </>
             );

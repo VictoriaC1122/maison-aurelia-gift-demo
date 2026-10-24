@@ -4,11 +4,13 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "prebuild": "node scripts/build-images.mjs",
     "build": "next build",
     "start": "next start",
     "lint": "eslint . --ext .ts,.tsx",
     "typecheck": "tsc --noEmit",
-    "sync:products": "node scripts/sync-products.mjs"
+    "sync:products": "node scripts/sync-products.mjs",
+    "images": "node scripts/build-images.mjs"
   },
   "keywords": [],
   "author": "",
@@ -17,7 +19,6 @@
   "dependencies": {
     "@supabase/supabase-js": "^2.105.4",
     "clsx": "^2.1.1",
-    "framer-motion": "^12.38.0",
     "lucide-react": "^1.14.0",
     "next": "^15.5.18",
     "react": "^19.2.6",
@@ -31,6 +32,7 @@
     "eslint": "^8.57.1",
     "eslint-config-next": "^15.5.18",
     "postcss": "^8.5.14",
+    "sharp": "^0.34.5",
     "tailwindcss": "^3.4.17",
     "typescript": "^5.7.3"
   }

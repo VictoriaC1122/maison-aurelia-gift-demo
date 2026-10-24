@@ -67,8 +67,9 @@ export function categoryName(category: Category, locale: Locale) {
   return locale === "en" ? category.nameEn || category.englishName : category.name;
 }
 
+/** 系列小標：中文版用中文標語，英文版附上中文系列名 */
 export function categoryAltName(category: Category, locale: Locale) {
-  return locale === "en" ? category.name : category.englishName;
+  return locale === "en" ? category.name : category.tagline || category.englishName;
 }
 
 export function categoryDescription(category: Category, locale: Locale) {

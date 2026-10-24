@@ -52,7 +52,7 @@ export const en: Messages = {
   announcement: {
     freeShipping: (amount: string) => `Free shipping on orders over ${amount}`,
     deliveryLong: "Home delivery · 7-ELEVEN / FamilyMart pickup",
-    deliveryShort: "Delivery & store pickup"
+    deliveryShort: "Store pickup"
   },
 
   footer: {
@@ -197,7 +197,14 @@ export const en: Messages = {
     faqEyebrow: "Before You Order",
     faqTitle: "Frequently Asked Questions",
     faqAll: "All questions",
-    faqAllMobile: "View all questions"
+    faqAllMobile: "View all questions",
+    faqMore: "Still have questions?",
+    faqMoreLine: "Ask our advisor on LINE",
+    heroSlide: (index: number, total: number) => `Show featured gift ${index} of ${total}`,
+    statementEyebrow: "Our Philosophy",
+    statementQuote: ["Peace of mind for those who receive it,", "and pride for those who give it."],
+    statementBody: "YUA JIN YAN specializes in premium bird's nest. From sourcing at Vietnamese swiftlet houses to the presentation of every Yanxu gift box, each step is made with these two things in mind.",
+    statementCta: "About YUA JIN YAN"
   },
 
   productsPage: {
@@ -280,7 +287,25 @@ export const en: Messages = {
     slogan: "Premium Bird's Nest, Expertly Selected",
     promiseEyebrow: "Our Promise",
     promiseText: "A visible origin and clear information, so every gift is given with ease.",
-    imageAlt: "YUA JIN YAN Yanxu gift boxes"
+    imageAlt: "YUA JIN YAN Yanxu gift boxes",
+    promisesEyebrow: "Our Promise",
+    promisesTitle: "Three things we always care about",
+    promises: [
+      { title: "Traceable origin", text: "Our bird's nest comes from Vietnamese swiftlet houses, with real photos from the house to harvest and cleaning." },
+      { title: "Clear and honest", text: "Our advisor explains sizes, portions and storage one by one, so everything is clear before you order." },
+      { title: "Gifts with grace", text: "Elegant gift boxes suited to everyday wellness, festive gifting and corporate gifts alike." }
+    ],
+    collectionsEyebrow: "Yanxu Collections",
+    collectionsTitle: "Two collections, two kinds of care",
+    collectionsCta: "Shop this collection",
+    originEyebrow: "Our Origin",
+    originTitle: "It all starts in Vietnam",
+    originText: "Nest-building, hand harvesting and careful cleaning—every step is documented in photos.",
+    originCta: "See our origin",
+    ctaTitle: "Looking for the right gift?",
+    ctaText: "Tell us who it's for, how many you need and your budget, and our advisor will help you choose.",
+    ctaLine: "Ask on LINE",
+    ctaShop: "Shop gifts"
   },
 
   contactPage: {

@@ -6,3 +6,4 @@ out
 coverage
 *.log
 *.tsbuildinfo
+public/_img

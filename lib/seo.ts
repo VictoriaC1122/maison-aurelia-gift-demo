@@ -76,7 +76,8 @@ export function buildMetadata({
       images: [
         {
           url: ogImage,
-          alt: locale === "en" ? site.brandName : site.brandNameZh
+          alt: locale === "en" ? site.brandName : site.brandNameZh,
+          ...(image === site.ogImage ? { width: 1200, height: 630 } : {})
         }
       ]
     },

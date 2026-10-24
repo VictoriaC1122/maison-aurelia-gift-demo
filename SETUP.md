@@ -67,3 +67,11 @@ NEXT_PUBLIC_WEB3FORMS_KEY=xxxx-xxxx
 - 商品與 FAQ 的英文：`data/products.json` 的 `summaryEn`、`featuresEn`、`nameEn`、`descriptionEn`、`factoryCaptionsEn`，以及 `data/faq.json` 的 `questionEn`、`answerEn`。商品英文名稱用 `name`。
 - 商品標示（成分、保存方式等）如需英文，可在商品加上 `detailsEn`（欄位同 `details`）；沒填的欄位會顯示中文。
 - 後台與新訂單通知信維持中文；英文網站下的訂單，備註開頭會標示「【英文網站訂單】」。
+
+## 8. 圖片與首頁設定
+
+- 商品與產地照片放在 `public/assets/`。建置時會自動產生手機、平板、電腦用的多種尺寸（`public/_img/`，不需放進 Git）；本機可用 `npm run images` 先產生。
+- 首頁主視覺輪播：`data/site.json` → `heroSlides`（每張指定商品代碼與照片）。
+- 首頁「送禮情境」三張卡片的照片：`data/site.json` → `occasionImages`。
+- 分享到 LINE／Facebook 時顯示的圖片：`public/og.jpg`（1200×630）。
+- 品牌影片：`public/assets/video/hero-film.mp4`，封面為 `hero-film-poster.webp`。

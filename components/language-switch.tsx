@@ -51,7 +51,7 @@ export function LanguageSwitch({ variant = "pill", className }: { variant?: "pil
   if (variant === "menu") {
     return (
       <div className={cn("flex items-center gap-2", className)} role="group" aria-label="Language / 語言">
-        <Globe aria-hidden="true" className="h-4 w-4 text-ink/45" />
+        <Globe aria-hidden="true" className="h-4 w-4 text-ink/60" />
         {options.map((option) => (
           <a
             key={option.id}
@@ -105,14 +105,14 @@ export function LanguageSwitch({ variant = "pill", className }: { variant?: "pil
         hrefLang={other === "zh" ? "zh-Hant" : "en"}
         lang={other === "zh" ? "zh-Hant" : "en"}
         onClick={go(other)}
-        aria-label={other === "zh" ? "切換為中文版" : "Switch to English"}
         className={cn(
           "inline-flex h-11 min-w-11 items-center justify-center gap-1 rounded-full border border-champagne/25 bg-white/70 px-2.5 text-[12px] tracking-[0.04em] text-ink transition hover:bg-white sm:hidden",
           className
         )}
       >
-        <Globe aria-hidden="true" className="h-3.5 w-3.5 text-ink/50" />
+        <Globe aria-hidden="true" className="h-3.5 w-3.5 text-ink/60" />
         {other === "zh" ? "中文" : "EN"}
+        <span className="sr-only">{other === "zh" ? "（切換為中文版）" : " (Switch to English)"}</span>
       </a>
       {/* 平板以上：中文｜EN 切換 */}
       <div
@@ -128,13 +128,13 @@ export function LanguageSwitch({ variant = "pill", className }: { variant?: "pil
             lang={option.id === "zh" ? "zh-Hant" : "en"}
             onClick={go(option.id)}
             aria-current={option.id === locale ? "true" : undefined}
-            aria-label={option.id === "zh" ? "切換為中文版" : "Switch to English"}
             className={cn(
               "inline-flex h-full min-w-[38px] items-center justify-center rounded-full px-2.5 tracking-[0.04em] transition",
               option.id === locale ? "bg-ink text-pearl" : "text-ink/65 hover:text-ink"
             )}
           >
             {option.label}
+            <span className="sr-only">{option.id === "zh" ? "（切換為中文版）" : " (Switch to English)"}</span>
           </a>
         ))}
       </div>

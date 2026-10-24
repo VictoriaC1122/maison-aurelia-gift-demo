@@ -18,5 +18,5 @@ export function OrderRedirect() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ready]);
 
-  return <p className="paper-panel p-8 text-center text-sm text-ink/55">正在前往結帳…</p>;
+  return <p className="paper-panel p-8 text-center text-sm text-ink/60">正在前往結帳…</p>;
 }

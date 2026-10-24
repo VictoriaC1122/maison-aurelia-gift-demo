@@ -13,6 +13,8 @@ export type Category = {
   slug: string;
   name: string;
   englishName: string;
+  /** 中文版的系列小標（例如「日常奢養・入門之選」） */
+  tagline?: string;
   /** 英文版顯示的系列名稱 */
   nameEn?: string;
   description: string;
@@ -89,6 +91,10 @@ export type SiteData = {
   metaTitle: string;
   metaDescription: string;
   ogImage: string;
+  /** 首頁主視覺輪播：商品代碼與要顯示的圖片 */
+  heroSlides?: Array<{ product: string; image: string }>;
+  /** 首頁「送禮情境」三張卡片的圖片 */
+  occasionImages?: string[];
   socialLinks: {
     instagram: string;
     line: string;

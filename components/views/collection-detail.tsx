@@ -53,16 +53,16 @@ export function CollectionDetailView({ slug, locale }: { slug: string; locale: L
 
   return (
     <main id="main-content" className="shell space-y-10 py-10 md:py-16">
-      <nav aria-label={messages.common.breadcrumb} className="flex min-w-0 items-center gap-2 overflow-hidden text-sm text-ink/48">
+      <nav aria-label={messages.common.breadcrumb} className="flex min-w-0 items-center gap-2 overflow-hidden text-xs text-ink/60 md:text-sm">
         <Link href={href("/")} className="shrink-0 transition hover:text-ink">{messages.common.home}</Link>
-        <ChevronRight aria-hidden="true" className="h-3.5 w-3.5 shrink-0 text-champagne" />
+        <ChevronRight aria-hidden="true" className="h-3.5 w-3.5 shrink-0 text-gold" />
         <Link href={href("/collections")} className="shrink-0 transition hover:text-ink">{t.title}</Link>
-        <ChevronRight aria-hidden="true" className="h-3.5 w-3.5 shrink-0 text-champagne" />
+        <ChevronRight aria-hidden="true" className="h-3.5 w-3.5 shrink-0 text-gold" />
         <span aria-current="page" className="truncate text-ink/72">{name}</span>
       </nav>
       <div className="grid gap-6 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:items-end">
         <div className="min-w-0 space-y-5">
-          <p className="text-xs uppercase tracking-[0.36em] text-champagne">{categoryAltName(category, locale)}</p>
+          <p className="eyebrow">{categoryAltName(category, locale)}</p>
           <h1
             className={cn(
               "collection-hero__title font-display leading-[1.02] text-ink",
@@ -73,7 +73,7 @@ export function CollectionDetailView({ slug, locale }: { slug: string; locale: L
           </h1>
           <p className="max-w-2xl text-base leading-8 text-ink/65">{categoryDescription(category, locale)}</p>
           {!isFactory ? (
-            <div className="inline-flex rounded-full border border-champagne/15 bg-white/62 px-4 py-2 text-[11px] uppercase tracking-[0.24em] text-champagne">
+            <div className="inline-flex rounded-full border border-champagne/15 bg-white/62 px-4 py-2 eyebrow">
               {t.count(products.length)}
             </div>
           ) : null}
@@ -116,7 +116,7 @@ export function CollectionDetailView({ slug, locale }: { slug: string; locale: L
           <ol className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
             {factory.steps.map((step, index) => (
               <li key={step.title} className="glass-panel p-5 md:p-6">
-                <p className="text-[11px] uppercase tracking-[0.28em] text-champagne">{factory.stepLabel(index + 1)}</p>
+                <p className="eyebrow">{factory.stepLabel(index + 1)}</p>
                 <h3 className="mt-3 font-display text-2xl text-ink">{step.title}</h3>
                 <p className="mt-3 text-[0.97rem] leading-8 text-ink/66">{step.text}</p>
               </li>

@@ -5,7 +5,7 @@
   "chineseSlogan": "頂級燕窩・專研之選",
   "metaTitle": "越金燕 YUA JIN YAN｜頂級燕窩・專研之選",
   "metaDescription": "越金燕 YUA JIN YAN 專研頂級燕窩，提供「燕序」本養、深養系列燕窩禮盒，以及企業客製禮贈與專人顧問服務。",
-  "ogImage": "/assets/categories/benyang/S__75194507_0.jpg",
+  "ogImage": "/og.jpg",
   "socialLinks": {
     "instagram": "",
     "line": "youwayliu"
@@ -39,5 +39,24 @@
       "accountName": ""
     },
     "transferDeadlineDays": 3
-  }
+  },
+  "heroSlides": [
+    {
+      "product": "yanxu-essential-6",
+      "image": "/assets/categories/benyang/S__75194507_0.webp"
+    },
+    {
+      "product": "yanxu-deep-reserve-6",
+      "image": "/assets/categories/shenyang/S__75194502_0.webp"
+    },
+    {
+      "product": "yanxu-essential-signature",
+      "image": "/assets/categories/benyang/S__75194511_0.webp"
+    }
+  ],
+  "occasionImages": [
+    "/assets/categories/benyang/S__75194512_0.webp",
+    "/assets/categories/shenyang/S__75194504_0.webp",
+    "/assets/categories/shenyang/S__75194503_0.webp"
+  ]
 }

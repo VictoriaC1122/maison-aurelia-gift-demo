@@ -18,7 +18,11 @@ const nextConfig: NextConfig = {
     NEXT_PUBLIC_TRAILING_SLASH: isGithubPages ? "true" : ""
   },
   images: {
-    unoptimized: true
+    // 靜態網站：用預先產生的多種尺寸（scripts/build-images.mjs）
+    loader: "custom",
+    loaderFile: "./lib/image-loader.ts",
+    deviceSizes: [480, 768, 1080, 1400],
+    imageSizes: [128, 256]
   }
 };
 

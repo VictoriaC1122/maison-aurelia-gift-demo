@@ -143,7 +143,7 @@ export function OrderTracker() {
           <PackageSearch aria-hidden="true" className="h-4 w-4" />
           {loading ? t.loading : t.submit}
         </button>
-        <p className="text-xs leading-6 text-ink/50">
+        <p className="text-xs leading-6 text-ink/60">
           {t.help(contact.line, contact.phone)}
         </p>
       </form>
@@ -152,7 +152,7 @@ export function OrderTracker() {
         <section aria-live="polite" className="paper-panel space-y-6 p-5 md:p-7">
           <div className="flex flex-wrap items-baseline justify-between gap-2">
             <h2 className="font-display text-2xl text-ink">{order.orderId}</h2>
-            <span className="text-sm text-ink/50">{t.placedAt} {formatDateTime(order.createdAt, locale)}</span>
+            <span className="text-sm text-ink/60">{t.placedAt} {formatDateTime(order.createdAt, locale)}</span>
           </div>
 
           {order.status === "cancelled" ? (
@@ -167,7 +167,7 @@ export function OrderTracker() {
                       <span className={cn("inline-flex h-9 w-9 items-center justify-center rounded-full border text-xs", done ? "border-ink bg-ink text-pearl" : "border-champagne/30 bg-white text-ink/40")}>
                         {done ? <Check aria-hidden="true" className="h-4 w-4" /> : index + 1}
                       </span>
-                      <span className={cn("whitespace-nowrap text-xs", done ? "text-ink" : "text-ink/45")}>{step.label}</span>
+                      <span className={cn("whitespace-nowrap text-xs", done ? "text-ink" : "text-ink/60")}>{step.label}</span>
                     </div>
                     {index < steps.length - 1 ? (
                       <span className={cn("mx-2 mb-6 h-px flex-1", index < stepIndex ? "bg-ink" : "bg-champagne/30")} />
@@ -179,12 +179,12 @@ export function OrderTracker() {
           )}
 
           <div>
-            <h3 className="mb-2 text-sm text-ink/55">{t.items}</h3>
+            <h3 className="mb-2 text-sm text-ink/60">{t.items}</h3>
             {order.items.length > 0 ? (
               <ul className="divide-y divide-champagne/12 rounded-2xl border border-champagne/14 bg-white/50 px-4">
                 {order.items.map((item) => (
                   <li key={`${item.slug}-${item.name}`} className="flex items-center justify-between gap-3 py-3 text-sm">
-                    <span className="text-ink">{itemName(item.slug, item.name)}<span className="ml-2 text-xs text-ink/45">{itemSpec(item.slug, item.spec)}</span></span>
+                    <span className="text-ink">{itemName(item.slug, item.name)}<span className="ml-2 text-xs text-ink/60">{itemSpec(item.slug, item.spec)}</span></span>
                     <span className="text-ink/70">x {item.quantity}</span>
                   </li>
                 ))}
@@ -196,12 +196,12 @@ export function OrderTracker() {
 
           <dl className="grid gap-4 sm:grid-cols-2">
             <div className="rounded-2xl border border-champagne/14 bg-white/50 p-4">
-              <dt className="flex items-center gap-2 text-xs text-ink/50"><Truck aria-hidden="true" className="h-4 w-4 text-champagne" />{t.delivery}</dt>
+              <dt className="flex items-center gap-2 text-xs text-ink/60"><Truck aria-hidden="true" className="h-4 w-4 text-gold" />{t.delivery}</dt>
               <dd className="mt-1 text-sm text-ink">{deliveryLabel(order.deliveryMethod, locale)}</dd>
               {order.trackingNumber ? <dd className="mt-1 text-sm text-ink/70">{t.trackingNumber}{colon}{order.trackingNumber}</dd> : null}
             </div>
             <div className="rounded-2xl border border-champagne/14 bg-white/50 p-4">
-              <dt className="flex items-center gap-2 text-xs text-ink/50"><Landmark aria-hidden="true" className="h-4 w-4 text-champagne" />{t.payment}</dt>
+              <dt className="flex items-center gap-2 text-xs text-ink/60"><Landmark aria-hidden="true" className="h-4 w-4 text-gold" />{t.payment}</dt>
               <dd className="mt-1 text-sm text-ink">{paymentLabel(order.paymentMethod, locale)}{locale === "en" ? " · " : "・"}{messages.paymentStatus[order.paymentStatus]}</dd>
               <dd className="mt-1 text-sm text-ink/70">
                 {t.amountDue}{colon}{order.quotedTotal !== null ? <strong className="text-ink">{formatTWD(order.quotedTotal)}</strong> : t.amountPending}
@@ -216,11 +216,11 @@ export function OrderTracker() {
                 <p className="text-sm leading-7 text-ink/65">{t.bankPending}</p>
               ) : hasBankAccount() ? (
                 <dl className="space-y-2 text-sm">
-                  <div className="flex items-center justify-between gap-3"><dt className="text-ink/55">{t.bank}</dt><dd className="text-ink">{bank.bankName}{bank.bankCode ? `（${bank.bankCode}）` : ""}{bank.branch ? ` ${bank.branch}` : ""}</dd></div>
-                  <div className="flex items-center justify-between gap-3"><dt className="text-ink/55">{t.account}</dt><dd className="flex items-center gap-2 text-ink">{bank.accountNumber}<CopyButton value={bank.accountNumber} /></dd></div>
-                  {bank.accountName ? <div className="flex items-center justify-between gap-3"><dt className="text-ink/55">{t.accountName}</dt><dd className="text-ink">{bank.accountName}</dd></div> : null}
-                  <div className="flex items-center justify-between gap-3"><dt className="text-ink/55">{t.amount}</dt><dd className="font-display text-lg text-ink">{formatTWD(order.quotedTotal)}</dd></div>
-                  <p className="pt-1 text-xs text-ink/50">{t.deadline(site.payment.transferDeadlineDays)}</p>
+                  <div className="flex items-center justify-between gap-3"><dt className="text-ink/60">{t.bank}</dt><dd className="text-ink">{bank.bankName}{bank.bankCode ? `（${bank.bankCode}）` : ""}{bank.branch ? ` ${bank.branch}` : ""}</dd></div>
+                  <div className="flex items-center justify-between gap-3"><dt className="text-ink/60">{t.account}</dt><dd className="flex items-center gap-2 text-ink">{bank.accountNumber}<CopyButton value={bank.accountNumber} /></dd></div>
+                  {bank.accountName ? <div className="flex items-center justify-between gap-3"><dt className="text-ink/60">{t.accountName}</dt><dd className="text-ink">{bank.accountName}</dd></div> : null}
+                  <div className="flex items-center justify-between gap-3"><dt className="text-ink/60">{t.amount}</dt><dd className="font-display text-lg text-ink">{formatTWD(order.quotedTotal)}</dd></div>
+                  <p className="pt-1 text-xs text-ink/60">{t.deadline(site.payment.transferDeadlineDays)}</p>
                 </dl>
               ) : (
                 <p className="text-sm leading-7 text-ink/65">{t.bankByAdvisor}</p>
@@ -244,7 +244,7 @@ export function OrderTracker() {
           ) : null}
         </section>
       ) : (
-        <section className="paper-panel hidden items-center justify-center p-10 text-center text-sm leading-7 text-ink/50 lg:flex lg:min-h-[320px]">
+        <section className="paper-panel hidden items-center justify-center p-10 text-center text-sm leading-7 text-ink/60 lg:flex lg:min-h-[320px]">
           {t.placeholder}
         </section>
       )}

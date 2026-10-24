@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { Check, ChevronDown, ChevronRight, MessageCircleMore, ShieldCheck, Store, Truck } from "lucide-react";
+import { ArrowUpRight, Check, ChevronDown, ChevronRight, MessageCircleMore, ShieldCheck, Store, Truck } from "lucide-react";
 import { MobileBuyBar, ProductPurchase } from "@/components/add-to-cart";
 import { ProductCard } from "@/components/product-card";
 import { ProductGallery } from "@/components/product-gallery";
@@ -64,7 +64,7 @@ function InfoSection({ title, children, defaultOpen = false }: { title: string; 
     <details open={defaultOpen} className="group border-b border-champagne/15">
       <summary className="flex min-h-[60px] cursor-pointer list-none items-center justify-between gap-4 text-base text-ink">
         {title}
-        <ChevronDown aria-hidden="true" className="h-4 w-4 text-ink/45 transition group-open:rotate-180" />
+        <ChevronDown aria-hidden="true" className="h-4 w-4 text-ink/60 transition group-open:rotate-180" />
       </summary>
       <div className="pb-6 text-sm leading-7 text-ink/68">{children}</div>
     </details>
@@ -93,19 +93,19 @@ export function ProductDetailView({ slug, locale }: { slug: string; locale: Loca
 
   return (
     <>
-      <main id="main-content" className="shell space-y-10 pb-32 pt-6 md:space-y-14 md:pb-16 md:pt-10">
+      <main id="main-content" className="shell space-y-8 pb-32 pt-5 md:space-y-14 md:pb-16 md:pt-8">
         <StructuredData data={buildProductSchema(product, locale)} />
-        <nav aria-label={messages.common.breadcrumb} className="flex min-w-0 items-center gap-2 overflow-hidden text-sm text-ink/48">
+        <nav aria-label={messages.common.breadcrumb} className="flex min-w-0 items-center gap-2 overflow-hidden text-xs text-ink/60 md:text-sm">
           <Link href={href("/")} className="shrink-0 transition hover:text-ink">{messages.common.home}</Link>
-          <ChevronRight aria-hidden="true" className="h-3.5 w-3.5 shrink-0 text-champagne" />
+          <ChevronRight aria-hidden="true" className="h-3.5 w-3.5 shrink-0 text-gold" />
           <Link href={href("/products")} className="shrink-0 transition hover:text-ink">{messages.nav.products}</Link>
           {category ? (
             <>
-              <ChevronRight aria-hidden="true" className="h-3.5 w-3.5 shrink-0 text-champagne" />
+              <ChevronRight aria-hidden="true" className="h-3.5 w-3.5 shrink-0 text-gold" />
               <Link href={href(`/products?category=${category.slug}`)} className="shrink-0 transition hover:text-ink">{categoryName(category, locale)}</Link>
             </>
           ) : null}
-          <ChevronRight aria-hidden="true" className="h-3.5 w-3.5 shrink-0 text-champagne" />
+          <ChevronRight aria-hidden="true" className="h-3.5 w-3.5 shrink-0 text-gold" />
           <span aria-current="page" className="truncate text-ink/72">{name}</span>
         </nav>
 
@@ -120,14 +120,14 @@ export function ProductDetailView({ slug, locale }: { slug: string; locale: Loca
                 </Link>
               ) : null}
               <h1 className="product-detail-title font-display text-[2.2rem] leading-[1.12] text-ink md:text-[2.9rem]">{name}</h1>
-              <p className={cn("text-xs text-rosegold", locale === "en" ? "tracking-[0.2em]" : "uppercase tracking-[0.28em]")}>{productAltName(product, locale)}</p>
+              <p className={cn("text-xs text-gold", locale === "en" ? "tracking-[0.2em]" : "uppercase tracking-[0.28em]")}>{productAltName(product, locale)}</p>
             </div>
 
             <div className="flex flex-wrap items-end gap-x-4 gap-y-1 border-y border-champagne/15 py-4">
               <strong className="font-display text-[2rem] font-medium leading-none text-ink">{priceLabel}</strong>
-              <span className="pb-1 text-sm text-ink/55">{specification}</span>
+              <span className="pb-1 text-sm text-ink/60">{specification}</span>
               {!product.price ? (
-                <span className="w-full pt-1 text-xs leading-5 text-ink/50">{t.priceNote}</span>
+                <span className="w-full pt-1 text-xs leading-5 text-ink/60">{t.priceNote}</span>
               ) : null}
             </div>
 
@@ -136,7 +136,7 @@ export function ProductDetailView({ slug, locale }: { slug: string; locale: Loca
             <ul className="space-y-2 text-sm text-ink/70">
               {features.map((feature) => (
                 <li key={feature} className="flex items-start gap-2.5">
-                  <Check aria-hidden="true" className="mt-1 h-4 w-4 shrink-0 text-champagne" />
+                  <Check aria-hidden="true" className="mt-1 h-4 w-4 shrink-0 text-gold" />
                   {feature}
                 </li>
               ))}
@@ -146,15 +146,15 @@ export function ProductDetailView({ slug, locale }: { slug: string; locale: Loca
 
             <ul className="grid gap-2 rounded-2xl border border-champagne/14 bg-white/50 p-4 text-sm text-ink/68">
               <li className="flex items-center gap-2.5">
-                <Truck aria-hidden="true" className="h-4 w-4 text-champagne" />
+                <Truck aria-hidden="true" className="h-4 w-4 text-gold" />
                 {t.homeDelivery(formatTWD(site.shippingPolicy.standardShippingFee), formatTWD(site.shippingPolicy.freeShippingThreshold))}
               </li>
               <li className="flex items-center gap-2.5">
-                <Store aria-hidden="true" className="h-4 w-4 text-champagne" />
+                <Store aria-hidden="true" className="h-4 w-4 text-gold" />
                 {t.pickup(cvsFee ? formatTWD(cvsFee) : "")}
               </li>
               <li className="flex items-center gap-2.5">
-                <ShieldCheck aria-hidden="true" className="h-4 w-4 text-champagne" />
+                <ShieldCheck aria-hidden="true" className="h-4 w-4 text-gold" />
                 {t.confirmFirst}
               </li>
             </ul>
@@ -183,7 +183,7 @@ export function ProductDetailView({ slug, locale }: { slug: string; locale: Loca
               <dl className="divide-y divide-champagne/12">
                 {details.map(([label, value]) => (
                   <div key={label} className={cn("grid gap-3 py-2.5", locale === "en" ? "grid-cols-[9.5rem_minmax(0,1fr)]" : "grid-cols-[7rem_minmax(0,1fr)]")}>
-                    <dt className="text-ink/48">{label}</dt>
+                    <dt className="text-ink/60">{label}</dt>
                     <dd className="whitespace-pre-line break-words text-ink/78">{value}</dd>
                   </div>
                 ))}
@@ -219,6 +219,17 @@ export function ProductDetailView({ slug, locale }: { slug: string; locale: Loca
             <h2 className="font-display text-2xl text-ink md:text-3xl">{t.related}</h2>
             <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
               {related.map((item) => <ProductCard key={item.slug} product={item} locale={locale} />)}
+              {related.length < 3 ? (
+                <Link
+                  href={href("/products")}
+                  className="group hidden min-h-[240px] flex-col items-center justify-center gap-4 rounded-[1.4rem] border border-dashed border-champagne/40 bg-white/35 p-6 text-center transition hover:bg-white/70 lg:flex"
+                >
+                  <span className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-champagne/40 text-gold transition group-hover:bg-ink group-hover:text-pearl">
+                    <ArrowUpRight aria-hidden="true" className="h-5 w-5" />
+                  </span>
+                  <span className="font-display text-xl text-ink">{messages.common.viewAllProducts}</span>
+                </Link>
+              ) : null}
             </div>
           </section>
         ) : null}

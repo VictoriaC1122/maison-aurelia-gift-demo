@@ -28,7 +28,7 @@ export function OrderingView({ locale }: { locale: Locale }) {
         {steps.map(({ icon: Icon, title, text }, index) => (
           <li key={title} className="order-flow__item">
             <div className="order-flow__card">
-              <span className="block text-[11px] tracking-[0.24em] text-champagne">{t.stepLabel(index + 1)}</span>
+              <span className="block text-[11px] tracking-[0.24em] text-gold">{t.stepLabel(index + 1)}</span>
               <span className="mt-3 inline-flex h-11 w-11 items-center justify-center rounded-full bg-white text-ink shadow-[0_6px_16px_rgba(21,18,15,0.06)]">
                 <Icon aria-hidden="true" className="h-5 w-5" />
               </span>
@@ -36,7 +36,7 @@ export function OrderingView({ locale }: { locale: Locale }) {
               <span className="mt-1 block text-sm leading-6 text-ink/60">{text}</span>
             </div>
             {index < steps.length - 1 ? (
-              <ArrowDown aria-hidden="true" className="order-flow__arrow-down h-5 w-5 text-champagne" />
+              <ArrowDown aria-hidden="true" className="order-flow__arrow-down h-5 w-5 text-gold" />
             ) : null}
           </li>
         ))}
@@ -50,7 +50,7 @@ export function OrderingView({ locale }: { locale: Locale }) {
               <li key={option.id} className="flex items-start justify-between gap-4 py-3">
                 <span>
                   <span className="block text-ink">{option.label}</span>
-                  <span className="text-sm leading-6 text-ink/55">{option.description}</span>
+                  <span className="text-sm leading-6 text-ink/60">{option.description}</span>
                 </span>
                 <span className="shrink-0 text-sm text-ink/70">
                   {option.id === "home" ? formatTWD(site.shippingPolicy.standardShippingFee) : cvsFee ? formatTWD(cvsFee) : t.byStore}
@@ -69,7 +69,7 @@ export function OrderingView({ locale }: { locale: Locale }) {
             {enabledPaymentOptions(locale).map((option) => (
               <li key={option.id} className="py-3">
                 <span className="block text-ink">{option.label}</span>
-                <span className="text-sm leading-6 text-ink/55">{option.description}</span>
+                <span className="text-sm leading-6 text-ink/60">{option.description}</span>
               </li>
             ))}
           </ul>

@@ -54,7 +54,7 @@ export function ProductCatalog({ products, categories }: { products: Product[]; 
             </button>
           ))}
         </div>
-        <div className="flex items-center gap-3 text-sm text-ink/55">
+        <div className="flex items-center gap-3 text-sm text-ink/60">
           <span>{t.common.productCount(visible.length)}</span>
           {hasPrices ? (
             <label className="flex items-center gap-2">
@@ -74,7 +74,7 @@ export function ProductCatalog({ products, categories }: { products: Product[]; 
       </div>
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {visible.map((product) => (
-          <ProductCard key={product.slug} product={product} locale={locale} />
+          <ProductCard key={product.slug} product={product} locale={locale} headingLevel="h2" />
         ))}
       </div>
     </div>

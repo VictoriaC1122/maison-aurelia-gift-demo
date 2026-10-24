@@ -1,10 +1,10 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { withBasePath } from "@/lib/utils";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { cn, withBasePath } from "@/lib/utils";
 
+/** 自動輪播圖片：淡入切換，只載入目前、上一張與下一張。 */
 export function AutoImageRotator({
   images,
   alt,
@@ -12,7 +12,8 @@ export function AutoImageRotator({
   intervalMs = 4200,
   className = "",
   imageClassName = "object-cover",
-  sizes = "100vw"
+  sizes = "100vw",
+  showDots = true
 }: {
   images: string[];
   alt: string;
@@ -21,103 +22,83 @@ export function AutoImageRotator({
   className?: string;
   imageClassName?: string;
   sizes?: string;
+  showDots?: boolean;
 }) {
   const uniqueImages = useMemo(() => Array.from(new Set(images.filter(Boolean))), [images]);
-  const [index, setIndex] = useState(0);
-  const [isVisible, setIsVisible] = useState(priority);
-  const [isPaused, setIsPaused] = useState(false);
-  const reduceMotion = useReducedMotion();
+  const [{ index, previous }, setSlide] = useState<{ index: number; previous: number | null }>({ index: 0, previous: null });
+  const [active, setActive] = useState(false);
+  const [paused, setPaused] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+  const count = uniqueImages.length;
 
+  // 只在畫面附近、且使用者沒有要求減少動態時才輪播
   useEffect(() => {
-    if (priority) {
-      setIsVisible(true);
-      return;
-    }
-
     const element = containerRef.current;
-    if (!element) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        setIsVisible(entry.isIntersecting);
-      },
-      {
-        rootMargin: "240px 0px"
-      }
-    );
-
+    if (!element || count < 2 || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const observer = new IntersectionObserver(([entry]) => setActive(entry.isIntersecting), { rootMargin: "120px 0px" });
     observer.observe(element);
-
-    return () => {
-      observer.disconnect();
-    };
-  }, [priority]);
+    return () => observer.disconnect();
+  }, [count]);
 
   useEffect(() => {
-    if (reduceMotion || !isVisible || isPaused || uniqueImages.length < 2) return;
-
+    if (!active || paused || count < 2) return;
     const timer = window.setInterval(() => {
-      setIndex((current) => (current + 1) % uniqueImages.length);
+      setSlide((current) => ({ index: (current.index + 1) % count, previous: current.index }));
     }, intervalMs);
-
     return () => window.clearInterval(timer);
-  }, [intervalMs, isPaused, isVisible, reduceMotion, uniqueImages.length]);
+  }, [active, paused, count, intervalMs]);
 
   useEffect(() => {
-    setIndex(0);
+    setSlide({ index: 0, previous: null });
   }, [uniqueImages]);
 
-  if (uniqueImages.length === 0) {
-    return null;
-  }
+  if (count === 0) return null;
+
+  const next = (index + 1) % count;
 
   return (
     <div
       ref={containerRef}
-      className={className}
-      onMouseEnter={() => setIsPaused(true)}
-      onMouseLeave={() => setIsPaused(false)}
+      className={cn("isolate", className)}
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
     >
-      {reduceMotion || uniqueImages.length < 2 ? (
-        <div className="absolute inset-0">
-          <Image
-            src={withBasePath(uniqueImages[0])}
-            alt={alt}
-            fill
-            priority={priority}
-            sizes={sizes}
-            className={imageClassName}
-          />
-        </div>
-      ) : (
-        <AnimatePresence mode="wait" initial={false}>
-          <motion.div
-            key={uniqueImages[index]}
-            className="absolute inset-0"
-            initial={{ opacity: 0.18, scale: 1.012 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0.12, scale: 1.008 }}
-            transition={{ duration: 0.9, ease: "easeInOut" }}
+      {uniqueImages.map((src, imageIndex) => {
+        const isCurrent = imageIndex === index;
+        const isPrevious = imageIndex === previous;
+        const isNext = active && count > 1 && imageIndex === next;
+        if (!isCurrent && !isPrevious && !isNext) return null;
+        return (
+          <div
+            key={src}
+            aria-hidden={isCurrent ? undefined : true}
+            className={cn(
+              "absolute inset-0",
+              isCurrent ? "z-[2]" : isPrevious ? "z-[1]" : "z-0 opacity-0",
+              isCurrent && previous !== null && "rotator-enter"
+            )}
           >
             <Image
-              src={withBasePath(uniqueImages[index])}
-              alt={alt}
+              src={withBasePath(src)}
+              alt={isCurrent ? alt : ""}
               fill
-              priority={priority}
+              priority={priority && imageIndex === 0}
               sizes={sizes}
               className={imageClassName}
             />
-          </motion.div>
-        </AnimatePresence>
-      )}
+          </div>
+        );
+      })}
 
-      {uniqueImages.length > 1 && !reduceMotion ? (
+      {showDots && count > 1 ? (
         <div aria-hidden="true" className="pointer-events-none absolute bottom-4 left-1/2 z-10 flex -translate-x-1/2 gap-1.5">
           {uniqueImages.map((image, imageIndex) => (
             <span
               key={image}
-              className={imageIndex === index ? "h-1.5 w-6 rounded-full bg-white/90" : "h-1.5 w-1.5 rounded-full bg-white/45"}
+              className={cn(
+                "h-1.5 rounded-full transition-all duration-500",
+                imageIndex === index ? "w-6 bg-white/90" : "w-1.5 bg-white/45"
+              )}
             />
           ))}
         </div>

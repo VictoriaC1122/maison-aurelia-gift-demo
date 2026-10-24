@@ -9,6 +9,8 @@ const config: Config = {
         pearl: "#FCFAF6",
         ink: "#15120F",
         champagne: "#C2A46D",
+        /** 淺色背景上的金色文字（對比足夠，小字也看得清楚） */
+        gold: "#8C6D3A",
         rosegold: "#BF8B7A",
         mist: "#D9CFC2"
       },

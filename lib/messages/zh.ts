@@ -195,7 +195,14 @@ export const zh = {
     faqEyebrow: "下單須知",
     faqTitle: "下單前常見問題",
     faqAll: "全部問題",
-    faqAllMobile: "查看全部問題"
+    faqAllMobile: "查看全部問題",
+    faqMore: "還有其他問題？",
+    faqMoreLine: "LINE 詢問顧問",
+    heroSlide: (index: number, total: number) => `顯示第 ${index} 件精選，共 ${total} 件`,
+    statementEyebrow: "品牌理念",
+    statementQuote: ["讓收到燕窩的人吃得安心，", "也讓送禮的人送得體面。"],
+    statementBody: "越金燕專研頂級燕窩，從越南燕屋的產地把關，到「燕序」系列的禮盒呈現，每一步都為這兩件事而做。",
+    statementCta: "認識越金燕"
   },
 
   productsPage: {
@@ -278,7 +285,25 @@ export const zh = {
     slogan: "頂級燕窩・專研之選",
     promiseEyebrow: "我們的承諾",
     promiseText: "產地看得見、內容講清楚，讓每一份燕禮都送得從容。",
-    imageAlt: "越金燕燕序系列禮盒"
+    imageAlt: "越金燕燕序系列禮盒",
+    promisesEyebrow: "我們的承諾",
+    promisesTitle: "三件我們一直在意的事",
+    promises: [
+      { title: "產地看得見", text: "燕窩來自越南燕屋，從燕屋、採收到整理，都有實拍紀錄可以看。" },
+      { title: "內容講清楚", text: "規格、份量與保存方式由顧問逐一說明，下單前就能確認清楚。" },
+      { title: "送禮送得體面", text: "精緻禮盒包裝，從日常保養、節慶送禮到企業贈禮都合適。" }
+    ],
+    collectionsEyebrow: "燕序系列",
+    collectionsTitle: "兩個系列，對應兩種心意",
+    collectionsCta: "選購此系列",
+    originEyebrow: "產地故事",
+    originTitle: "一切從越南燕屋開始",
+    originText: "燕屋築巢、人工採收、清潔整理，每一個環節都有照片可以看。",
+    originCta: "查看產地故事",
+    ctaTitle: "想找一份合適的燕禮？",
+    ctaText: "告訴我們送禮對象、數量與預算，顧問會協助你挑選。",
+    ctaLine: "LINE 詢問顧問",
+    ctaShop: "選購燕禮"
   },
 
   contactPage: {

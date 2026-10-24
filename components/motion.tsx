@@ -1,28 +1,48 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
-import type { PropsWithChildren } from "react";
+import { useEffect, useRef, useState } from "react";
+import type { ElementType, PropsWithChildren } from "react";
+import { cn } from "@/lib/utils";
 
+/**
+ * 捲動到時淡入。首屏內容直接顯示（不延遲最大內容繪製），
+ * 只有一開始在畫面外的區塊才會在出現時輕微淡入上移。
+ */
 export function FadeIn({
   children,
   delay = 0,
-  className = ""
-}: PropsWithChildren<{ delay?: number; className?: string }>) {
-  const reduceMotion = useReducedMotion();
+  className = "",
+  as: Tag = "div"
+}: PropsWithChildren<{ delay?: number; className?: string; as?: Extract<ElementType, "div" | "li" | "section" | "article"> }>) {
+  const ref = useRef<HTMLElement>(null);
+  const [state, setState] = useState<"idle" | "pending" | "shown">("idle");
 
-  if (reduceMotion) {
-    return <div className={className}>{children}</div>;
-  }
+  useEffect(() => {
+    const element = ref.current;
+    if (!element || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const rect = element.getBoundingClientRect();
+    if (rect.top < window.innerHeight && rect.bottom > 0) return;
+    setState("pending");
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setState("shown");
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "0px 0px -60px 0px" }
+    );
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, []);
 
   return (
-    <motion.div
-      className={className}
-      initial={false}
-      whileInView={{ opacity: [0.86, 1], y: [8, 0] }}
-      viewport={{ once: true, margin: "-80px" }}
-      transition={{ duration: 0.48, delay, ease: "easeOut" }}
+    <Tag
+      ref={ref as never}
+      className={cn(className, state === "pending" && "reveal-pending", state === "shown" && "reveal-shown")}
+      style={state === "shown" && delay ? { transitionDelay: `${delay}s` } : undefined}
     >
       {children}
-    </motion.div>
+    </Tag>
   );
 }

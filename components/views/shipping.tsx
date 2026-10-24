@@ -28,7 +28,7 @@ export function ShippingView({ locale }: { locale: Locale }) {
       <div className="grid gap-4 md:grid-cols-3">
         {cards.map(({ icon: Icon, title, fee, text }) => (
           <section key={title} className="paper-panel p-6">
-            <Icon aria-hidden="true" className="h-6 w-6 text-champagne" />
+            <Icon aria-hidden="true" className="h-6 w-6 text-gold" />
             <h2 className="mt-4 font-display text-2xl text-ink">{title}</h2>
             <p className="mt-2 text-lg text-ink">{fee}</p>
             <p className="mt-3 text-sm leading-7 text-ink/62">{text}</p>

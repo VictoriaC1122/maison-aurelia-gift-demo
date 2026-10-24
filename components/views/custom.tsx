@@ -17,7 +17,7 @@ export function CustomView({ locale }: { locale: Locale }) {
       <SectionHeading as="h1" eyebrow={t.eyebrow} title={t.title} description={t.description} />
       <div className="glass-panel grid gap-6 p-5 md:p-8 lg:grid-cols-2">
         <div className="space-y-4">
-          <div className="inline-flex rounded-full border border-champagne/15 bg-white/65 px-4 py-2 text-[11px] uppercase tracking-[0.24em] text-champagne">
+          <div className="inline-flex rounded-full border border-champagne/15 bg-white/65 px-4 py-2 eyebrow">
             {t.badge}
           </div>
           <h2 className="font-display text-[2rem] leading-[1.08] md:text-4xl">{t.heading}</h2>
@@ -40,7 +40,7 @@ export function CustomView({ locale }: { locale: Locale }) {
         <ul className="grid gap-3 text-sm leading-8 text-ink/68">
           {t.items.map((item, index) => (
             <li key={item} className="rounded-[1.3rem] border border-champagne/12 bg-white/55 px-4 py-3">
-              <span className="mr-3 inline-flex h-7 w-7 items-center justify-center rounded-full border border-champagne/20 text-[11px] text-champagne">
+              <span className="mr-3 inline-flex h-7 w-7 items-center justify-center rounded-full border border-champagne/20 text-[11px] text-gold">
                 0{index + 1}
               </span>
               {item}

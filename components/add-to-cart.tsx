@@ -49,7 +49,7 @@ export function ProductPurchase({ slug }: { slug: string }) {
   return (
     <div className="space-y-3">
       <div className="flex flex-wrap items-center gap-3">
-        <span className="text-sm text-ink/55">{t.common.quantity}</span>
+        <span className="text-sm text-ink/60">{t.common.quantity}</span>
         <QuantityStepper value={quantity} onChange={setQuantity} />
       </div>
       <div className="grid gap-3 sm:grid-cols-2">
@@ -84,7 +84,7 @@ export function MobileBuyBar({ slug, priceLabel, specLabel }: { slug: string; pr
   return (
     <div className="product-mobile-dock md:hidden">
       <div className="min-w-0">
-        <span className="block truncate text-[11px] text-ink/50">{specLabel}</span>
+        <span className="block truncate text-[11px] text-ink/60">{specLabel}</span>
         <strong className="mt-0.5 block truncate font-display text-base font-medium leading-tight text-ink">{priceLabel}</strong>
       </div>
       <div className="flex gap-2">

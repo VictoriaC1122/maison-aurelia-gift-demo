@@ -12,7 +12,7 @@ export function TrackView({ locale }: { locale: Locale }) {
   return (
     <main id="main-content" className="shell space-y-6 py-8 md:py-12">
       <div className="space-y-2">
-        <p className="text-[11px] uppercase tracking-[0.32em] text-champagne">{t.eyebrow}</p>
+        <p className="eyebrow">{t.eyebrow}</p>
         <h1 className="font-display text-[2.2rem] leading-tight text-ink md:text-[2.8rem]">{t.title}</h1>
         <p className="text-sm leading-7 text-ink/60">{t.description}</p>
       </div>
